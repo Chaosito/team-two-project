@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SenpaiMarket.DataAccess", "SenpaiMarket.DataAccess\SenpaiMarket.DataAccess.csproj", "{51FE1B74-9E52-4F3B-8C1D-C78462AC5C16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KartowkaMarkowkaHub.DataAccess", "SenpaiMarket.DataAccess\KartowkaMarkowkaHub.DataAccess.csproj", "{51FE1B74-9E52-4F3B-8C1D-C78462AC5C16}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KartowkaMarkowkaHub.Web", "KartowkaMarkowkaHub.Web\KartowkaMarkowkaHub.Web.csproj", "{0B97868F-95FB-45A7-AC74-A2E503D54D06}"
 EndProject
