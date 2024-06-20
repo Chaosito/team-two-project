@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Configuration\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\KartowkaMarkowkaHub.Core\KartowkaMarkowkaHub.Core.csproj" />
   </ItemGroup>
 
