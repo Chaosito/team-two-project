@@ -7,16 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Common\" />
-    <Folder Include="Module1\" />
-    <Folder Include="Module2\" />
-    <Folder Include="Vendors\" />
-    <Folder Include="Orders\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\KartowkaMarkowkaHub.Core\KartowkaMarkowkaHub.Core.csproj" />
-    <ProjectReference Include="..\SenpaiMarket.DataAccess\KartowkaMarkowkaHub.Data.csproj" />
+    <ProjectReference Include="..\KartowkaMarkowkaHub.Data\KartowkaMarkowkaHub.Data.csproj" />
   </ItemGroup>
 
 </Project>
