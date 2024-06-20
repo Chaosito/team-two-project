@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SenpaiMarket.DataAccess.Models
+namespace KartowkaMarkowkaHub.Core.Domain.Product
 {
     /// <summary>
     /// Продукт
     /// </summary>
-    internal class Product: BaseTable
+    internal class Product: BaseEntity
     {
         /// <summary>
         /// Наименование
