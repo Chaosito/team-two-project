@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2052D02C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KartowkaMarkowkaHub.Data", "KartowkaMarkowkaHub.Data\KartowkaMarkowkaHub.Data.csproj", "{CBD6CD0F-FB18-4D9C-BC29-83B3FA4EC4D7}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{7AC97A3D-D2C4-45E6-B7B8-9080D2031FED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{CBD6CD0F-FB18-4D9C-BC29-83B3FA4EC4D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBD6CD0F-FB18-4D9C-BC29-83B3FA4EC4D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBD6CD0F-FB18-4D9C-BC29-83B3FA4EC4D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AC97A3D-D2C4-45E6-B7B8-9080D2031FED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AC97A3D-D2C4-45E6-B7B8-9080D2031FED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AC97A3D-D2C4-45E6-B7B8-9080D2031FED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AC97A3D-D2C4-45E6-B7B8-9080D2031FED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
