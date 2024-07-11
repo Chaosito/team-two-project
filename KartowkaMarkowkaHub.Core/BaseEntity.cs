@@ -1,7 +1,7 @@
 ﻿namespace KartowkaMarkowkaHub.Core
 {
-    internal abstract class BaseEntity
+    public abstract class BaseEntity
     {
-        internal Guid Id { get; set; }
+        public Guid Id { get; set; }
     }
 }
