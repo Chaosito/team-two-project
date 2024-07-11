@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2024-07-11T16:19:16.045Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" etag="cKwpbWWhAhSzi5_jkRx8" version="24.6.4" type="github" pages="2">
+<mxfile host="app.diagrams.net" modified="2024-07-11T16:20:47.023Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" etag="9AQuiDPRhrJSZeVR2kHO" version="24.6.4" type="github" pages="2">
   <diagram name="Страница — 1" id="WEvIcGgdlRctzQuML9KB">
     <mxGraphModel dx="1050" dy="691" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -338,13 +338,13 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="I4_50CBUvLRl2ALyt6JC-10" value="Статус заказ" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="1006" y="-147" width="140" height="90" as="geometry" />
+          <mxGeometry x="1006" y="-160" width="140" height="121" as="geometry" />
         </mxCell>
         <mxCell id="I4_50CBUvLRl2ALyt6JC-11" value="Id" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="I4_50CBUvLRl2ALyt6JC-10">
           <mxGeometry y="30" width="140" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="I4_50CBUvLRl2ALyt6JC-12" value="Название" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="I4_50CBUvLRl2ALyt6JC-10">
-          <mxGeometry y="60" width="140" height="30" as="geometry" />
+        <mxCell id="I4_50CBUvLRl2ALyt6JC-12" value="Название (принят, сформирован, отправлен, доставлен, заблокирован)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" vertex="1" parent="I4_50CBUvLRl2ALyt6JC-10">
+          <mxGeometry y="60" width="140" height="61" as="geometry" />
         </mxCell>
         <mxCell id="I4_50CBUvLRl2ALyt6JC-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="I4_50CBUvLRl2ALyt6JC-16" target="I4_50CBUvLRl2ALyt6JC-11">
           <mxGeometry relative="1" as="geometry" />
