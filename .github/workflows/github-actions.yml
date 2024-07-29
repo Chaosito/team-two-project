@@ -1,0 +1,21 @@
+name: GitHub Actions Demo
+run-name: ${{ github.actor }} is start GitHub Actions 🚀
+on: 
+  push:
+    branches: 
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: pull repository
+        uses: actions/checkout@v4
+      - name: set dotnet version
+        uses: actions/setup-dotnet@v4
+        with: 
+          dotnet-version: '8.0'
+      - name: restore
+        run: dotnet restore './KartowkaMarkowkaHub.Web/KartowkaMarkowkaHub.Web.csproj'
+      - name: build
+        run: dotnet build './KartowkaMarkowkaHub.Web/KartowkaMarkowkaHub.Web.csproj'
+      - run: echo "🐱‍👤This job's status is ${{ job.status }}."  
