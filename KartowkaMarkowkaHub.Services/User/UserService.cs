@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KartowkaMarkowkaHub.Data.Data
+namespace KartowkaMarkowkaHub.Services.Module2
 {
-    public interface IDbInitializer
+    public class UserService
     {
-        void InitializeDb();
     }
 }

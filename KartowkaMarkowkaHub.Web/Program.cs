@@ -15,7 +15,7 @@ namespace KartowkaMarkowkaHub.Web
 
             var app = builder.Build();
 
-            startup.Configure(app, app.Environment);
+            startup.Configure(app, app.Environment, app.Services);
 
             #region Первичный вариант без Startup
             //if (!app.Environment.IsDevelopment())

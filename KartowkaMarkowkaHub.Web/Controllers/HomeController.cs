@@ -4,6 +4,8 @@ using System.Diagnostics;
 
 namespace KartowkaMarkowkaHub.Web.Controllers
 {
+    [Route("[controller]")]
+    [Route("")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -13,6 +15,7 @@ namespace KartowkaMarkowkaHub.Web.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             return View();

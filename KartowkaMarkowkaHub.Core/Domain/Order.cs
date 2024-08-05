@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KartowkaMarkowkaHub.Core.Domain
 {
-    public class Order
+    public class Order:BaseEntity
     {
         public DateTime CreationDate { get; set; }
 
@@ -22,7 +22,7 @@ namespace KartowkaMarkowkaHub.Core.Domain
         public bool IsArbitrated { get; set; }
 
         /// <summary>
-        /// Комбинированный заказ
+        /// Комбинированный заказ ?
         /// </summary>
         public bool IsComboOrder { get; set; }
 

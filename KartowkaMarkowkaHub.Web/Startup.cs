@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using KartowkaMarkowkaHub.Core.Domain;
+using KartowkaMarkowkaHub.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace KartowkaMarkowkaHub.Web
 {
@@ -16,14 +20,7 @@ namespace KartowkaMarkowkaHub.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-        }
-
-        // Метод для добавления служб в контейнер DI
-        // Add services to the container.
-        public void DependencyInjectionRegistration(IServiceCollection services)
-        {
-            services.AddControllersWithViews();
-
+            #region Авторизация
             //// Добавление и настройка служб авторизации
             //services.AddAuthorization(options =>
             //{
@@ -38,12 +35,34 @@ namespace KartowkaMarkowkaHub.Web
             //    options.LoginPath = "/Account/Login";
             //    options.AccessDeniedPath = "/Account/AccessDenied";
             //});
+            #endregion
         }
 
+        // Метод для добавления служб в контейнер DI
+        // Add services to the container.
+        public void DependencyInjectionRegistration(IServiceCollection services)
+        {
+            services.AddControllersWithViews();
+
+            if (DbConfiguration.CurrentDbType == DbType.SqlLite)
+            {
+                services.AddDbContext<HubContext>(o => o.UseSqlite());
+            }
+        }
         // Метод для настройки конвейера HTTP-запросов
         // Configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
+            using (var scope = serviceProvider.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetService<HubContext>();
+                DbHelper.Initialize(dbContext);
+
+                //dbContext.Database.EnsureDeleted();
+                //dbContext.Database.EnsureCreated();
+                //dbContext.Database.Migrate();
+            }
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -58,15 +77,15 @@ namespace KartowkaMarkowkaHub.Web
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseAuthorization();
+            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 // Наиболее гибкий вариант роутинга.
                 endpoints.MapControllers();
 
-
-                //// Основной маршрут для контроллеров без области
+                #region Как могло бы быть
+                // Основной маршрут для контроллеров без области
                 //endpoints.MapControllerRoute(
                 //    name: "default",
                 //    pattern: "{controller=Home}/{action=Index}/{id?}");
@@ -81,6 +100,7 @@ namespace KartowkaMarkowkaHub.Web
                 //    name: "User",
                 //    areaName: "User",
                 //    pattern: "User/{controller=Home}/{action=Index}/{id?}");
+                #endregion
             });
         }
     }

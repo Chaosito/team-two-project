@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KartowkaMarkowkaHub.Services.Module2
+namespace KartowkaMarkowkaHub.Services.User
 {
-    internal class Module2
+    public class RoleService
     {
+
     }
 }

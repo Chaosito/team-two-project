@@ -9,16 +9,16 @@ using System.Threading.Tasks;
 
 namespace KartowkaMarkowkaHub.Data.Configuration.EfConfiguration
 {
-    public class ClientConfiguration : IEntityTypeConfiguration<Client>
+    public class FarmerConfiguration : IEntityTypeConfiguration<Farmer>
     {
-        public void Configure(EntityTypeBuilder<Client> builder)
+        public void Configure(EntityTypeBuilder<Farmer> builder)
         {
-            builder.HasMany(e => e.Orders)
-                .WithOne(c => c.Client);
+            builder.HasMany(x => x.Products)
+                .WithOne(x => x.Farmer);
 
             builder.HasOne(x => x.User)
-                .WithOne(y => y.ClientInfo)
-                .HasForeignKey<Client>(x => x.UserId);
+                .WithOne(y => y.FarmerInfo)
+                .HasForeignKey<Farmer>(f => f.UserId);
         }
     }
 }
