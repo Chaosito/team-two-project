@@ -48,6 +48,9 @@ namespace KartowkaMarkowkaHub.Web
             {
                 services.AddDbContext<HubContext>(o => o.UseSqlite());
             }
+
+            services.AddEndpointsApiExplorer();
+            //services.AddSwaggenGen()
         }
         // Метод для настройки конвейера HTTP-запросов
         // Configure the HTTP request pipeline.
@@ -96,10 +99,10 @@ namespace KartowkaMarkowkaHub.Web
                 //    areaName: "Admin",
                 //    pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
 
-                //endpoints.MapAreaControllerRoute(
-                //    name: "User",
-                //    areaName: "User",
-                //    pattern: "User/{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapAreaControllerRoute(
+                    name: "Account",
+                    areaName: "Account",
+                    pattern: "Account/{controller=Home}/{action=Index}/{id?}");
                 #endregion
             });
         }
