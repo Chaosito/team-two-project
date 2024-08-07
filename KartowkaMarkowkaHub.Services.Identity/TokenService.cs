@@ -4,11 +4,18 @@ using System.Security.Claims;
 
 namespace KartowkaMarkowkaHub.Services.Identity
 {
-    public class TokenService
+    public class TokenService : ITokenService
     {
-        public string TokenGenerate(string username)
+        private readonly IClaimService _claimService;
+
+        public TokenService(IClaimService claimService)
         {
-            var claims = new List<Claim> { new Claim(ClaimTypes.Name, username) };
+            _claimService = claimService;
+        }
+
+        public async Task<string> TokenGenerateAsync(Guid id)
+        {
+            var claims = await _claimService.GetAllClaims(id);
 
             // создаем JWT-токен
             var jwt = new JwtSecurityToken(
@@ -20,5 +27,7 @@ namespace KartowkaMarkowkaHub.Services.Identity
 
             return new JwtSecurityTokenHandler().WriteToken(jwt);
         }
+        
     }
 }
+

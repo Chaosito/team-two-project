@@ -27,5 +27,10 @@ namespace KartowkaMarkowkaHub.Services.Account
 
             return result;
         }
+
+        public Task<UserDTO> Login(string username, string password)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

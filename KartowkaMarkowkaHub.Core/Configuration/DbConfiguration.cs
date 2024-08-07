@@ -21,7 +21,7 @@ namespace KartowkaMarkowkaHub.Core.Domain
         /// <summary>
         /// Определяет пересоздавать ли БД при каждом запуске
         /// </summary>
-        public static bool ReCreateEveryRun = true;
+        public static bool ReCreateEveryRun = false;
 
         /// <summary>
         /// Заполнить предварительными данными

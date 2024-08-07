@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,5 +21,9 @@ namespace KartowkaMarkowkaHub.Core.Abstractions.Repositories
         Task UpdateAsync(T entity);
 
         Task DeleteAsync(T entity);
+
+        IQueryable<T> GetAllQueryableAsync();
+
+        IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression);
     }
 }

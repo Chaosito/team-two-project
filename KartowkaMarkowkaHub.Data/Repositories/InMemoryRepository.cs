@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq.Expressions;
 
 namespace KartowkaMarkowkaHub.Data.Repositories
 {
@@ -43,6 +44,21 @@ namespace KartowkaMarkowkaHub.Data.Repositories
         }
 
         public Task DeleteAsync(T entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<T> GetByName(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<T> GetAllQueryableAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression)
         {
             throw new NotImplementedException();
         }

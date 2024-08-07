@@ -1,6 +1,7 @@
 ﻿using KartowkaMarkowkaHub.Core.Abstractions.Repositories;
 using KartowkaMarkowkaHub.Core;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace KartowkaMarkowkaHub.Data.Repositories
 {
@@ -18,6 +19,17 @@ namespace KartowkaMarkowkaHub.Data.Repositories
             var entities = await _dataContext.Set<T>().ToListAsync();
 
             return entities;
+        }
+
+        public IQueryable<T> GetAllQueryableAsync()
+        {
+            var query = _dataContext.Set<T>().AsNoTracking();
+            return query;
+        }
+
+        public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression)
+        {
+            return _dataContext.Set<T>().Where(expression).AsNoTracking();
         }
 
         public async Task<T> GetByIdAsync(Guid id)

@@ -1,6 +1,9 @@
-﻿namespace KartowkaMarkowkaHub.Services.Account
+﻿using KartowkaMarkowkaHub.DTO.Account;
+
+namespace KartowkaMarkowkaHub.Services.Account
 {
-    internal interface IAuthService
+    public interface IAuthService
     {
+        Task<LoginDto> Login(string username, string password);
     }
 }
