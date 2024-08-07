@@ -30,9 +30,13 @@ namespace KartowkaMarkowkaHub.Services.Identity
             //    .Select(x => new Claim(ClaimTypes.Role, x.Role.Name)).ToListAsync();
 
             var result = await _userRepository.GetByIdAsync(userId);
-            var roles = result.Roles.ToList();
+            var r = _userRepository.GetAllQueryableAsync()
+                .Include(f => f.Roles).ThenInclude(y => y.Role)
+                .FirstOrDefault(x => x.Id == userId);
 
-            return roles.Select(x => new Claim(ClaimTypes.Role, x.Role.Name)).ToList();
+            var roles = r.Roles.Select(x => x.Role);
+
+            return roles.Select(x => new Claim(ClaimTypes.Role, x.Name)).ToList();
         }
 
         public async Task<List<Claim>> GetAllClaims(Guid userId)

@@ -2,6 +2,7 @@
 using KartowkaMarkowkaHub.Core.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace KartowkaMarkowkaHub.Data.Configuration.EfConfiguration
     {
         public void Configure(EntityTypeBuilder<BaseEntity> builder)
         {
+            // TPT TPC TPH 
             builder.UseTpcMappingStrategy();
             builder.HasKey(x => x.Id);
         }

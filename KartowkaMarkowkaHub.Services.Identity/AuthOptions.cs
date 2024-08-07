@@ -9,11 +9,11 @@ namespace KartowkaMarkowkaHub.Services.Identity
 {
     public class AuthOptions
     {
-        public const string ISSUER = "MyAuthServer"; // издатель токена
+        public const string ISSUER = "KartowkaMarkowkaHub"; // издатель токена
 
-        public const string AUDIENCE = "MyAuthClient"; // потребитель токена
+        public const string AUDIENCE = "KartowkaMarkowkaHub.Web"; // потребитель токена
 
-        const string KEY = "mysupersecret_secretsecretsecretkey!123";   // ключ для шифрации
+        const string KEY = "mysecretsdasdasdasdkeyasdasdasdasdasda";   // ключ для шифрации
 
         public static SymmetricSecurityKey GetSymmetricSecurityKey() =>
             new SymmetricSecurityKey(Encoding.UTF8.GetBytes(KEY));
