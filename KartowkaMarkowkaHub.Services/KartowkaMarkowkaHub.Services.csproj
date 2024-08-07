@@ -7,7 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\KartowkaMarkowkaHub.Data\KartowkaMarkowkaHub.Data.csproj" />
+    <ProjectReference Include="..\KartowkaMarkowkaHub.DTO\KartowkaMarkowkaHub.DTO.csproj" />
+    <ProjectReference Include="..\KartowkaMarkowkaHub.Services.Identity\KartowkaMarkowkaHub.Services.Identity.csproj" />
   </ItemGroup>
 
 </Project>

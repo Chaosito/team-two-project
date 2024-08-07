@@ -18,9 +18,11 @@ namespace KartowkaMarkowkaHub.Core.Domain
         /// </summary>
         public string Address { get; set; }
 
-        
-
         // Навигационное свойство
         public ICollection<Product> Products { get; set; }
+
+        public User? User { get; set; }
+
+        public Guid? UserId { get; set; }
     }
 }

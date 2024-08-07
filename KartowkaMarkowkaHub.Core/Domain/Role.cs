@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace KartowkaMarkowkaHub.Core.Domain
 {
-    public class Storage : BaseEntity
+    public class Role: BaseEntity
     {
         public string Name { get; set; }
 
-        public string Address { get; set; } = "";
+        public string Description { get; set; }
 
-        public string Description { get; set; } = "";
+        public virtual ICollection<UserRole> Users { get; set; }
     }
 }

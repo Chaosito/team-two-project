@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KartowkaMarkowkaHub.Core
+namespace KartowkaMarkowkaHub.Core.Domain
 {
-    public class User: BaseEntity
+    public class User : BaseEntity
     {
         public string Login { get; set; }
 
@@ -21,5 +21,15 @@ namespace KartowkaMarkowkaHub.Core
         public string Email { get; set; }
 
         public bool IsDeleted { get; set; }
+
+        public Farmer? FarmerInfo { get; set; }
+
+        public Guid? FarmerId { get; set; }
+
+        public Client? ClientInfo { get; set; }
+
+        public Guid? ClientId { get; set; }
+
+        public ICollection<UserRole> Roles { get; set; }
     }
 }
