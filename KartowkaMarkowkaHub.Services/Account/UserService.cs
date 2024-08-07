@@ -4,10 +4,10 @@ using KartowkaMarkowkaHub.DTO.Account;
 
 namespace KartowkaMarkowkaHub.Services.Account
 {
-    public class UserService
+    public class UserService : IUserService
     {
         private readonly IRepository<User> _userRepository;
-
+        
         public UserService(IRepository<User> userRepository) 
         {
             _userRepository = userRepository;

@@ -1,7 +1,14 @@
-﻿using KartowkaMarkowkaHub.Core.Domain;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
+using KartowkaMarkowkaHub.Core.Abstractions.Repositories;
+using KartowkaMarkowkaHub.Core.Domain;
 using KartowkaMarkowkaHub.Data;
+using KartowkaMarkowkaHub.Data.Repositories;
+using KartowkaMarkowkaHub.Services.Account;
+using KartowkaMarkowkaHub.Web.Validators;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -46,6 +53,13 @@ namespace KartowkaMarkowkaHub.Web
         {
             services.AddControllersWithViews();
 
+            //https://github.com/FluentValidation/FluentValidation.AspNetCore
+            services.AddFluentValidationAutoValidation();
+            services.AddFluentValidationClientsideAdapters();
+            services.AddValidatorsFromAssemblyContaining(typeof(UserViewModelValidator));
+
+
+
             if (DbConfiguration.CurrentDbType == DbType.SqlLite)
             {
                 services.AddDbContext<HubContext>(o => o.UseSqlite());
@@ -60,6 +74,9 @@ namespace KartowkaMarkowkaHub.Web
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
+
+            services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+            services.AddScoped<IUserService, UserService>();
         }
         // Метод для настройки конвейера HTTP-запросов
         // Configure the HTTP request pipeline.
