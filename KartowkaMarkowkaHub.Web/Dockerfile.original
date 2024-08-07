@@ -10,7 +10,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["KartowkaMarkowkaHub.Web/KartowkaMarkowkaHub.Web.csproj", "KartowkaMarkowkaHub.Web/"]
-RUN dotnet restore "./KartowkaMarkowkaHub.Web/KartowkaMarkowkaHub.Web.csproj"
+RUN dotnet restore "./KartowkaMarkowkaHub.Web/./KartowkaMarkowkaHub.Web.csproj"
 COPY . .
 WORKDIR "/src/KartowkaMarkowkaHub.Web"
 RUN dotnet build "./KartowkaMarkowkaHub.Web.csproj" -c $BUILD_CONFIGURATION -o /app/build
