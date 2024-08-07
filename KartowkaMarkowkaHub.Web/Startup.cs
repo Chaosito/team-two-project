@@ -1,8 +1,10 @@
 ﻿using KartowkaMarkowkaHub.Core.Domain;
 using KartowkaMarkowkaHub.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace KartowkaMarkowkaHub.Web
 {
@@ -49,8 +51,15 @@ namespace KartowkaMarkowkaHub.Web
                 services.AddDbContext<HubContext>(o => o.UseSqlite());
             }
 
-            services.AddEndpointsApiExplorer();
-            //services.AddSwaggenGen()
+            //services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "KartowkaMarkowkaHub ", Version = "v1" });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });
         }
         // Метод для настройки конвейера HTTP-запросов
         // Configure the HTTP request pipeline.
@@ -93,17 +102,37 @@ namespace KartowkaMarkowkaHub.Web
                 //    name: "default",
                 //    pattern: "{controller=Home}/{action=Index}/{id?}");
 
-                //// Маршрут для области Admin
-                //endpoints.MapAreaControllerRoute(
-                //    name: "admin",
-                //    areaName: "Admin",
-                //    pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
+                // Маршрут для области Admin
+                endpoints.MapAreaControllerRoute(
+                    name: "admin",
+                    areaName: "Admin",
+                    pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
+
+                // Маршрут для области Фермер
+                endpoints.MapAreaControllerRoute(
+                    name: "farmer",
+                    areaName: "Farmer",
+                    pattern: "Farmer/{controller=Home}/{action=Index}/{id?}");
+
+                // Маршрут для области Клиент
+                endpoints.MapAreaControllerRoute(
+                    name: "client",
+                    areaName: "Client",
+                    pattern: "Client/{controller=Home}/{action=Index}/{id?}");
 
                 endpoints.MapAreaControllerRoute(
                     name: "Account",
                     areaName: "Account",
                     pattern: "Account/{controller=Home}/{action=Index}/{id?}");
                 #endregion
+            });
+
+            // Включаем middleware для генерации Swagger JSON и Swagger UI
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API V1");
+                c.RoutePrefix = "swagger"; // Чтобы Swagger UI был доступен по корню приложения
             });
         }
     }

@@ -6,6 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>6e4e0547-fabf-48c8-badf-76baf3533a34</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +15,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.7.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.7.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.7.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,7 +25,6 @@
   <ItemGroup>
     <Folder Include="Areas\Account\Data\" />
     <Folder Include="Areas\Account\Models\" />
-    <Folder Include="Areas\Account\Views\" />
   </ItemGroup>
 
 </Project>

@@ -5,7 +5,8 @@ namespace KartowkaMarkowkaHub.Web.Controllers.api
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class HomeController : ControllerBase
+    public class AccountController : ControllerBase
     {
+
     }
 }

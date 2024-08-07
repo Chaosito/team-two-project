@@ -32,7 +32,7 @@ namespace KartowkaMarkowkaHub.Data.Repositories
             return Task.FromResult(Data.Where(x => ids.Contains(x.Id)).AsEnumerable());
         }
 
-        public Task AddAsync(T entity)
+        public Task<T> AddAsync(T entity)
         {
             throw new NotImplementedException();
         }

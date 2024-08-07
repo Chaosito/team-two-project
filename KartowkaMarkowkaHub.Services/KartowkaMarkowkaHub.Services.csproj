@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\KartowkaMarkowkaHub.Data\KartowkaMarkowkaHub.Data.csproj" />
+    <ProjectReference Include="..\KartowkaMarkowkaHub.DTO\KartowkaMarkowkaHub.DTO.csproj" />
   </ItemGroup>
 
 </Project>

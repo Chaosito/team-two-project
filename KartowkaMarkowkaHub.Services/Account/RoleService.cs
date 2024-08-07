@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KartowkaMarkowkaHub.Services.User
+namespace KartowkaMarkowkaHub.Services.Account
 {
     public class RoleService
     {

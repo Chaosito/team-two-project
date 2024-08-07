@@ -33,10 +33,12 @@ namespace KartowkaMarkowkaHub.Data.Repositories
             return entities;
         }
 
-        public async Task AddAsync(T entity)
+        public async Task<T> AddAsync(T entity)
         {
             await _dataContext.Set<T>().AddAsync(entity);
             await _dataContext.SaveChangesAsync();
+
+            return entity;
         }
 
         public async Task UpdateAsync(T entity)

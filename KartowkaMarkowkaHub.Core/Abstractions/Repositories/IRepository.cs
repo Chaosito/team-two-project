@@ -15,7 +15,7 @@ namespace KartowkaMarkowkaHub.Core.Abstractions.Repositories
 
         Task<IEnumerable<T>> GetRangeByIdsAsync(List<Guid> ids);
 
-        Task AddAsync(T entity);
+        Task<T> AddAsync(T entity);
 
         Task UpdateAsync(T entity);
 
