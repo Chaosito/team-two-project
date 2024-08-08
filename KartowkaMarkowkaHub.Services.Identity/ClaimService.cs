@@ -30,7 +30,7 @@ namespace KartowkaMarkowkaHub.Services.Identity
             //    .Select(x => new Claim(ClaimTypes.Role, x.Role.Name)).ToListAsync();
 
             var result = await _userRepository.GetByIdAsync(userId);
-            var r = _userRepository.GetAllQueryableAsync()
+            var r = _userRepository.GetAllQueryable()
                 .Include(f => f.Roles).ThenInclude(y => y.Role)
                 .FirstOrDefault(x => x.Id == userId);
 

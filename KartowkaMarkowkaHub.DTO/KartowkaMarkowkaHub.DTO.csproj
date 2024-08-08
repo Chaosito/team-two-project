@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Account\Validators\" />
+    <ProjectReference Include="..\KartowkaMarkowkaHub.Core\KartowkaMarkowkaHub.Core.csproj" />
   </ItemGroup>
 
 </Project>

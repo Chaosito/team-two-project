@@ -21,31 +21,85 @@ namespace KartowkaMarkowkaHub.Web.Controllers.api
             _authService = authService;
         }
 
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAll()
+        {
+            var users = await _userService.GetAll();
 
+            var usersViewModel = users.Select(x => new UserViewModel() { Id = x.Id, 
+                Login = x.Login, 
+                Roles = x.Roles
+                        .Select(x => new RoleViewModel() { 
+                            Id = x.Id, 
+                            Name = x.Name, 
+                            Descriptions = x.Description }), 
+                Email = x.Email });
+
+            return Ok(usersViewModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetById(Guid Id) 
+        {
+            var result = await _userService.GetUserByIdAsync(Id);
+
+            if(result == null) return NotFound();
+
+            var viewmodel = new UserViewModel()
+            {
+                Id = Id,
+                Login = result.Login,
+                Email = result.Email,
+                Roles = result.Roles.Select(x => new RoleViewModel() { Id = x.Id, Name = x.Name, Descriptions = x.Description })
+            };
+
+            return Ok(viewmodel);
+        }
 
         [HttpPost]
         public async Task<IActionResult> CreateUser(UserViewModel user)
         {
             var userDto = new UserDTO()
             {
-                Email = user.Email,
                 Login = user.Login,
-                Name = user.UserName,
+                Email = user.Email,
                 Password = user.Password,
             };
 
             var result = await _userService.CreateAsync(userDto);
 
-            return Ok(user);
+            var userViewModel = new UserViewModel()
+            {
+                Id = result.Id,
+                Login = result.Login,
+                Email = result.Email
+            };
+
+            return Ok(userViewModel);
         }
 
         [HttpPost("Login")]
-        public IActionResult Login(UserViewModel user)
+        public async Task<IActionResult> Login(LoginViewModel user)
         {
-            var userDto = _authService.Login(user.Login, user.Password);
-            if (userDto == null) return Unauthorized();
+            var loginDto = await _authService.Login(user.Login, user.Password);
 
-            return Ok(userDto);
+            if (loginDto == null) return Unauthorized();
+
+            var loginViewModel = new LoginViewModel()
+            {
+                Login = loginDto.Login,
+                AccessToken = loginDto.AccessToken
+            };
+
+            return Ok(loginViewModel);
+        }
+
+        [HttpPost("AddRole")]
+        public async Task<IActionResult> AddRole(RoleUserViewModel roleUser)
+        {
+            var user = await _userService.AddRoleUserAsync(roleUser.UserId, roleUser.RoleId);
+
+            return Ok(user);
         }
 
         [Authorize]
@@ -66,7 +120,7 @@ namespace KartowkaMarkowkaHub.Web.Controllers.api
         [HttpGet("TestAuthAnonymous")]
         public IActionResult TestAuthAnonymous()
         {
-            return Ok(new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+            return Ok();
         }
     }
 }
