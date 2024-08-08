@@ -19,4 +19,8 @@
     <ProjectReference Include="..\KartowkaMarkowkaHub.Core\KartowkaMarkowkaHub.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+  </ItemGroup>
+
 </Project>

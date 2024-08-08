@@ -53,7 +53,7 @@ namespace KartowkaMarkowkaHub.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public IQueryable<T> GetAllQueryableAsync()
+        public IQueryable<T> GetAllQueryable()
         {
             throw new NotImplementedException();
         }

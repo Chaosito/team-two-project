@@ -62,11 +62,16 @@ namespace KartowkaMarkowkaHub.Data
 
         private static void FakeDataSeed(HubContext context)
         {
-            //context.Roles.AddRange(FakeDataFactory.GetData<Role>());
-            //context.Employees.AddRange(FakeDataFactory.GetData<Employee>());
-            //context.Preferences.AddRange(FakeDataFactory.GetData<Preference>());
-            //context.Customers.AddRange(FakeDataFactory.GetData<Customer>());
-            //context.SaveChanges();
+            var guidRoleAdmin = new Guid("f62087f8-c4f5-4106-a4c0-6cb9a311e31d");
+            var guidRoleModer = new Guid("a0a88ca9-9e3e-4564-b152-006722093ebf");
+
+            context.Set<Role>().AddRange(new Role() { Id = guidRoleAdmin, Name = "admin", Description = "Администратор" });
+            context.Set<Role>().AddRange(new Role() { Id = guidRoleModer, Name = "moder", Description = "Модератор" });
+
+            var guidUser = new Guid("6EBC929B-3785-49D9-9D46-B3B9F70B0BB5");
+            context.Set<User>().AddRange(new User() { Id = guidUser, Login = "Wower", Email = "wower@mail.ru", Password = "123123", Roles = new List<UserRole>() { new UserRole() { RoleId = guidRoleAdmin, UserId = guidUser } } });
+
+            context.SaveChanges();
         }
     }
 }

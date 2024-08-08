@@ -21,7 +21,7 @@ namespace KartowkaMarkowkaHub.Data.Repositories
             return entities;
         }
 
-        public IQueryable<T> GetAllQueryableAsync()
+        public IQueryable<T> GetAllQueryable()
         {
             var query = _dataContext.Set<T>().AsNoTracking();
             return query;
@@ -55,7 +55,10 @@ namespace KartowkaMarkowkaHub.Data.Repositories
 
         public async Task UpdateAsync(T entity)
         {
+            var sample = await _dataContext.Set<T>().FirstOrDefaultAsync(x => x.Id == entity.Id);
+            _dataContext.Entry<T>(sample).CurrentValues.SetValues(entity);
             await _dataContext.SaveChangesAsync();
+
         }
 
         public async Task DeleteAsync(T entity)

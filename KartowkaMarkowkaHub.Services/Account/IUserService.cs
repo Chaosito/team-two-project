@@ -5,6 +5,13 @@ namespace KartowkaMarkowkaHub.Services.Account
 {
     public interface IUserService
     {
-        Task<User> CreateAsync(UserDTO user);
+        Task<IEnumerable<UserDTO>> GetAll();
+
+
+        Task<UserDTO> GetUserByIdAsync(Guid Id);
+
+        Task<UserDTO> CreateAsync(UserDTO user);
+
+        Task<UserDTO> AddRoleUserAsync(Guid userId, Guid roleId);
     }
 }

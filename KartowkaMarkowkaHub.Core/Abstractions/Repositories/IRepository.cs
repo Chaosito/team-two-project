@@ -22,7 +22,7 @@ namespace KartowkaMarkowkaHub.Core.Abstractions.Repositories
 
         Task DeleteAsync(T entity);
 
-        IQueryable<T> GetAllQueryableAsync();
+        IQueryable<T> GetAllQueryable();
 
         IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression);
     }
