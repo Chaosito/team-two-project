@@ -13,17 +13,17 @@ namespace KartowkaMarkowkaHub.Data.Configuration.EfConfiguration
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.Navigation<Client>(c => c.ClientInfo).IsRequired(false);
+            //builder.Navigation<Client>(c => c.ClientInfo).IsRequired(false);
 
-            builder.Navigation<Farmer>(c => c.FarmerInfo).IsRequired(false);
-
-            builder.HasOne(x => x.FarmerInfo)
-                .WithOne(y => y.User)
-                .HasForeignKey<Farmer>(f => f.FarmerId);
-
-            builder.HasOne(x => x.ClientInfo)
-                .WithOne(y => y.User)
-                .HasForeignKey<Client>(f => f.ClientId);
+            //builder.Navigation<Farmer>(c => c.FarmerInfo).IsRequired(false);
+            //
+            //builder.HasOne(x => x.FarmerInfo)
+            //    .WithOne(y => y.User)
+            //    .HasForeignKey<Farmer>(f => f.FarmerId);
+            //
+            //builder.HasOne(x => x.ClientInfo)
+            //    .WithOne(y => y.User)
+            //    .HasForeignKey<Client>(f => f.ClientId);
         }
     }
 }

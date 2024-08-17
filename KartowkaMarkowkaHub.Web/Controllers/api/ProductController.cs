@@ -1,6 +1,8 @@
 ﻿using KartowkaMarkowkaHub.Services.Products;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace KartowkaMarkowkaHub.Web.Controllers.api
 {
@@ -44,8 +46,12 @@ namespace KartowkaMarkowkaHub.Web.Controllers.api
         /// <param name="productDto">модель товара</param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CreateAsync(ProductDto productDto)
         {
+            var claim = HttpContext.User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier);
+            var id = claim.Value;
+            Guid guid = Guid.Parse(id);
             await _productService.CreateAsync(productDto);
             return Created();
         }

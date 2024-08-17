@@ -16,8 +16,6 @@ namespace KartowkaMarkowkaHub.Services.Products
         public IEnumerable<ProductViewModel> GetAsync(Guid userId)
         {
             var products = _db.Products
-                .Include(p => p.Farmer)
-                .Where(p => p.Farmer.UserId == userId)
                 .Select(p => new ProductViewModel
                 {
                     Id = p.Id,
@@ -44,7 +42,7 @@ namespace KartowkaMarkowkaHub.Services.Products
         }
 
         public async Task<Guid> CreateAsync(ProductDto productDto)
-        {
+        {       
             Product product = new Product()
             {
                 Name = productDto.Name,
