@@ -104,6 +104,7 @@ namespace KartowkaMarkowkaHub.Web
                 c.IncludeXmlComments(xmlPath);
             });
 
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRoleService, RoleService>();
@@ -111,7 +112,7 @@ namespace KartowkaMarkowkaHub.Web
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IClaimService, ClaimService>();
             services.AddScoped<IProductService, ProductService>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();       
 
             //Авторизация
             //services.AddAuthorization();
