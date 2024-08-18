@@ -1,11 +1,11 @@
 ﻿using KartowkaMarkowkaHub.Services.Products;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace KartowkaMarkowkaHub.Web.Controllers.api
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductController : ControllerBase
@@ -20,23 +20,23 @@ namespace KartowkaMarkowkaHub.Web.Controllers.api
         /// <summary>
         /// Получает товары фермера
         /// </summary>
-        /// <param name="farmerId">id фермера</param>
+        /// <param name="userId">id фермера</param>
         /// <returns></returns>
-        [HttpGet("{farmerId}")]
-        public IActionResult GetAsync(Guid farmerId)
+        [HttpGet("{userId}")]
+        public IActionResult Get(Guid userId)
         {
-            var products = _productService.GetAsync(farmerId);
+            var products = _productService.Get(userId);
             return Ok(products);
         }
 
         /// <summary>
         /// Получает все товары
         /// </summary>
-        /// <returns></returns>
+        /// <returns></returns> 
         [HttpGet]
-        public IActionResult GetAsync()
+        public IActionResult Get()
         {
-            var products = _productService.GetAsync();
+            var products = _productService.Get();
             return Ok(products);
         }
 
@@ -46,13 +46,11 @@ namespace KartowkaMarkowkaHub.Web.Controllers.api
         /// <param name="productDto">модель товара</param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> CreateAsync(ProductDto productDto)
+        public IActionResult Create(ProductDto productDto)
         {
-            var claim = HttpContext.User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier);
-            var id = claim.Value;
-            Guid guid = Guid.Parse(id);
-            await _productService.CreateAsync(productDto);
+            var claimUserId = HttpContext.User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier);
+            var userId = Guid.Parse(claimUserId.Value);            
+            _productService.Create(productDto, userId);
             return Created();
         }
 

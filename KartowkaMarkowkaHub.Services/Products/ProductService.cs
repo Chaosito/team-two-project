@@ -1,21 +1,21 @@
 ﻿using KartowkaMarkowkaHub.Core.Domain;
-using KartowkaMarkowkaHub.Data;
-using Microsoft.EntityFrameworkCore;
+using KartowkaMarkowkaHub.Data.Repositories;
 
 namespace KartowkaMarkowkaHub.Services.Products
 {
     public class ProductService : IProductService
     {
-        private readonly HubContext _db;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ProductService(HubContext db)
+        public ProductService(IUnitOfWork unitOfWork)
         { 
-            _db = db;
+            _unitOfWork = unitOfWork;
         }
 
-        public IEnumerable<ProductViewModel> GetAsync(Guid userId)
+        public IEnumerable<ProductViewModel> Get(Guid userId)
         {
-            var products = _db.Products
+            var products = _unitOfWork.ProductRepository
+                .Get(filter: p => p.UserId == userId)
                 .Select(p => new ProductViewModel
                 {
                     Id = p.Id,
@@ -27,9 +27,9 @@ namespace KartowkaMarkowkaHub.Services.Products
             return products;
         }
 
-        public IEnumerable<ProductViewModel> GetAsync()
+        public IEnumerable<ProductViewModel> Get()
         {
-            var products = _db.Products                
+            var products = _unitOfWork.ProductRepository.Get()                
                 .Select(p => new ProductViewModel
                 {
                     Id = p.Id,
@@ -41,32 +41,31 @@ namespace KartowkaMarkowkaHub.Services.Products
             return products;
         }
 
-        public async Task<Guid> CreateAsync(ProductDto productDto)
+        public void Create(ProductDto productDto, Guid userId)
         {       
             Product product = new Product()
             {
                 Name = productDto.Name,
                 Price = productDto.Price,
+                UserId = userId,
             };
-            Product model = (await _db.Products.AddAsync(product)).Entity;
-            await _db.SaveChangesAsync();
-            return model.Id;
+            _unitOfWork.ProductRepository.Insert(product);
+            _unitOfWork.Save();            
         }        
 
         public void Update(Guid productId, ProductDto productDto)
         {
-            var product = _db.Products.Find(productId) ?? throw new ArgumentNullException("Товар не найден в базе данных!");
+            var product = _unitOfWork.ProductRepository.GetByID(productId) ?? throw new ArgumentNullException("Товар не найден в базе данных!");
             product.Name = productDto.Name;
             product.Price = productDto.Price;
-            _db.Entry(product).State = EntityState.Modified;
-            _db.SaveChanges();
+            _unitOfWork.ProductRepository.Update(product);
+            _unitOfWork.Save();
         }
 
         public void Remove(Guid productId)
         {
-            var product = _db.Products.Find(productId) ?? throw new ArgumentNullException("Товар не найден в базе данных!");
-            _db.Remove(product);
-            _db.SaveChanges();
+            _unitOfWork.ProductRepository.Delete(productId);
+            _unitOfWork.Save();
         }
     }
 }

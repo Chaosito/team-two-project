@@ -111,6 +111,7 @@ namespace KartowkaMarkowkaHub.Web
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IClaimService, ClaimService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             //Авторизация
             //services.AddAuthorization();
