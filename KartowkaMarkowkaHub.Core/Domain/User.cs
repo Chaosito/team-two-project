@@ -30,8 +30,10 @@ namespace KartowkaMarkowkaHub.Core.Domain
         //
         //public Guid? ClientId { get; set; }
 
-        public ICollection<UserRole> Roles { get; set; } = [];
+        public virtual ICollection<UserRole> Roles { get; set; } = [];
 
-        public ICollection<Product> Products { get; set; } = [];
+        public virtual ICollection<Product> Products { get; set; } = [];
+
+        public virtual ICollection<Order> Orders { get; set; } = [];
     }
 }

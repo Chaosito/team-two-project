@@ -18,9 +18,14 @@ namespace KartowkaMarkowkaHub.Core.Domain
         /// </summary>
         public decimal Price { get; set; }
 
+        /// <summary>
+        /// id фермера, продавца
+        /// </summary>
         public Guid UserId { get; set; }
 
-        public virtual User User { get; set; }  
+        public virtual required User User { get; set; }
+
+        public virtual ICollection<Order> Orders { get; set; } = [];
 
         /// <summary>
         /// Оптовая цена

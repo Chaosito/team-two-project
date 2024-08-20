@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KartowkaMarkowkaHub.Services.Orders
 {
-    public class OrderService : IOrderService
+    public interface IOrderService
     {
     }
 }
