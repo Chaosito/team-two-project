@@ -71,6 +71,26 @@ namespace KartowkaMarkowkaHub.Data
             var guidUser = new Guid("6EBC929B-3785-49D9-9D46-B3B9F70B0BB5");
             context.Set<User>().AddRange(new User() { Id = guidUser, Login = "Wower", Email = "wower@mail.ru", Password = "123123", Roles = new List<UserRole>() { new UserRole() { RoleId = guidRoleAdmin, UserId = guidUser } } });
 
+            context.Set<Product>().AddRange([
+                new() { Name = "Картошка", Price = 150, UserId = guidUser, User = new() },
+                new() { Name = "Морковка", Price = 120, UserId = guidUser, User = new() },
+                new() { Name = "Помидорки", Price = 300, UserId = guidUser, User = new() },
+                new() { Name = "Лук", Price = 175, UserId = guidUser, User = new() },
+                new() { Name = "Чеснок", Price = 900, UserId = guidUser, User = new() },
+                new() { Name = "Молоко", Price = 500, UserId = guidUser, User = new() },
+                new() { Name = "Яблоки", Price = 250, UserId = guidUser, User = new() },
+                new() { Name = "Вишня", Price = 500, UserId = guidUser, User = new() },
+                new() { Name = "Творог", Price = 1700, UserId = guidUser, User = new() },
+                new() { Name = "Мёд", Price = 7000, UserId = guidUser, User = new() },
+            ]);
+
+            context.Set<OrderStatus>().AddRange([
+                new() { Name = "Создан", StatusType = StatusType.Created },
+                new() { Name = "В работе", StatusType = StatusType.InProcess },
+                new() { Name = "Выполнен", StatusType = StatusType.Completed },
+            ]);
+
+
             context.SaveChanges();
         }
     }

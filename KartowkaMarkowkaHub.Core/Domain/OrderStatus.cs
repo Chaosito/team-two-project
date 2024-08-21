@@ -23,10 +23,19 @@ namespace KartowkaMarkowkaHub.Core.Domain
 
     public enum StatusType
     {
+        /// <summary>
+        /// Создан
+        /// </summary>
         Created = 1,
 
+        /// <summary>
+        /// В работе
+        /// </summary>
         InProcess = 2,
 
+        /// <summary>
+        /// Выполнен
+        /// </summary>
         Completed = 3
     }
 }

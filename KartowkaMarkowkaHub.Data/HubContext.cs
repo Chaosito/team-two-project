@@ -11,13 +11,13 @@ namespace KartowkaMarkowkaHub.Data
 
         //public DbSet<Basket> Baskets { get; set; }
 
-        public DbSet<Farmer> Farmers { get; set; }
+        //public DbSet<Farmer> Farmers { get; set; }
 
-        //public DbSet<Order> Orders { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
         //public DbSet<OrderItem> Items { get; set; }
 
-        //public DbSet<OrderStatus> OrderStatus { get; set; }
+        public DbSet<OrderStatus> OrderStatus { get; set; }
 
         public DbSet<Product> Products { get; set; }
 

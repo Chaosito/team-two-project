@@ -14,6 +14,8 @@ namespace KartowkaMarkowkaHub.Services.Orders
         public uint Number { get; set; }
 
         public required ProductViewModel Product { get; set; }
+
+        public string OrderStatusName { get; set; } = string.Empty;
     }
 
     public class OrderViewModelProfile : Profile
@@ -26,7 +28,8 @@ namespace KartowkaMarkowkaHub.Services.Orders
                     Id = p.Product.Id,
                     Name = p.Product.Name,
                     Price = p.Product.Price,
-                }));
+                }))
+                .ForMember(d => d.OrderStatusName, o => o.MapFrom(p => p.OrderStatus.Name));
         }
     }
 }

@@ -7,5 +7,6 @@ namespace KartowkaMarkowkaHub.Data.Repositories
         void Save();
 
         GenericRepository<Product> ProductRepository { get; }
+        GenericRepository<Order> OrderRepository { get; }
     }
 }

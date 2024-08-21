@@ -6,6 +6,7 @@ using KartowkaMarkowkaHub.Data;
 using KartowkaMarkowkaHub.Data.Repositories;
 using KartowkaMarkowkaHub.Services.Account;
 using KartowkaMarkowkaHub.Services.Identity;
+using KartowkaMarkowkaHub.Services.Orders;
 using KartowkaMarkowkaHub.Services.Products;
 using KartowkaMarkowkaHub.Web.Validators;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -112,6 +113,7 @@ namespace KartowkaMarkowkaHub.Web
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IClaimService, ClaimService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();       
 
             //Авторизация
