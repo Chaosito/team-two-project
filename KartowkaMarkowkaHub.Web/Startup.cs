@@ -60,11 +60,18 @@ namespace KartowkaMarkowkaHub.Web
             services.AddFluentValidationClientsideAdapters();
             services.AddValidatorsFromAssemblyContaining(typeof(UserViewModelValidator));
 
+            services.AddOptions<Options>().Bind(Configuration);
+            Options options = Configuration.Get<Options>() ?? throw new ArgumentException("Options not load from apsettings!");
 
-
-            if (DbConfiguration.CurrentDbType == DbType.SqlLite)
+            switch (DbConfiguration.CurrentDbType)
             {
-                services.AddDbContext<HubContext>(o => o.UseSqlite());
+                case DbType.SqlLite:
+                    services.AddDbContext<HubContext>(o => o.UseSqlite());
+                    break;
+
+                case DbType.PostgreSql:
+                    services.AddDbContext<HubContext>(o => o.UseNpgsql(options.ConnectionStrings.PostgresConnection));
+                    break;
             }
 
             //services.AddEndpointsApiExplorer();
