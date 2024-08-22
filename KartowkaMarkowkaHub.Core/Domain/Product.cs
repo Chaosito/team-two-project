@@ -19,33 +19,42 @@ namespace KartowkaMarkowkaHub.Core.Domain
         public decimal Price { get; set; }
 
         /// <summary>
+        /// id фермера, продавца
+        /// </summary>
+        public Guid UserId { get; set; }
+
+        public virtual required User User { get; set; }
+
+        public virtual ICollection<Order> Orders { get; set; } = [];
+
+        /// <summary>
         /// Оптовая цена
         /// </summary>
-        public decimal OptionalPrice { get; set; }
+        //public decimal OptionalPrice { get; set; }
 
 
-        public ProductType ProductType { get; set; }
+        //public ProductType ProductType { get; set; }
 
         /// <summary>
         /// Сертификация
         /// </summary>
-        public string Certification { get; set; } = "";
+        //public string Certification { get; set; } = "";
 
         // Внешний ключ для фермера
-        public int FarmerId { get; set; }
-        public Farmer Farmer { get; set; }
+        //public int FarmerId { get; set; }
+        //public Farmer Farmer { get; set; }
     }
 
-    public enum ProductType
-    {
-        /// <summary>
-        /// Скоропортящийся
-        /// </summary>
-        Perishable = 1,
+    //public enum ProductType
+    //{
+    //    /// <summary>
+    //    /// Скоропортящийся
+    //    /// </summary>
+    //    Perishable = 1,
 
-        /// <summary>
-        /// Не тухнет
-        /// </summary>
-        NonPerishable = 2
-    }
+    //    /// <summary>
+    //    /// Не тухнет
+    //    /// </summary>
+    //    NonPerishable = 2
+    //}
 }

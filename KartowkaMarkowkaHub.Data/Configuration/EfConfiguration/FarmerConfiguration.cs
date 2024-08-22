@@ -13,12 +13,12 @@ namespace KartowkaMarkowkaHub.Data.Configuration.EfConfiguration
     {
         public void Configure(EntityTypeBuilder<Farmer> builder)
         {
-            builder.HasMany(x => x.Products)
-                .WithOne(x => x.Farmer);
-
-            builder.HasOne(x => x.User)
-                .WithOne(y => y.FarmerInfo)
-                .HasForeignKey<Farmer>(f => f.UserId);
+            //builder.HasMany(x => x.Products)
+            //    .WithOne(x => x.Farmer);
+            //
+            //builder.HasOne(x => x.User)
+            //    .WithOne(y => y.FarmerInfo)
+            //    .HasForeignKey<Farmer>(f => f.UserId);
         }
     }
 }

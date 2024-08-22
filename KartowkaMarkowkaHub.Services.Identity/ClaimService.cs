@@ -46,7 +46,8 @@ namespace KartowkaMarkowkaHub.Services.Identity
             var user = await _userRepository.GetByIdAsync(userId);
             List<Claim> userInfo = new List<Claim>()
             {
-                new Claim(ClaimTypes.Name, user.Login)
+                new Claim(ClaimTypes.Name, user.Login),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
             };
 
             userInfo.AddRange(roleClaims);
