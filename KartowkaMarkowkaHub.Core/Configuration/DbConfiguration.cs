@@ -16,7 +16,7 @@ namespace KartowkaMarkowkaHub.Core.Domain
         /// <summary>
         /// Определяет какой тип БД конструировать в Ef Core
         /// </summary>
-        public static DbType CurrentDbType => DbType.SqlLite;
+        public static DbType CurrentDbType => DbType.PostgreSql;//DbType.SqlLite;
 
         /// <summary>
         /// Определяет пересоздавать ли БД при каждом запуске
