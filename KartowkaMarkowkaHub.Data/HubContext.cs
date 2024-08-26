@@ -41,9 +41,9 @@ namespace KartowkaMarkowkaHub.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            var dbName = DbConfiguration.DbName;
+            //var dbName = DbConfiguration.DbName;
             //options.UseLazyLoadingProxies();
-            options.UseSqlite($"Data Source={dbName}");
+            //options.UseSqlite($"Data Source={dbName}");
             options.EnableSensitiveDataLogging().LogTo(Console.WriteLine, LogLevel.Information);
         }
     }
