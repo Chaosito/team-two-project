@@ -17,6 +17,9 @@
 * Участник 2
 * Участник 3
 
+## Запуск приложения
+ * docker-compose up -d - запускает все контейнеры приложения в файле docker-compose.yml, в фоне
+
 ## Ссылки
 
 [License MIT](https://opensource.org/license/mit)
