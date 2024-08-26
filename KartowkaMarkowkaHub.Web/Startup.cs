@@ -173,7 +173,7 @@ namespace KartowkaMarkowkaHub.Web
             using (var scope = serviceProvider.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetService<HubContext>();
-                DbHelper.Initialize(dbContext);
+                //DbHelper.Initialize(dbContext);
 
                 //dbContext.Database.EnsureDeleted();
                 //dbContext.Database.EnsureCreated();

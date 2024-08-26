@@ -25,25 +25,25 @@ services:
     ports:
      - 5432:5432
 
-  adminer:
-    image: adminer:4.8.1
-    container_name: adminer
-    restart: always
-    environment: 
-      ADMINER_DEFAULT_SERVER: postgreSql
-      ADMINER_DEFAULT_USERNAME: adminHub
-      ADMINER_DEFAULT_PASSWORD: passwordHub
-    ports:
-     - 5000:8080
-    depends_on:
-     - postgreSql
+  #adminer:
+  #  image: adminer:4.8.1
+  #  container_name: adminer
+  #  restart: always
+  #  environment: 
+  #    ADMINER_DEFAULT_SERVER: postgreSql
+  #    ADMINER_DEFAULT_USERNAME: adminHub
+  #    ADMINER_DEFAULT_PASSWORD: passwordHub
+  #  ports:
+  #   - 5000:8080
+  #  depends_on:
+  #   - postgreSql
 
-  pgadmin: 
-      image: dpage/pgadmin4:8
-      container_name: pgadmin4
-      restart: always
-      environment:
-          "PGADMIN_DEFAULT_EMAIL": test@gmail.com
-          "PGADMIN_DEFAULT_PASSWORD": pg-admin_1
-      ports:
-          - "8086:80"
+  #pgadmin: 
+  #    image: dpage/pgadmin4:8
+  #    container_name: pgadmin4
+  #    restart: always
+  #    environment:
+  #        "PGADMIN_DEFAULT_EMAIL": test@gmail.com
+  #        "PGADMIN_DEFAULT_PASSWORD": pg-admin_1
+  #    ports:
+  #        - "8086:80"
