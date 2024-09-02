@@ -34,8 +34,18 @@ namespace KartowkaMarkowkaHub.Core.Domain
         InProcess = 2,
 
         /// <summary>
+        /// Готов к получению
+        /// </summary>
+        ReadyToReceive = 3,
+
+        /// <summary>
         /// Выполнен
         /// </summary>
-        Completed = 3
+        Completed = 4,
+
+        /// <summary>
+        /// Отменён
+        /// </summary>
+        Canceled = 5,
     }
 }

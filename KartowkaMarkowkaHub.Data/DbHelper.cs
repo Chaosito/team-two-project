@@ -87,7 +87,9 @@ namespace KartowkaMarkowkaHub.Data
             context.Set<OrderStatus>().AddRange([
                 new() { Name = "Создан", StatusType = StatusType.Created },
                 new() { Name = "В работе", StatusType = StatusType.InProcess },
+                new() { Name = "Готов к получению", StatusType = StatusType.ReadyToReceive },
                 new() { Name = "Выполнен", StatusType = StatusType.Completed },
+                new() { Name = "Отменён", StatusType = StatusType.Canceled },
             ]);
 
 
