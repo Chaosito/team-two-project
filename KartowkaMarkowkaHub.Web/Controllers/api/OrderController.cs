@@ -79,7 +79,7 @@ namespace KartowkaMarkowkaHub.Web.Controllers.api
         /// </summary>
         /// <param name="orderId"></param>
         /// <returns></returns>
-        [HttpGet("{orderId}")]
+        [HttpGet("GetStatus/{orderId}")]
         public ActionResult GetStatus(Guid orderId) 
         {            
             return Ok(_orderService.GetStatusName(orderId));

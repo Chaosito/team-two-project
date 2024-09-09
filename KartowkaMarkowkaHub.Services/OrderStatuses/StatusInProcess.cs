@@ -6,7 +6,7 @@ namespace KartowkaMarkowkaHub.Services.OrderStatuses
     public class StatusInProcess : IOrderStatus
     {
         public StatusType StatusType => StatusType.InProcess;
-        private readonly IPrincipal principal = Thread.CurrentPrincipal ?? throw new Exception("User is not authenticated!");
+        //private readonly IPrincipal principal = Thread.CurrentPrincipal ?? throw new Exception("User is not authenticated!");
 
         public void Handle(IOrderStatusService orderStatusService)
         {
@@ -19,7 +19,7 @@ namespace KartowkaMarkowkaHub.Services.OrderStatuses
 
         public void NextStatus(IOrderStatusService orderStatusService)
         {
-            if (principal.IsInRole("Fermer"))
+            if (true/*principal.IsInRole("Fermer")*/)
             {
                 orderStatusService.Status = new StatusReadyToReceive();
                 //возможен переключение статуса на отменён, если товар нет или испорчен

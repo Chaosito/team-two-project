@@ -17,8 +17,8 @@ namespace KartowkaMarkowkaHub.Services.OrderStatuses
         public OrderStatusService(IUnitOfWork unitOfWork, Guid orderId)
         {
             _unitOfWork = unitOfWork;
-            _orderStatus = GetStatus(orderId);
-            _order = unitOfWork.OrderRepository.GetByID(orderId);
+            _order = unitOfWork.OrderRepository.Get(filter: x => x.Id == orderId, includeProperties: typeof(OrderStatus).Name).First();
+            _orderStatus = GetStatus(orderId);            
         }
 
         public IOrderStatus GetStatus(Guid orderId)
