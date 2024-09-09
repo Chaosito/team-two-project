@@ -73,5 +73,28 @@ namespace KartowkaMarkowkaHub.Web.Controllers.api
             _orderService.Remove(orderId);
             return Ok();
         }
+
+        /// <summary>
+        /// Название текущего статуса заказа
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+        [HttpGet("{orderId}")]
+        public ActionResult GetStatus(Guid orderId) 
+        {            
+            return Ok(_orderService.GetStatusName(orderId));
+        }
+
+        /// <summary>
+        /// Переключить статус заказа
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+        [HttpPut, Route("UpdateStatus")]
+        public IActionResult UpdateStatus([FromBody] Guid orderId)
+        {
+            _orderService.SetNextStatus(orderId);
+            return Ok();
+        }
     }
 }

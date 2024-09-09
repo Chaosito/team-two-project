@@ -8,5 +8,6 @@ namespace KartowkaMarkowkaHub.Data.Repositories
 
         GenericRepository<Product> ProductRepository { get; }
         GenericRepository<Order> OrderRepository { get; }
+        GenericRepository<OrderStatus> OrderStatusRepository { get; }
     }
 }

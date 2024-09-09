@@ -33,5 +33,18 @@
         /// </summary>
         /// <param name="orderId">id заказа</param>
         void Remove(Guid orderId);
+
+        /// <summary>
+        /// Получает текущий статус заказа
+        /// </summary>
+        /// <param name="orderId">id заказа</param>
+        /// <returns></returns>
+        string GetStatusName(Guid orderId);
+
+        /// <summary>
+        /// Устанавливает следующий статус заказа
+        /// </summary>
+        /// <param name="orderId"></param>
+        void SetNextStatus(Guid orderId);
     }
 }

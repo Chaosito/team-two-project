@@ -47,18 +47,28 @@ namespace KartowkaMarkowkaHub.Services.OrderStatuses
             return status;
         }
 
-        private void SaveStatusInOrder()
+        private void SaveStatusInOrder(StatusType oldStatusType)
         {
-            //Status.StatusType;
-            //_order.OrderStatusId = ;
-            //_unitOfWork.OrderRepository.Update(_order);
-            //_unitOfWork.Save();
+            if(oldStatusType == Status.StatusType) return;
+
+            var orderStatus = _unitOfWork.OrderStatusRepository
+                .Get(filter: s => s.StatusType == Status.StatusType)
+                .FirstOrDefault();
+
+            if (orderStatus == null)
+            {
+                return;
+            }
+            _order.OrderStatusId = orderStatus.Id;
+            _unitOfWork.OrderRepository.Update(_order);
+            _unitOfWork.Save();
         }
 
         public void SetNextStatus()
         {
+            StatusType oldStatusType = Status.StatusType;
             _orderStatus.NextStatus(this);
-            SaveStatusInOrder();
+            SaveStatusInOrder(oldStatusType);
         }
 
         public string GetStatusName()
