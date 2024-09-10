@@ -34,7 +34,11 @@ namespace KartowkaMarkowkaHub.Services.Orders
         public void Create(OrderCreateRequest orderCreateRequest, Guid userId)
         {
             Order order = _mapper.Map<Order>(orderCreateRequest);
+            var firstStatus = _unitOfWork.OrderStatusRepository
+                .Get(filter: x => x.StatusType == StatusType.Created)
+                .First();
 
+            order.OrderStatusId = firstStatus.Id;
             order.ClientId = userId;
             _unitOfWork.OrderRepository.Insert(order);
             _unitOfWork.Save();

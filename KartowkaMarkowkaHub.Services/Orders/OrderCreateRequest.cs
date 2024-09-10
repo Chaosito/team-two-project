@@ -10,12 +10,6 @@ namespace KartowkaMarkowkaHub.Services.Orders
         /// </summary>
         public uint Number { get; set; }
 
-
-        /// <summary>
-        /// id статуса заказа
-        /// </summary>
-        public Guid OrderStatusId { get; set; }
-
         /// <summary>
         /// id продукта
         /// </summary>
@@ -27,7 +21,6 @@ namespace KartowkaMarkowkaHub.Services.Orders
         public OrderCreateRequestProfile()
         {
             CreateMap<OrderCreateRequest, Order>()
-                .ForMember(d => d.OrderStatusId, o => o.MapFrom(r => r.OrderStatusId))
                 .ForMember(d => d.ProductId, o => o.MapFrom(r => r.ProductId));
         }
     }
