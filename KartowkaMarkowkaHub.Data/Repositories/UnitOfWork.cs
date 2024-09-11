@@ -7,6 +7,7 @@ namespace KartowkaMarkowkaHub.Data.Repositories
         private readonly HubContext _db;
         private GenericRepository<Product>? _productRepository;
         private GenericRepository<Order>? _orderRepository;
+        private GenericRepository<OrderStatus>? _orderStatusRepository;
 
         public UnitOfWork(HubContext db)
         {
@@ -28,6 +29,16 @@ namespace KartowkaMarkowkaHub.Data.Repositories
                 if (_orderRepository == null)
                     _orderRepository = new GenericRepository<Order>(_db);
                 return _orderRepository;
+            }
+        }
+
+        public GenericRepository<OrderStatus> OrderStatusRepository
+        {
+            get
+            {
+                if (_orderStatusRepository == null)
+                    _orderStatusRepository = new GenericRepository<OrderStatus>(_db);
+                return _orderStatusRepository;
             }
         }
 
