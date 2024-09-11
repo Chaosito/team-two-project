@@ -1,5 +1,8 @@
 version: '3.4'
 
+volumes:
+  order-data:
+
 services:
   kartowkamarkowkahub.web:
     image: ${DOCKER_REGISTRY-}kartowkamarkowkahubweb
@@ -25,6 +28,19 @@ services:
     ports:
      - 5432:5432
 
+  orderDb:
+    image: postgres:16
+    container_name: orderDb
+    restart: always
+    volumes:
+     - order-data:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_USER: adminHub
+      POSTGRES_PASSWORD: passwordHub
+      POSTGRES_DB: Orders
+    ports:
+     - 5433:5432
+
   #adminer:
   #  image: adminer:4.8.1
   #  container_name: adminer
@@ -47,3 +63,4 @@ services:
   #        "PGADMIN_DEFAULT_PASSWORD": pg-admin_1
   #    ports:
   #        - "8086:80"
+
