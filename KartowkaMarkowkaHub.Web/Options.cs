@@ -9,5 +9,6 @@
     {
         public string DefaultConnection { get; set; } = string.Empty;
         public string PostgresConnection { get; set; } = string.Empty;
+        public string RedisConnection { get; set; } = string.Empty;
     }
 }

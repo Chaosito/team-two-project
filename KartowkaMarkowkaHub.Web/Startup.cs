@@ -166,10 +166,10 @@ namespace KartowkaMarkowkaHub.Web
                     };
                 });
 
-            services.AddStackExchangeRedisCache(options =>
+            services.AddStackExchangeRedisCache(cacheOptions =>
             {
-                options.Configuration = "localhost";
-                options.InstanceName = "kartowka-markowka-hub_";
+                cacheOptions.Configuration = options.ConnectionStrings.RedisConnection;
+                cacheOptions.InstanceName = "kartowka-markowka-hub_";
             });
         }
         // Метод для настройки конвейера HTTP-запросов
