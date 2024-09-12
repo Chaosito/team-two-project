@@ -13,13 +13,13 @@ namespace KartowkaMarkowkaHub.Services.Products
         /// </summary>
         /// <param name="farmerId">id фермера</param>
         /// <returns></returns>
-        IEnumerable<ProductViewModel> Get(Guid farmerId);
+        Task<IEnumerable<ProductViewModel>> Get(Guid farmerId);
 
         /// <summary>
         /// Получает все товары
         /// </summary>
         /// <returns></returns>
-        IEnumerable<ProductViewModel> Get();
+        Task<IEnumerable<ProductViewModel>> Get();
 
         /// <summary>
         /// Создаёт товар

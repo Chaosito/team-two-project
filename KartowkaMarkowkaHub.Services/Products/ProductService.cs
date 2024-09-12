@@ -1,6 +1,8 @@
 ﻿using KartowkaMarkowkaHub.Core.Domain;
 using KartowkaMarkowkaHub.Data.Repositories;
 using AutoMapper;
+using Microsoft.Extensions.Caching.Distributed;
+using System.Text.Json;
 
 namespace KartowkaMarkowkaHub.Services.Products
 {
@@ -8,25 +10,60 @@ namespace KartowkaMarkowkaHub.Services.Products
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IDistributedCache _distributedCache;
 
-        public ProductService(IMapper mapper, IUnitOfWork unitOfWork)
+        public ProductService(IMapper mapper, IUnitOfWork unitOfWork, IDistributedCache distributedCache)
         { 
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _distributedCache = distributedCache;
         }
 
-        public IEnumerable<ProductViewModel> Get(Guid userId)
+        public async Task<IEnumerable<ProductViewModel>> Get(Guid userId)
         {
-            var products = _unitOfWork.ProductRepository
-                .Get(filter: p => p.UserId == userId);
-            var viewModels = _mapper.Map<IEnumerable<ProductViewModel>>(products).ToList();
+            IEnumerable<ProductViewModel> viewModels = [];
+            string key = $"products-for-{userId}";
+            string? textProducts = await _distributedCache.GetStringAsync(key);
+            if (textProducts != null)
+            {
+                viewModels = JsonSerializer.Deserialize<IEnumerable<ProductViewModel>>(textProducts) ?? [];
+            }
+            else
+            {
+                var products = _unitOfWork.ProductRepository
+                    .Get(filter: p => p.UserId == userId);
+                viewModels = _mapper.Map<IEnumerable<ProductViewModel>>(products).ToList();
+
+                textProducts = JsonSerializer.Serialize(viewModels);
+                await _distributedCache.SetStringAsync(key, textProducts, new DistributedCacheEntryOptions()
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(30)
+                });             
+            }            
             return viewModels;
         }
 
-        public IEnumerable<ProductViewModel> Get()
+        public async Task<IEnumerable<ProductViewModel>> Get()
         {
-            var products = _unitOfWork.ProductRepository.Get();
-            var viewModels = _mapper.Map<IEnumerable<ProductViewModel>>(products).ToList();
+            IEnumerable<ProductViewModel> viewModels = [];
+            string key = "products";
+            var textProducts = await _distributedCache.GetStringAsync(key);
+            if(textProducts != null)
+            {
+                viewModels = JsonSerializer.Deserialize<IEnumerable<ProductViewModel>>(textProducts) ?? [];
+            }
+            else
+            {
+                var products = _unitOfWork.ProductRepository.Get();
+                viewModels = _mapper.Map<IEnumerable<ProductViewModel>>(products).ToList();
+                
+                textProducts = JsonSerializer.Serialize(viewModels);
+                await _distributedCache.SetStringAsync(key, textProducts, new DistributedCacheEntryOptions()
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(30)
+                });
+                         
+            }
             return viewModels;
         }
 

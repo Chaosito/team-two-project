@@ -23,9 +23,9 @@ namespace KartowkaMarkowkaHub.Web.Controllers.api
         /// <param name="userId">id фермера</param>
         /// <returns></returns>
         [HttpGet("{userId}")]
-        public IActionResult Get(Guid userId)
+        public async Task<IActionResult> Get(Guid userId)
         {
-            var products = _productService.Get(userId);
+            var products = await _productService.Get(userId);
             return Ok(products);
         }
 
@@ -34,9 +34,9 @@ namespace KartowkaMarkowkaHub.Web.Controllers.api
         /// </summary>
         /// <returns></returns> 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            var products = _productService.Get();
+            var products = await _productService.Get();
             return Ok(products);
         }
 

@@ -25,6 +25,14 @@ services:
     ports:
      - 5432:5432
 
+  cacheRedis:
+    image: redis:7.4.0-alpine
+    container_name: chcheRedis
+    restart: always
+    ports:
+     - 6379:6379
+     - 8001:8001 
+
   #adminer:
   #  image: adminer:4.8.1
   #  container_name: adminer
