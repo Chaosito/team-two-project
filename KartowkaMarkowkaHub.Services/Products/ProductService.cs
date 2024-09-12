@@ -1,6 +1,8 @@
 ﻿using KartowkaMarkowkaHub.Core.Domain;
 using KartowkaMarkowkaHub.Data.Repositories;
 using AutoMapper;
+using Microsoft.Extensions.Caching.Distributed;
+using System.Text.Json;
 
 namespace KartowkaMarkowkaHub.Services.Products
 {
@@ -8,11 +10,13 @@ namespace KartowkaMarkowkaHub.Services.Products
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IDistributedCache _distributedCache;
 
-        public ProductService(IMapper mapper, IUnitOfWork unitOfWork)
+        public ProductService(IMapper mapper, IUnitOfWork unitOfWork, IDistributedCache distributedCache)
         { 
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+            _distributedCache = distributedCache;
         }
 
         public IEnumerable<ProductViewModel> Get(Guid userId)
@@ -25,8 +29,24 @@ namespace KartowkaMarkowkaHub.Services.Products
 
         public IEnumerable<ProductViewModel> Get()
         {
-            var products = _unitOfWork.ProductRepository.Get();
-            var viewModels = _mapper.Map<IEnumerable<ProductViewModel>>(products).ToList();
+            IEnumerable<ProductViewModel> viewModels = [];
+            string key = "products";
+            var textProducts = _distributedCache.GetString(key);
+            if(textProducts != null)
+            {
+                viewModels = JsonSerializer.Deserialize<IEnumerable<ProductViewModel>>(textProducts) ?? [];
+            }
+            else
+            {
+                var products = _unitOfWork.ProductRepository.Get();
+                viewModels = _mapper.Map<IEnumerable<ProductViewModel>>(products).ToList();
+                textProducts = JsonSerializer.Serialize(viewModels);
+                _distributedCache.SetString(key, textProducts, new DistributedCacheEntryOptions()
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(30)
+                });
+               
+            }
             return viewModels;
         }
 

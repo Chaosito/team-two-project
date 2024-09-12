@@ -165,6 +165,12 @@ namespace KartowkaMarkowkaHub.Web
                         }
                     };
                 });
+
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = "localhost";
+                options.InstanceName = "kartowka-markowka-hub_";
+            });
         }
         // Метод для настройки конвейера HTTP-запросов
         // Configure the HTTP request pipeline.
