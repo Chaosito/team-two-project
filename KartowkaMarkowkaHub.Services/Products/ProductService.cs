@@ -19,19 +19,35 @@ namespace KartowkaMarkowkaHub.Services.Products
             _distributedCache = distributedCache;
         }
 
-        public IEnumerable<ProductViewModel> Get(Guid userId)
+        public async Task<IEnumerable<ProductViewModel>> Get(Guid userId)
         {
-            var products = _unitOfWork.ProductRepository
-                .Get(filter: p => p.UserId == userId);
-            var viewModels = _mapper.Map<IEnumerable<ProductViewModel>>(products).ToList();
+            IEnumerable<ProductViewModel> viewModels = [];
+            string key = $"products-for-{userId}";
+            string? textProducts = await _distributedCache.GetStringAsync(key);
+            if (textProducts != null)
+            {
+                viewModels = JsonSerializer.Deserialize<IEnumerable<ProductViewModel>>(textProducts) ?? [];
+            }
+            else
+            {
+                var products = _unitOfWork.ProductRepository
+                    .Get(filter: p => p.UserId == userId);
+                viewModels = _mapper.Map<IEnumerable<ProductViewModel>>(products).ToList();
+
+                textProducts = JsonSerializer.Serialize(viewModels);
+                await _distributedCache.SetStringAsync(key, textProducts, new DistributedCacheEntryOptions()
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(30)
+                });             
+            }            
             return viewModels;
         }
 
-        public IEnumerable<ProductViewModel> Get()
+        public async Task<IEnumerable<ProductViewModel>> Get()
         {
             IEnumerable<ProductViewModel> viewModels = [];
             string key = "products";
-            var textProducts = _distributedCache.GetString(key);
+            var textProducts = await _distributedCache.GetStringAsync(key);
             if(textProducts != null)
             {
                 viewModels = JsonSerializer.Deserialize<IEnumerable<ProductViewModel>>(textProducts) ?? [];
@@ -40,12 +56,13 @@ namespace KartowkaMarkowkaHub.Services.Products
             {
                 var products = _unitOfWork.ProductRepository.Get();
                 viewModels = _mapper.Map<IEnumerable<ProductViewModel>>(products).ToList();
+                
                 textProducts = JsonSerializer.Serialize(viewModels);
-                _distributedCache.SetString(key, textProducts, new DistributedCacheEntryOptions()
+                await _distributedCache.SetStringAsync(key, textProducts, new DistributedCacheEntryOptions()
                 {
                     AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(30)
                 });
-               
+                         
             }
             return viewModels;
         }
