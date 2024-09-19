@@ -22,7 +22,7 @@ namespace KartowkaMarkowkaHub.Data.Repositories
             } 
         }
 
-        public GenericRepository<Order> OrderRepository
+        public virtual GenericRepository<Order> OrderRepository
         {
             get
             {

@@ -17,10 +17,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2052D02C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KartowkaMarkowkaHub.Data", "KartowkaMarkowkaHub.Data\KartowkaMarkowkaHub.Data.csproj", "{CBD6CD0F-FB18-4D9C-BC29-83B3FA4EC4D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KartowkaMarkowkaHub.DTO", "KartowkaMarkowkaHub.DTO\KartowkaMarkowkaHub.DTO.csproj", "{96E2D775-B44B-46D3-82CF-BB4FC86D68BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KartowkaMarkowkaHub.DTO", "KartowkaMarkowkaHub.DTO\KartowkaMarkowkaHub.DTO.csproj", "{96E2D775-B44B-46D3-82CF-BB4FC86D68BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KartowkaMarkowkaHub.Services.Identity", "KartowkaMarkowkaHub.Services.Identity\KartowkaMarkowkaHub.Services.Identity.csproj", "{91952A97-30B1-479A-B030-1422FFD00C39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KartowkaMarkowkaHub.Services.Identity", "KartowkaMarkowkaHub.Services.Identity\KartowkaMarkowkaHub.Services.Identity.csproj", "{91952A97-30B1-479A-B030-1422FFD00C39}"
+EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{7AC97A3D-D2C4-45E6-B7B8-9080D2031FED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KartowkaMarkowkaHub.Test", "..\KartowkaMarkowkaHub.Test\KartowkaMarkowkaHub.Test.csproj", "{20AD90C5-85B1-4DDD-A05B-8E83B5973850}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,6 +59,10 @@ Global
 		{7AC97A3D-D2C4-45E6-B7B8-9080D2031FED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AC97A3D-D2C4-45E6-B7B8-9080D2031FED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AC97A3D-D2C4-45E6-B7B8-9080D2031FED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20AD90C5-85B1-4DDD-A05B-8E83B5973850}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20AD90C5-85B1-4DDD-A05B-8E83B5973850}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20AD90C5-85B1-4DDD-A05B-8E83B5973850}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20AD90C5-85B1-4DDD-A05B-8E83B5973850}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
