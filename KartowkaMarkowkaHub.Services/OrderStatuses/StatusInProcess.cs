@@ -1,4 +1,5 @@
 ﻿using KartowkaMarkowkaHub.Core.Domain;
+using KartowkaMarkowkaHub.Services.Orders;
 
 namespace KartowkaMarkowkaHub.Services.OrderStatuses
 {
@@ -15,13 +16,14 @@ namespace KartowkaMarkowkaHub.Services.OrderStatuses
             throw new NotImplementedException();
         }
 
-        public void NextStatus(IOrderStatusService orderStatusService)
+        public StatusType NextStatus(IOrderStatusService orderStatusService)
         {
             if (true)
             {
                 orderStatusService.Status = new StatusReadyToReceive();
                 //возможен переключение статуса на отменён, если товар нет или испорчен
             }
+            return orderStatusService.Status.StatusType;
         }
     }
 }

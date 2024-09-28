@@ -17,7 +17,9 @@ namespace KartowkaMarkowkaHub.Services.OrderStatuses
         public OrderStatusService(IUnitOfWork unitOfWork, Guid orderId)
         {
             _unitOfWork = unitOfWork;
-            _order = unitOfWork.OrderRepository.Get(filter: x => x.Id == orderId, includeProperties: typeof(OrderStatus).Name).First();
+            _order = unitOfWork.OrderRepository
+                .Get(filter: x => x.Id == orderId, includeProperties: typeof(OrderStatus).Name)
+                .First();
             _orderStatus = GetStatus(orderId);            
         }
 
@@ -49,11 +51,11 @@ namespace KartowkaMarkowkaHub.Services.OrderStatuses
 
         private void SaveStatusInOrder(StatusType oldStatusType)
         {
-            if(oldStatusType == Status.StatusType) return;
+            if(oldStatusType == _orderStatus.StatusType) return;
 
             var orderStatus = _unitOfWork.OrderStatusRepository
-                .Get(filter: s => s.StatusType == Status.StatusType)
-                .FirstOrDefault();
+                .Get(filter: s => s.StatusType == _orderStatus.StatusType)
+                .First();
 
             if (orderStatus == null)
             {
@@ -64,11 +66,12 @@ namespace KartowkaMarkowkaHub.Services.OrderStatuses
             _unitOfWork.Save();
         }
 
-        public void SetNextStatus()
+        public StatusType SetNextStatus()
         {
             StatusType oldStatusType = Status.StatusType;
             _orderStatus.NextStatus(this);
             SaveStatusInOrder(oldStatusType);
+            return _orderStatus.StatusType;
         }
 
         public string GetStatusName()
