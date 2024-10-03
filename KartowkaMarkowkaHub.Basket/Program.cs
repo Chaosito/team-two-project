@@ -14,6 +14,15 @@ namespace KartowkaMarkowkaHub.Basket
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddOptions<Options>().Bind(builder.Configuration);
+            Options options = builder.Configuration.Get<Options>() ?? throw new ArgumentException("Options not load from apsettings!");
+
+            builder.Services.AddStackExchangeRedisCache(op =>
+            {
+                op.Configuration = options.RedisConnection;
+                op.InstanceName = "basket_";
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
