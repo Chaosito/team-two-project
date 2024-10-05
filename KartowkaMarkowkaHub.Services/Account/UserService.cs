@@ -1,8 +1,7 @@
 ﻿using KartowkaMarkowkaHub.Core.Abstractions.Repositories;
 using KartowkaMarkowkaHub.Core.Domain;
-using KartowkaMarkowkaHub.DTO.Account;
+using KartowkaMarkowkaHub.Services.Roles;
 using Microsoft.EntityFrameworkCore;
-using System.Net.WebSockets;
 
 namespace KartowkaMarkowkaHub.Services.Account
 {
@@ -15,18 +14,31 @@ namespace KartowkaMarkowkaHub.Services.Account
             _userRepository = userRepository;
         }
 
-        public async Task<IEnumerable<UserDTO>> GetAll()
+        public async Task<IEnumerable<GetUserDTO>> GetAll()
         {
-            var users = await _userRepository.GetAllQueryable().Include(x => x.Roles).ThenInclude(x => x.Role).Select(x => new UserDTO(x)).ToListAsync();
+            var users = await _userRepository.GetAllQueryable().Include(x => x.Roles).ThenInclude(x => x.Role).Select(x => new GetUserDTO
+            {
+                Id = x.Id,
+                Login = x.Login,
+                Email = x.Email,
+                Roles = x.Roles.Select(role => new GetRoleDTO() { Id = role.Role.Id, Name = role.Role.Name, Description = role.Role.Description }),
+            }).ToListAsync();
 
             return users;
         }
 
         public async Task<UserDTO> GetUserByIdAsync(Guid Id)
         {
-            var user = await _userRepository.FindByCondition(x => x.Id == Id)
+            var user = await _userRepository
+                .FindByCondition(x => x.Id == Id)
                 .Include(x => x.Roles).ThenInclude(x => x.Role)
-                .Select(user => new UserDTO(user))
+                .Select(user => new UserDTO
+                {
+                    Id = user.Id,
+                    Login = user.Login,
+                    Email = user.Email,
+                    Roles = user.Roles.Select(role => new GetRoleDTO() { Id = role.Role.Id, Name = role.Role.Name, Description = role.Role.Description }),
+                })
                 .FirstOrDefaultAsync();
 
             //if(user == null)
@@ -37,9 +49,8 @@ namespace KartowkaMarkowkaHub.Services.Account
             return user;
         }
 
-        public async Task<UserDTO> CreateAsync(UserDTO user)
+        public async Task<UserDTO> CreateAsync(CreateUserDTO user)
         {
-
             var userSample = new User()
             {
                 Email = user.Email,

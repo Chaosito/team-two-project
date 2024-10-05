@@ -1,7 +1,6 @@
-﻿using KartowkaMarkowkaHub.Core.Abstractions.Repositories;
-using KartowkaMarkowkaHub.Services.Account;
-using KartowkaMarkowkaHub.Web.Models;
-using Microsoft.AspNetCore.Http;
+﻿using KartowkaMarkowkaHub.Application.Roles.Queries.GetAllRoles;
+using KartowkaMarkowkaHub.Services.Roles;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KartowkaMarkowkaHub.Web.Controllers.api
@@ -10,19 +9,21 @@ namespace KartowkaMarkowkaHub.Web.Controllers.api
     [ApiController]
     public class RoleController : ControllerBase
     {
+        private readonly IMediator _mediator;
         private readonly IRoleService _roleService;
         
-        public RoleController(IRoleService roleService)
+        public RoleController(IMediator mediator, IRoleService roleService)
         {
+            _mediator = mediator;
             _roleService = roleService;
         }
 
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAll() 
+        public async Task<IActionResult> GetAll(CancellationToken cancellationToken) 
         {
-            var roles = await _roleService.GetAll();
-            var result = roles.Select(x => new RoleViewModel() { Id = x.Id, Name = x.Name, Descriptions = x.Description });
-            return Ok(result);
+            var query = new GetAllRolesQuery();
+            var viewModel = await _mediator.Send(query, cancellationToken);
+            return Ok(viewModel);
         }
     }
 }

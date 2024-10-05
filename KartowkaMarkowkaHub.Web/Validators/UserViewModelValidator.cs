@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using KartowkaMarkowkaHub.Web.Models;
+using KartowkaMarkowkaHub.Application.Account.Queries.GetAllUsers;
 
 namespace KartowkaMarkowkaHub.Web.Validators
 {

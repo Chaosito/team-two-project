@@ -1,10 +1,12 @@
-﻿using KartowkaMarkowkaHub.DTO.Account;
-using KartowkaMarkowkaHub.Services.Account;
-using KartowkaMarkowkaHub.Services.Identity;
+﻿using KartowkaMarkowkaHub.Application.Account.Commands.AddUserRole;
+using KartowkaMarkowkaHub.Application.Account.Commands.CreateUser;
+using KartowkaMarkowkaHub.Application.Account.Commands.LoginUser;
+using KartowkaMarkowkaHub.Application.Account.Queries.GetAllUsers;
+using KartowkaMarkowkaHub.Application.Account.Queries.GetUser;
 using KartowkaMarkowkaHub.Web.Models;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 
 namespace KartowkaMarkowkaHub.Web.Controllers.api
 {
@@ -12,94 +14,74 @@ namespace KartowkaMarkowkaHub.Web.Controllers.api
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly IUserService _userService;
-        private readonly IAuthService _authService;
+        private readonly IMediator _mediator;
 
-        public AccountController(IUserService userService, IAuthService authService) 
+        public AccountController(IMediator mediator) 
         {
-            _userService = userService;
-            _authService = authService;
+            _mediator = mediator;
         }
 
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
         {
-            var users = await _userService.GetAll();
+            var viewModels = await _mediator.Send(new GetAllUsersQuery(), cancellationToken);
 
-            var usersViewModel = users.Select(x => new UserViewModel() { Id = x.Id, 
-                Login = x.Login, 
-                Roles = x.Roles
-                        .Select(x => new RoleViewModel() { 
-                            Id = x.Id, 
-                            Name = x.Name, 
-                            Descriptions = x.Description }), 
-                Email = x.Email });
-
-            return Ok(usersViewModel);
+            return Ok(viewModels);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetById(Guid Id) 
+        public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken) 
         {
-            var result = await _userService.GetUserByIdAsync(Id);
+            var viewModels = await _mediator.Send(new GetUserQuery { Id = id }, cancellationToken);
 
-            if(result == null) return NotFound();
-
-            var viewmodel = new UserViewModel()
-            {
-                Id = Id,
-                Login = result.Login,
-                Email = result.Email,
-                Roles = result.Roles.Select(x => new RoleViewModel() { Id = x.Id, Name = x.Name, Descriptions = x.Description })
-            };
-
-            return Ok(viewmodel);
+            return Ok(viewModels);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser(UserViewModel user)
+        public async Task<IActionResult> CreateUser(UserRequest request, CancellationToken cancellationToken)
         {
-            var userDto = new UserDTO()
+            Guid? id = await _mediator.Send(new CreateUserCommand 
             {
-                Login = user.Login,
-                Email = user.Email,
-                Password = user.Password,
-            };
+                Login = request.Login,
+                Email = request.Email,
+                Password = request.Password,
+                Roles = request.Roles.Select(i => new CreateUserRole
+                {
+                    Description = i.Description,
+                    Id = i.Id,
+                    Name = i.Name,
+                }),
+            }, cancellationToken);
 
-            var result = await _userService.CreateAsync(userDto);
+            if (id is null) return BadRequest();
 
-            var userViewModel = new UserViewModel()
-            {
-                Id = result.Id,
-                Login = result.Login,
-                Email = result.Email
-            };
+            var viewModel = await _mediator.Send(new GetUserQuery { Id = id.Value }, cancellationToken);
 
-            return Ok(userViewModel);
+            return Ok(viewModel);
         }
 
         [HttpPost("Login")]
-        public async Task<IActionResult> Login(LoginViewModel user)
+        public async Task<IActionResult> Login(LoginRequest request, CancellationToken cancellationToken)
         {
-            var loginDto = await _authService.Login(user.Login, user.Password);
+            var viewModel = await _mediator.Send(new LoginUserCommand 
+            { 
+                Login = request.Login,
+                Password = request.Password,
+            }, cancellationToken);
 
-            if (loginDto == null) return Unauthorized();
-
-            var loginViewModel = new LoginViewModel()
-            {
-                Login = loginDto.Login,
-                AccessToken = loginDto.AccessToken
-            };
-
-            return Ok(loginViewModel);
+            return Ok(viewModel);
         }
 
         [HttpPost("AddRole")]
-        public async Task<IActionResult> AddRole(RoleUserViewModel roleUser)
+        public async Task<IActionResult> AddRole(RoleUserRequest request, CancellationToken cancellationToken)
         {
-            var user = await _userService.AddRoleUserAsync(roleUser.UserId, roleUser.RoleId);
+            var viewModel = await _mediator.Send(new AddUserRoleCommand
+            {
+                UserId = request.UserId,
+                RoleId = request.RoleId,
+            }, cancellationToken);
 
-            return Ok(user);
+            return Ok(viewModel);
         }
 
         [Authorize]

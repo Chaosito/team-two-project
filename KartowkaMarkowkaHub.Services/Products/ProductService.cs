@@ -19,20 +19,20 @@ namespace KartowkaMarkowkaHub.Services.Products
             _distributedCache = distributedCache;
         }
 
-        public async Task<IEnumerable<ProductViewModel>> Get(Guid userId)
+        public async Task<IEnumerable<GetProductDto>> Get(Guid userId)
         {
-            IEnumerable<ProductViewModel> viewModels = [];
+            IEnumerable<GetProductDto> viewModels = [];
             string key = $"products-for-{userId}";
             string? textProducts = await _distributedCache.GetStringAsync(key);
             if (textProducts != null)
             {
-                viewModels = JsonSerializer.Deserialize<IEnumerable<ProductViewModel>>(textProducts) ?? [];
+                viewModels = JsonSerializer.Deserialize<IEnumerable<GetProductDto>>(textProducts) ?? [];
             }
             else
             {
                 var products = _unitOfWork.ProductRepository
                     .Get(filter: p => p.UserId == userId);
-                viewModels = _mapper.Map<IEnumerable<ProductViewModel>>(products).ToList();
+                viewModels = _mapper.Map<IEnumerable<GetProductDto>>(products).ToList();
 
                 textProducts = JsonSerializer.Serialize(viewModels);
                 await _distributedCache.SetStringAsync(key, textProducts, new DistributedCacheEntryOptions()
@@ -43,19 +43,19 @@ namespace KartowkaMarkowkaHub.Services.Products
             return viewModels;
         }
 
-        public async Task<IEnumerable<ProductViewModel>> Get()
+        public async Task<IEnumerable<GetProductDto>> Get()
         {
-            IEnumerable<ProductViewModel> viewModels = [];
+            IEnumerable<GetProductDto> viewModels = [];
             string key = "products";
             var textProducts = await _distributedCache.GetStringAsync(key);
             if(textProducts != null)
             {
-                viewModels = JsonSerializer.Deserialize<IEnumerable<ProductViewModel>>(textProducts) ?? [];
+                viewModels = JsonSerializer.Deserialize<IEnumerable<GetProductDto>>(textProducts) ?? [];
             }
             else
             {
                 var products = _unitOfWork.ProductRepository.Get();
-                viewModels = _mapper.Map<IEnumerable<ProductViewModel>>(products).ToList();
+                viewModels = _mapper.Map<IEnumerable<GetProductDto>>(products).ToList();
                 
                 textProducts = JsonSerializer.Serialize(viewModels);
                 await _distributedCache.SetStringAsync(key, textProducts, new DistributedCacheEntryOptions()
@@ -67,7 +67,7 @@ namespace KartowkaMarkowkaHub.Services.Products
             return viewModels;
         }
 
-        public void Create(ProductDto productDto, Guid userId)
+        public void Create(CreateProductDto productDto, Guid userId)
         {
             Product product = _mapper.Map<Product>(productDto);
             product.UserId = userId;
@@ -75,7 +75,7 @@ namespace KartowkaMarkowkaHub.Services.Products
             _unitOfWork.Save();            
         }        
 
-        public void Update(Guid productId, ProductDto productDto)
+        public void Update(Guid productId, UpdateProductDto productDto)
         {
             var product = _unitOfWork.ProductRepository.GetByID(productId) ?? throw new ArgumentNullException("Товар не найден в базе данных!");
             product = _mapper.Map(productDto, product);

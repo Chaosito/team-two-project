@@ -14,6 +14,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using KartowkaMarkowkaHub.Application;
+using KartowkaMarkowkaHub.Services.Roles;
 
 namespace KartowkaMarkowkaHub.Web
 {
@@ -121,7 +123,9 @@ namespace KartowkaMarkowkaHub.Web
             services.AddScoped<IClaimService, ClaimService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IOrderService, OrderService>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();       
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddApplication();
 
             //Авторизация
             //services.AddAuthorization();

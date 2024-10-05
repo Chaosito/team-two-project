@@ -1,6 +1,4 @@
-﻿using KartowkaMarkowkaHub.DTO.Account;
-
-namespace KartowkaMarkowkaHub.Services.Account
+﻿namespace KartowkaMarkowkaHub.Services.Account
 {
     public interface IAuthService
     {

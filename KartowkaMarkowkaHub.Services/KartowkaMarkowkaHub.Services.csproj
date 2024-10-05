@@ -8,6 +8,9 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="FluentValidation" Version="11.10.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.10.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -16,7 +19,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\KartowkaMarkowkaHub.Data\KartowkaMarkowkaHub.Data.csproj" />
-    <ProjectReference Include="..\KartowkaMarkowkaHub.DTO\KartowkaMarkowkaHub.DTO.csproj" />
     <ProjectReference Include="..\KartowkaMarkowkaHub.Services.Identity\KartowkaMarkowkaHub.Services.Identity.csproj" />
   </ItemGroup>
 

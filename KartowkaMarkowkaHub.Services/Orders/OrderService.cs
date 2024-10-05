@@ -16,22 +16,22 @@ namespace KartowkaMarkowkaHub.Services.Orders
             _mapper = mapper;
         }
 
-        public IEnumerable<OrderViewModel> Get(Guid clientId)
+        public IEnumerable<GetOrderDto> Get(Guid clientId)
         { 
             var orders = _unitOfWork.OrderRepository
                 .Get(filter: o => o.ClientId == clientId, includeProperties: typeof(Product).Name + "," + typeof(OrderStatus).Name);
-            var viewModels = _mapper.Map<IEnumerable<OrderViewModel>>(orders).ToList();
+            var viewModels = _mapper.Map<IEnumerable<GetOrderDto>>(orders).ToList();
             return viewModels;
         }
 
-        public IEnumerable<OrderViewModel> Get()
+        public IEnumerable<GetOrderDto> Get()
         {
             var orders = _unitOfWork.OrderRepository.Get(includeProperties: typeof(Product).Name + "," + typeof(OrderStatus).Name);
-            var viewModels = _mapper.Map<IEnumerable<OrderViewModel>>(orders).ToList();
+            var viewModels = _mapper.Map<IEnumerable<GetOrderDto>>(orders).ToList();
             return viewModels;
         }
 
-        public void Create(OrderCreateRequest orderCreateRequest, Guid userId)
+        public void Create(CreateOrderDto orderCreateRequest, Guid userId)
         {
             Order order = _mapper.Map<Order>(orderCreateRequest);
             var firstStatus = _unitOfWork.OrderStatusRepository
@@ -44,7 +44,7 @@ namespace KartowkaMarkowkaHub.Services.Orders
             _unitOfWork.Save();
         }                
 
-        public void Update(Guid orderId, OrderUpdateRequest orderUpdateRequest)
+        public void Update(Guid orderId, UpdateOrderDto orderUpdateRequest)
         {
             Order order = _unitOfWork.OrderRepository.GetByID(orderId) ?? throw new NullReferenceException("Order not found in database!");
             order.OrderStatusId = orderUpdateRequest.OrderStatusId;

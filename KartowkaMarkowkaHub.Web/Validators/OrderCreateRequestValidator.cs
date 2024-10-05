@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
-using KartowkaMarkowkaHub.Services.Orders;
+using KartowkaMarkowkaHub.Web.Models;
 
 namespace KartowkaMarkowkaHub.Web.Validators
 {
-    public class OrderCreateRequestValidator : AbstractValidator<OrderCreateRequest>
+    public class OrderCreateRequestValidator : AbstractValidator<CreateOrderRequest>
     {
         public OrderCreateRequestValidator() 
         {
