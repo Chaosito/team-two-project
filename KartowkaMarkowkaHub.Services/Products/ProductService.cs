@@ -3,18 +3,25 @@ using KartowkaMarkowkaHub.Data.Repositories;
 using AutoMapper;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Text.Json;
+using FluentValidation;
 
 namespace KartowkaMarkowkaHub.Services.Products
 {
     public class ProductService : IProductService
     {
         private readonly IMapper _mapper;
+        private readonly IValidator _validator;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IDistributedCache _distributedCache;
 
-        public ProductService(IMapper mapper, IUnitOfWork unitOfWork, IDistributedCache distributedCache)
-        { 
+        public ProductService(
+            IMapper mapper, 
+            IValidator validator, 
+            IUnitOfWork unitOfWork, 
+            IDistributedCache distributedCache)
+        {
             _mapper = mapper;
+            _validator = validator;
             _unitOfWork = unitOfWork;
             _distributedCache = distributedCache;
         }
@@ -69,7 +76,13 @@ namespace KartowkaMarkowkaHub.Services.Products
 
         public void Create(CreateProductDto productDto, Guid userId)
         {
+            var validationContext = new ValidationContext<CreateProductDto>(productDto);
+            var errors = _validator.Validate(validationContext).Errors;
+            if (errors.Count != 0)
+                throw new ValidationException(errors);
+
             Product product = _mapper.Map<Product>(productDto);
+
             product.UserId = userId;
             _unitOfWork.ProductRepository.Insert(product);
             _unitOfWork.Save();            
@@ -77,7 +90,14 @@ namespace KartowkaMarkowkaHub.Services.Products
 
         public void Update(Guid productId, UpdateProductDto productDto)
         {
-            var product = _unitOfWork.ProductRepository.GetByID(productId) ?? throw new ArgumentNullException("Товар не найден в базе данных!");
+            var product = _unitOfWork.ProductRepository.GetByID(productId) 
+                ?? throw new ArgumentNullException("Товар не найден в базе данных!");
+
+            var validationContext = new ValidationContext<UpdateProductDto>(productDto);
+            var errors = _validator.Validate(validationContext).Errors;
+            if (errors.Count != 0)
+                throw new ValidationException(errors);
+
             product = _mapper.Map(productDto, product);
             _unitOfWork.ProductRepository.Update(product);
             _unitOfWork.Save();

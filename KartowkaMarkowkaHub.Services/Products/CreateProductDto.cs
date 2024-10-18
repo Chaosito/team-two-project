@@ -1,7 +1,4 @@
-﻿using AutoMapper;
-using KartowkaMarkowkaHub.Core.Domain;
-
-namespace KartowkaMarkowkaHub.Services.Products
+﻿namespace KartowkaMarkowkaHub.Services.Products
 {
     public class CreateProductDto
     {
@@ -9,14 +6,4 @@ namespace KartowkaMarkowkaHub.Services.Products
 
         public decimal Price { get; set; }
     }
-
-    public class ProductDtoProfile: Profile
-    {
-        public ProductDtoProfile()
-        {
-            CreateMap<CreateProductDto, Product>();
-        }
-    }
-
-
 }

@@ -9,16 +9,5 @@ namespace KartowkaMarkowkaHub.Application.Account.Commands.CreateUser
         public string Email { get; set; } = string.Empty;
 
         public string Password { get; set; } = string.Empty;
-
-        public IEnumerable<CreateUserRole> Roles { get; set; }
-    }
-
-    public class CreateUserRole
-    {
-        public Guid Id { get; set; }
-
-        public string Name { get; set; }
-
-        public string Description { get; set; }
     }
 }

@@ -45,12 +45,6 @@ namespace KartowkaMarkowkaHub.Web.Controllers.api
                 Login = request.Login,
                 Email = request.Email,
                 Password = request.Password,
-                Roles = request.Roles.Select(i => new CreateUserRole
-                {
-                    Description = i.Description,
-                    Id = i.Id,
-                    Name = i.Name,
-                }),
             }, cancellationToken);
 
             if (id is null) return BadRequest();

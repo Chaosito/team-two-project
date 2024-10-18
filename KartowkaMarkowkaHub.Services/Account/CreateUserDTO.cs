@@ -1,15 +1,11 @@
-﻿using KartowkaMarkowkaHub.Services.Roles;
-
-namespace KartowkaMarkowkaHub.Services.Account
+﻿namespace KartowkaMarkowkaHub.Services.Account
 {
-    public class CreateUserDTO
+    public class CreateUserDto
     {
         public string Login { get; set; } = string.Empty;
 
         public string Email { get; set; } = string.Empty;
 
         public string Password { get; set; } = string.Empty;
-
-        public IEnumerable<GetRoleDTO> Roles { get; set; }
     }
 }

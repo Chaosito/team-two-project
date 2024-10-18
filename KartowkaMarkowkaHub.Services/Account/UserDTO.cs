@@ -3,7 +3,7 @@ using KartowkaMarkowkaHub.Services.Roles;
 
 namespace KartowkaMarkowkaHub.Services.Account
 {
-    public class UserDTO
+    public class UserDto
     {
         public Guid? Id { get; set; }
 
@@ -15,7 +15,7 @@ namespace KartowkaMarkowkaHub.Services.Account
 
         public IEnumerable<GetRoleDTO> Roles { get; set; }
 
-        public UserDTO(User user) // todo Mapping?
+        public UserDto(User user) // todo Mapping?
         {
             Id = user.Id;
             Login = user.Login;
@@ -23,6 +23,6 @@ namespace KartowkaMarkowkaHub.Services.Account
             Roles = user.Roles.Select(role => new GetRoleDTO() { Id = role.Role.Id, Name = role.Role.Name, Description = role.Role.Description });
         }
 
-        public UserDTO() { }
+        public UserDto() { }
     }
 }

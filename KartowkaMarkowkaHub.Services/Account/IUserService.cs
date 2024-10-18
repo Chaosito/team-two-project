@@ -2,13 +2,13 @@
 {
     public interface IUserService
     {
-        Task<IEnumerable<GetUserDTO>> GetAll();
+        Task<IEnumerable<GetUserDto>> GetAll();
 
 
-        Task<UserDTO> GetUserByIdAsync(Guid Id);
+        Task<GetUserDto> GetUserByIdAsync(Guid Id);
 
-        Task<UserDTO> CreateAsync(CreateUserDTO user);
+        Task<UserDto> CreateAsync(CreateUserDto user);
 
-        Task<UserDTO> AddRoleUserAsync(Guid userId, Guid roleId);
+        Task<UserDto> AddRoleUserAsync(Guid userId, Guid roleId);
     }
 }

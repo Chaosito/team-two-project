@@ -2,7 +2,7 @@
 
 namespace KartowkaMarkowkaHub.Services.Account
 {
-    public class GetUserDTO
+    public class GetUserDto
     {
         public Guid? Id { get; set; }
 

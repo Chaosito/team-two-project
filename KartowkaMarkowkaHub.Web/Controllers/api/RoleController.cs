@@ -23,7 +23,7 @@ namespace KartowkaMarkowkaHub.Web.Controllers.api
         {
             var query = new GetAllRolesQuery();
             var viewModel = await _mediator.Send(query, cancellationToken);
-            return Ok(viewModel);
+            return Ok(viewModel.Result);
         }
     }
 }

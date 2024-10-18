@@ -16,17 +16,11 @@ namespace KartowkaMarkowkaHub.Application.Account.Commands.CreateUser
 
         public async Task<Guid?> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            var result = await _userService.CreateAsync(new CreateUserDTO
+            var result = await _userService.CreateAsync(new CreateUserDto
             {
                 Email = request.Email,
                 Login = request.Login,
                 Password = request.Password,
-                Roles = request.Roles.Select(i => new GetRoleDTO
-                {
-                    Description = i.Description,
-                    Id = i.Id,
-                    Name = i.Name,
-                })
             });
 
             return result.Id;

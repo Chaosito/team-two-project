@@ -114,18 +114,16 @@ namespace KartowkaMarkowkaHub.Web
                 c.IncludeXmlComments(xmlPath);
             });
 
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddValidatorsFromAssemblies([Assembly.GetExecutingAssembly()]);
+            services.AddAutoMapper([Assembly.GetExecutingAssembly()]);
+
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IRoleService, RoleService>();
-            services.AddScoped<IAuthService, AuthService>();
-            services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IClaimService, ClaimService>();
-            services.AddScoped<IProductService, ProductService>();
-            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<ITokenService, TokenService>();         
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddApplication();
+            services.AddServices();
 
             //Авторизация
             //services.AddAuthorization();
