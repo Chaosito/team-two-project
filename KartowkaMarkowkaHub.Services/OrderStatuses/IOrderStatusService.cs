@@ -1,5 +1,3 @@
-﻿using KartowkaMarkowkaHub.Core.Domain;
-
 namespace KartowkaMarkowkaHub.Services.OrderStatuses
 {
     public interface IOrderStatusService

@@ -1,32 +1,53 @@
-﻿using KartowkaMarkowkaHub.Core.Abstractions.Repositories;
+﻿using AutoMapper;
+using FluentValidation;
+using KartowkaMarkowkaHub.Core.Abstractions.Repositories;
 using KartowkaMarkowkaHub.Core.Domain;
-using KartowkaMarkowkaHub.DTO.Account;
+using KartowkaMarkowkaHub.Services.Roles;
 using Microsoft.EntityFrameworkCore;
-using System.Net.WebSockets;
 
 namespace KartowkaMarkowkaHub.Services.Account
 {
     public class UserService : IUserService
     {
         private readonly IRepository<User> _userRepository;
-        
-        public UserService(IRepository<User> userRepository) 
+        private readonly IValidator _validator;
+        private readonly IMapper _mapper;
+
+        public UserService(IRepository<User> userRepository,
+            IValidator validator, IMapper mapper) 
         {
             _userRepository = userRepository;
+            _validator = validator;
+            _mapper = mapper;
         }
 
-        public async Task<IEnumerable<UserDTO>> GetAll()
+        public async Task<IEnumerable<GetUserDto>> GetAll()
         {
-            var users = await _userRepository.GetAllQueryable().Include(x => x.Roles).ThenInclude(x => x.Role).Select(x => new UserDTO(x)).ToListAsync();
+            var users = await _userRepository.GetAllQueryable()
+                .Include(x => x.Roles).ThenInclude(x => x.Role)
+                .Select(x => new GetUserDto
+                {
+                    Id = x.Id,
+                    Login = x.Login,
+                    Email = x.Email,
+                    Roles = x.Roles.Select(role => new GetRoleDTO() { Id = role.Role.Id, Name = role.Role.Name, Description = role.Role.Description }),
+                }).ToListAsync();
 
             return users;
         }
 
-        public async Task<UserDTO> GetUserByIdAsync(Guid Id)
+        public async Task<GetUserDto> GetUserByIdAsync(Guid Id)
         {
-            var user = await _userRepository.FindByCondition(x => x.Id == Id)
+            var user = await _userRepository
+                .FindByCondition(x => x.Id == Id)
                 .Include(x => x.Roles).ThenInclude(x => x.Role)
-                .Select(user => new UserDTO(user))
+                .Select(user => new GetUserDto
+                {
+                    Id = user.Id,
+                    Login = user.Login,
+                    Email = user.Email,
+                    Roles = user.Roles.Select(role => new GetRoleDTO() { Id = role.Role.Id, Name = role.Role.Name, Description = role.Role.Description }),
+                })
                 .FirstOrDefaultAsync();
 
             //if(user == null)
@@ -37,19 +58,18 @@ namespace KartowkaMarkowkaHub.Services.Account
             return user;
         }
 
-        public async Task<UserDTO> CreateAsync(UserDTO user)
+        public async Task<UserDto> CreateAsync(CreateUserDto userDto)
         {
+            var validationContext = new ValidationContext<CreateUserDto>(userDto);
+            var errors = _validator.Validate(validationContext).Errors;
+            if (errors.Count != 0)
+                throw new ValidationException(errors);
 
-            var userSample = new User()
-            {
-                Email = user.Email,
-                Login = user.Login,
-                Password = user.Password,
-            };
+            User user = _mapper.Map<User>(userDto);
 
-            var result = await _userRepository.AddAsync(userSample);
+            var result = await _userRepository.AddAsync(user);
 
-            return new UserDTO()
+            return new UserDto()
             {
                 Id = result.Id,
                 Email = result.Email,
@@ -57,16 +77,19 @@ namespace KartowkaMarkowkaHub.Services.Account
             };
         }
 
-        public async Task<UserDTO> AddRoleUserAsync(Guid userId, Guid roleId)
+        public async Task<UserDto> AddRoleUserAsync(Guid userId, Guid roleId)
         {
-            var user = await _userRepository.FindByCondition(x => x.Id == userId).Include(x => x.Roles).ThenInclude(x => x.Role).AsTracking().FirstOrDefaultAsync();
+            var user = await _userRepository
+                .FindByCondition(x => x.Id == userId)
+                .Include(x => x.Roles)
+                .ThenInclude(x => x.Role).AsTracking().FirstOrDefaultAsync();
             user.Roles.Add(new UserRole() { RoleId = roleId, UserId = userId });
 
             await _userRepository.UpdateAsync(user);
 
             var result = await _userRepository.FindByCondition(x => x.Id == userId).Include(x => x.Roles).ThenInclude(x => x.Role).FirstOrDefaultAsync();
 
-            return new UserDTO(result);
+            return new UserDto(result);
         }
     }
 }

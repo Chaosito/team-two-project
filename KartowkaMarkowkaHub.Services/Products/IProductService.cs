@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KartowkaMarkowkaHub.Services.Products
+﻿namespace KartowkaMarkowkaHub.Services.Products
 {
     public interface IProductService
     {
@@ -13,19 +7,19 @@ namespace KartowkaMarkowkaHub.Services.Products
         /// </summary>
         /// <param name="farmerId">id фермера</param>
         /// <returns></returns>
-        Task<IEnumerable<ProductViewModel>> Get(Guid farmerId);
+        Task<IEnumerable<GetProductDto>> Get(Guid farmerId);
 
         /// <summary>
         /// Получает все товары
         /// </summary>
         /// <returns></returns>
-        Task<IEnumerable<ProductViewModel>> Get();
+        Task<IEnumerable<GetProductDto>> Get();
 
         /// <summary>
         /// Создаёт товар
         /// </summary>
         /// <param name="productDto">модель товара</param>
-        void Create(ProductDto productDto, Guid userId);
+        void Create(CreateProductDto productDto, Guid userId);
 
         /// <summary>
         /// Удаляет товар
@@ -38,6 +32,6 @@ namespace KartowkaMarkowkaHub.Services.Products
         /// </summary>
         /// <param name="productId">id товара</param>
         /// <param name="productDto">модель товара</param>
-        void Update(Guid productId, ProductDto productDto);
+        void Update(Guid productId, UpdateProductDto productDto);
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KartowkaMarkowkaHub.Data.Data
+﻿namespace KartowkaMarkowkaHub.Data.Data
 {
     public class EfDbInitializer : IDbInitializer
     {
@@ -17,8 +11,8 @@ namespace KartowkaMarkowkaHub.Data.Data
 
         public void InitializeDb()
         {
-            //_dataContext.Database.EnsureDeleted();
-            //_dataContext.Database.EnsureCreated();
+            _dataContext.Database.EnsureDeleted();
+            _dataContext.Database.EnsureCreated();
 
             //_dataContext.AddRange(FakeDataFactory.Employees);
             //_dataContext.SaveChanges();

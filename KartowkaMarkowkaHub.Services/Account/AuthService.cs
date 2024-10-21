@@ -1,14 +1,7 @@
 ﻿using KartowkaMarkowkaHub.Core.Abstractions.Repositories;
 using KartowkaMarkowkaHub.Core.Domain;
-using KartowkaMarkowkaHub.DTO.Account;
 using KartowkaMarkowkaHub.Services.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KartowkaMarkowkaHub.Services.Account
 {
