@@ -17,10 +17,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2052D02C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KartowkaMarkowkaHub.Data", "KartowkaMarkowkaHub.Data\KartowkaMarkowkaHub.Data.csproj", "{CBD6CD0F-FB18-4D9C-BC29-83B3FA4EC4D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KartowkaMarkowkaHub.DTO", "KartowkaMarkowkaHub.DTO\KartowkaMarkowkaHub.DTO.csproj", "{96E2D775-B44B-46D3-82CF-BB4FC86D68BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KartowkaMarkowkaHub.DTO", "KartowkaMarkowkaHub.DTO\KartowkaMarkowkaHub.DTO.csproj", "{96E2D775-B44B-46D3-82CF-BB4FC86D68BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KartowkaMarkowkaHub.Services.Identity", "KartowkaMarkowkaHub.Services.Identity\KartowkaMarkowkaHub.Services.Identity.csproj", "{91952A97-30B1-479A-B030-1422FFD00C39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KartowkaMarkowkaHub.Services.Identity", "KartowkaMarkowkaHub.Services.Identity\KartowkaMarkowkaHub.Services.Identity.csproj", "{91952A97-30B1-479A-B030-1422FFD00C39}"
+EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{7AC97A3D-D2C4-45E6-B7B8-9080D2031FED}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KartowkaMarkowkaHub.Test", "KartowkaMarkowkaHub.Test\KartowkaMarkowkaHub.Test.csproj", "{BFC116BA-C979-4DD0-A580-1713719A3BCB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,6 +59,10 @@ Global
 		{7AC97A3D-D2C4-45E6-B7B8-9080D2031FED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AC97A3D-D2C4-45E6-B7B8-9080D2031FED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AC97A3D-D2C4-45E6-B7B8-9080D2031FED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFC116BA-C979-4DD0-A580-1713719A3BCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFC116BA-C979-4DD0-A580-1713719A3BCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFC116BA-C979-4DD0-A580-1713719A3BCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFC116BA-C979-4DD0-A580-1713719A3BCB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +74,8 @@ Global
 		{CBD6CD0F-FB18-4D9C-BC29-83B3FA4EC4D7} = {CAE6E06C-437E-4601-92A6-6A3990041B9F}
 		{96E2D775-B44B-46D3-82CF-BB4FC86D68BD} = {CAE6E06C-437E-4601-92A6-6A3990041B9F}
 		{91952A97-30B1-479A-B030-1422FFD00C39} = {CAE6E06C-437E-4601-92A6-6A3990041B9F}
+		{7AC97A3D-D2C4-45E6-B7B8-9080D2031FED} = {8E919545-663F-41FB-AB9B-CAF6A4431EBC}
+		{BFC116BA-C979-4DD0-A580-1713719A3BCB} = {8E919545-663F-41FB-AB9B-CAF6A4431EBC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0C79ACAC-272E-4461-AE8E-BD3F4111A63E}
