@@ -1,9 +1,9 @@
-﻿namespace KartowkaMarkowkaHub.Services.OrderStatuses
+namespace KartowkaMarkowkaHub.Services.OrderStatuses
 {
     public interface IOrderStatusService
     {
         IOrderStatus Status { get; set; }
-        void SetNextStatus();
+        StatusType SetNextStatus();
 
         string GetStatusName();
     }

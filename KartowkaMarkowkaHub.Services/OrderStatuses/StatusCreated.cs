@@ -12,9 +12,10 @@ namespace KartowkaMarkowkaHub.Services.OrderStatuses
             throw new NotImplementedException();
         }
 
-        public void NextStatus(IOrderStatusService orderService)
+        public StatusType NextStatus(IOrderStatusService orderStatusService)
         {
-            orderService.Status = new StatusInProcess();
+            orderStatusService.Status = new StatusInProcess();
+            return orderStatusService.Status.StatusType;
         }
     }
 }
