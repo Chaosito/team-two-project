@@ -3,22 +3,25 @@ using FluentValidation;
 using KartowkaMarkowkaHub.Core.Domain;
 using KartowkaMarkowkaHub.Data.Repositories;
 using KartowkaMarkowkaHub.Services.OrderStatuses;
+using KartowkaMarkowkaHub.Services.Products;
 
 namespace KartowkaMarkowkaHub.Services.Orders
 {
     public class OrderService : IOrderService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IValidator _validator;
         private readonly IMapper _mapper;
+        private readonly IEnumerable<IValidator<CreateOrderDto>> _сreateOrderDtoValidators;
+        private readonly IEnumerable<IValidator<UpdateOrderDto>> _updateOrderDtoValidators;
 
         public OrderService(
-            IUnitOfWork unitOfWork,
-            IValidator validator, IMapper mapper) 
+            IUnitOfWork unitOfWork, IMapper mapper, 
+            IEnumerable<IValidator<UpdateOrderDto>> updateOrderDtoValidators, IEnumerable<IValidator<CreateOrderDto>> сreateOrderDtoValidators)
         {
             _unitOfWork = unitOfWork;
-            _validator = validator;
             _mapper = mapper;
+            _updateOrderDtoValidators = updateOrderDtoValidators;
+            _сreateOrderDtoValidators = сreateOrderDtoValidators;
         }
 
         public IEnumerable<GetOrderDto> Get(Guid clientId)
@@ -36,14 +39,20 @@ namespace KartowkaMarkowkaHub.Services.Orders
             return viewModels;
         }
 
-        public void Create(CreateOrderDto productDto, Guid userId)
+        public void Create(CreateOrderDto orderDto, Guid userId)
         {
-            var validationContext = new ValidationContext<CreateOrderDto>(productDto);
-            var errors = _validator.Validate(validationContext).Errors;
-            if (errors.Count != 0)
-                throw new ValidationException(errors);
+            var context = new ValidationContext<CreateOrderDto>(orderDto);
+            var failures = _сreateOrderDtoValidators
+                .Select(v => v.Validate(context))
+                .SelectMany(result => result.Errors)
+                .Where(failure => failure != null)
+                .ToList();
+            if (failures.Count != 0)
+            {
+                throw new ValidationException(failures);
+            }
 
-            Order order = _mapper.Map<Order>(productDto);
+            Order order = _mapper.Map<Order>(orderDto);
             var firstStatus = _unitOfWork.OrderStatusRepository
                 .Get(filter: x => x.StatusType == StatusType.Created)
                 .First();
@@ -59,10 +68,16 @@ namespace KartowkaMarkowkaHub.Services.Orders
             Order order = _unitOfWork.OrderRepository.GetByID(orderId) 
                 ?? throw new NullReferenceException("Order not found in database!");
 
-            var validationContext = new ValidationContext<UpdateOrderDto>(orderDto);
-            var errors = _validator.Validate(validationContext).Errors;
-            if (errors.Count != 0)
-                throw new ValidationException(errors);
+            var context = new ValidationContext<UpdateOrderDto>(orderDto);
+            var failures = _сreateOrderDtoValidators
+                .Select(v => v.Validate(context))
+                .SelectMany(result => result.Errors)
+                .Where(failure => failure != null)
+                .ToList();
+            if (failures.Count != 0)
+            {
+                throw new ValidationException(failures);
+            }
 
             order.OrderStatusId = orderDto.OrderStatusId;
             order.ProductId = orderDto.ProductId;

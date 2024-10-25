@@ -12,12 +12,13 @@ namespace KartowkaMarkowkaHub.Services.Account
         private readonly IRepository<User> _userRepository;
         private readonly IValidator _validator;
         private readonly IMapper _mapper;
+        private readonly IEnumerable<IValidator<CreateUserDto>> _сreateUserDtoValidators;
 
-        public UserService(IRepository<User> userRepository,
-            IValidator validator, IMapper mapper) 
+        public UserService(IEnumerable<IValidator<CreateUserDto>> сreateUserDtoValidators, IRepository<User> userRepository,
+            IMapper mapper) 
         {
+            _сreateUserDtoValidators = сreateUserDtoValidators;
             _userRepository = userRepository;
-            _validator = validator;
             _mapper = mapper;
         }
 
@@ -61,9 +62,15 @@ namespace KartowkaMarkowkaHub.Services.Account
         public async Task<UserDto> CreateAsync(CreateUserDto userDto)
         {
             var validationContext = new ValidationContext<CreateUserDto>(userDto);
-            var errors = _validator.Validate(validationContext).Errors;
-            if (errors.Count != 0)
-                throw new ValidationException(errors);
+            var failures = _сreateUserDtoValidators
+               .Select(v => v.Validate(validationContext))
+               .SelectMany(result => result.Errors)
+               .Where(failure => failure != null)
+               .ToList();
+            if (failures.Count != 0)
+            {
+                throw new ValidationException(failures);
+            }
 
             User user = _mapper.Map<User>(userDto);
 

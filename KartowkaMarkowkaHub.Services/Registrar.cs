@@ -23,8 +23,8 @@ namespace KartowkaMarkowkaHub.Application
 
             #region ?
 
-            services.AddScoped<IOrderStatusService, OrderStatusService>();
-            services.AddScoped<IVendorService, VendorService>(); 
+            //services.AddScoped<IOrderStatusService, OrderStatusService>();
+            //services.AddScoped<IVendorService, VendorService>(); 
 
             #endregion
 
