@@ -1,4 +1,6 @@
 
+using KartowkaMarkowkaHub.Basket.Services;
+
 namespace KartowkaMarkowkaHub.Basket
 {
     public class Program
@@ -22,6 +24,9 @@ namespace KartowkaMarkowkaHub.Basket
                 op.Configuration = options.RedisConnection;
                 op.InstanceName = "basket_";
             });
+
+            builder.Services.AddHttpClient();
+            builder.Services.AddScoped<IBasketService, BasketService>();    
 
             var app = builder.Build();
 
