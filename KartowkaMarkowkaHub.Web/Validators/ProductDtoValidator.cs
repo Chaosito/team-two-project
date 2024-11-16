@@ -3,7 +3,7 @@ using KartowkaMarkowkaHub.Services.Products;
 
 namespace KartowkaMarkowkaHub.Web.Validators
 {
-    public class ProductDtoValidator : AbstractValidator<ProductDto>
+    public class ProductDtoValidator : AbstractValidator<CreateProductDto>
     {
         public ProductDtoValidator()
         {

@@ -3,7 +3,7 @@ using KartowkaMarkowkaHub.Web.Models;
 
 namespace KartowkaMarkowkaHub.Web.Validators
 {
-    public class LoginViewModelValidator : AbstractValidator<LoginViewModel>
+    public class LoginViewModelValidator : AbstractValidator<LoginRequest>
     {
         public LoginViewModelValidator()
         {

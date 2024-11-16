@@ -1,5 +1,4 @@
 ﻿using KartowkaMarkowkaHub.Core.Domain;
-using System.Security.Principal;
 
 namespace KartowkaMarkowkaHub.Services.OrderStatuses
 {
@@ -12,12 +11,13 @@ namespace KartowkaMarkowkaHub.Services.OrderStatuses
             throw new NotImplementedException();
         }
 
-        public void NextStatus(IOrderStatusService orderStatusService)
+        public StatusType NextStatus(IOrderStatusService orderStatusService)
         {
             if (true)
             {
                 orderStatusService.Status = new StatusCompleted();
             }
+            return orderStatusService.Status.StatusType;
         }
     }
 }
