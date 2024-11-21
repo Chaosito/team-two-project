@@ -1,5 +1,6 @@
 
 using KartowkaMarkowkaHub.Basket.Services;
+using MassTransit;
 
 namespace KartowkaMarkowkaHub.Basket
 {
@@ -23,6 +24,19 @@ namespace KartowkaMarkowkaHub.Basket
             {
                 op.Configuration = options.RedisConnection;
                 op.InstanceName = "basket_";
+            });
+
+            var rabbitmqOptions = builder.Configuration.GetSection("RabbitMq");
+            builder.Services.AddMassTransit(x =>
+            {
+                x.UsingRabbitMq((context, config) =>
+                {
+                    config.Host(rabbitmqOptions["Host"], h =>
+                    {
+                        h.Username(rabbitmqOptions["Username"]??"");
+                        h.Password(rabbitmqOptions["Password"]??"");
+                    });
+                });
             });
 
             builder.Services.AddHttpClient();
