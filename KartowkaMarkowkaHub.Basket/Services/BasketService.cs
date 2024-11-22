@@ -1,5 +1,7 @@
 ﻿
+using KartowkaMarkowkaHub.Basket.rabbitmq;
 using KartowkaMarkowkaHub.Basket.ViewModels;
+using MassTransit;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Text.Json;
 
@@ -9,11 +11,13 @@ namespace KartowkaMarkowkaHub.Basket.Services
     {
         private readonly IDistributedCache _cache;
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly ServiceProduct _serviceProduct;
 
-        public BasketService(IDistributedCache cache, IHttpClientFactory httpClientFactory)
+        public BasketService(IDistributedCache cache, IHttpClientFactory httpClientFactory, ISendEndpointProvider sendEndpointProvider)
         {
             _cache = cache;
             _httpClientFactory = httpClientFactory;
+            _serviceProduct = new ServiceProduct(sendEndpointProvider);
         }
 
         public async Task<BasketViewModel> Get(Guid userId)
@@ -38,6 +42,7 @@ namespace KartowkaMarkowkaHub.Basket.Services
 
         public async Task Create(Guid productId, Guid userId)
         {
+            await _serviceProduct.ProcessProduct(productId);
             string? basketText = await _cache.GetStringAsync(userId.ToString()) ?? "";
             BasketDto? savedProduct = null;
 

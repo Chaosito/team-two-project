@@ -1,7 +1,7 @@
 ﻿namespace KartowkaMarkowkaHub.Basket.rabbitmq
 {
-    public class ProcessProduct
+    public class ProcessProduct1
     {
-        public int ProductId { get; set; }
+        public Guid ProductId { get; set; }
     }
 }

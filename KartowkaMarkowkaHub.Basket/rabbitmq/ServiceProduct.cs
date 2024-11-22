@@ -1,4 +1,5 @@
 ﻿using MassTransit;
+using KartowkaMarkowkaHub.Services.rabbitmq;
 
 namespace KartowkaMarkowkaHub.Basket.rabbitmq
 {
@@ -10,7 +11,7 @@ namespace KartowkaMarkowkaHub.Basket.rabbitmq
             _sendEndpointProvider = sendEndpointProvider;
         }
 
-        public async Task ProcessProduct(int productId)
+        public async Task ProcessProduct(Guid productId)
         {
             var uri = new Uri("queue:product-queue");
             var endpoint = await _sendEndpointProvider.GetSendEndpoint(uri);
