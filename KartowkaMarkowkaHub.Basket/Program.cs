@@ -1,4 +1,5 @@
 
+using KartowkaMarkowkaHub.Basket.rabbitmq;
 using KartowkaMarkowkaHub.Basket.Services;
 using MassTransit;
 
@@ -29,6 +30,7 @@ namespace KartowkaMarkowkaHub.Basket
             var rabbitmqOptions = builder.Configuration.GetSection("RabbitMq");
             builder.Services.AddMassTransit(x =>
             {
+                x.AddConsumer<ConsumerByProduct>();
                 x.UsingRabbitMq((context, config) =>
                 {
                     config.Host(rabbitmqOptions["Host"], h =>
@@ -36,7 +38,11 @@ namespace KartowkaMarkowkaHub.Basket
                         h.Username(rabbitmqOptions["Username"]??"");
                         h.Password(rabbitmqOptions["Password"]??"");
                     });
-                });
+                    config.ReceiveEndpoint("product-queue-response", e =>
+                    {
+                        e.ConfigureConsumer<ConsumerByProduct>(context);
+                    });
+                });               
             });
 
             builder.Services.AddHttpClient();
