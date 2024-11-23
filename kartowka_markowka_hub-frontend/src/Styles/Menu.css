@@ -1,0 +1,33 @@
+.menu {
+    --gray-color: #F8F8F8;
+    --grin-color: #529E63;
+
+    background-color: var(--gray-color);
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .menu__box-name {
+        background-color: white;
+        width: 500px;
+        height: 100px;
+        font-size: 32px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        color: var(--grin-color)
+    }
+
+    .menu__box-login {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        font-size: 24px;
+        width: 280px;       
+    }
+}
+
+

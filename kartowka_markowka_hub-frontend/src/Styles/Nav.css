@@ -1,0 +1,11 @@
+.nav-box {
+    --grin-color: #529E63;
+
+    color: var(--grin-color);
+    font-size: 24px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 50%;
+}
