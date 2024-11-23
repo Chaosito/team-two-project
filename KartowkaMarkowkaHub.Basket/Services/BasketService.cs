@@ -76,9 +76,24 @@ namespace KartowkaMarkowkaHub.Basket.Services
             await _cache.SetStringAsync(userId.ToString(), basketText);
         }  
 
-        public void Remove(Guid productId)
+        public async Task Remove(Guid productId, Guid userId)
         {
-            throw new NotImplementedException();
+            string? basketText = await _cache.GetStringAsync(userId.ToString()) ?? "";
+
+            if(basketText != null)
+            {
+                BasketDto? savedProduct = JsonSerializer.Deserialize<BasketDto>(basketText);
+
+                if (savedProduct is not null)
+                {
+                    if (savedProduct.ProductIdList.Contains(productId))
+                    {
+                        savedProduct.ProductIdList.Remove(productId);
+                        basketText = JsonSerializer.Serialize(savedProduct);
+                        await _cache.SetStringAsync(userId.ToString(), basketText);
+                    }
+                }
+            }
         }
     }
 }

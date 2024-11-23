@@ -18,7 +18,7 @@
         /// Удаляет продукт из корзины
         /// </summary>
         /// <param name="productId">id продукта</param>
-        void Remove(Guid productId);
+        Task Remove(Guid productId, Guid userId);
 
     }
 }

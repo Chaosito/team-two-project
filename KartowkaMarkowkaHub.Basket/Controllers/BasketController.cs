@@ -33,9 +33,9 @@ namespace KartowkaMarkowkaHub.Basket.Controllers
         /// <param name="productId">id продукта</param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Post(Guid productId)
+        public async Task<IActionResult> Post(Guid productId)
         {
-            _basketService.Create(productId, _userId);
+            await _basketService.Create(productId, _userId);
             return Created();
         }
 
@@ -45,9 +45,9 @@ namespace KartowkaMarkowkaHub.Basket.Controllers
         /// <param name="productId">id продукта</param>
         /// <returns></returns>
         [HttpDelete]
-        public IActionResult Delete(Guid productId)
+        public async Task<IActionResult> Delete(Guid productId)
         {
-            _basketService.Remove(productId);
+            await _basketService.Remove(productId, _userId);
             return Ok();
         }
     }
