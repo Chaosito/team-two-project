@@ -1,6 +1,5 @@
-﻿
-using KartowkaMarkowkaHub.Basket.rabbitmq;
-using KartowkaMarkowkaHub.Basket.ViewModels;
+﻿using KartowkaMarkowkaHub.Services.Products;
+using KartowkaMarkowkaHub.Services.rabbitmq;
 using MassTransit;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Text.Json;
@@ -10,14 +9,12 @@ namespace KartowkaMarkowkaHub.Basket.Services
     public class BasketService : IBasketService
     {
         private readonly IDistributedCache _cache;
-        private readonly IHttpClientFactory _httpClientFactory;
-        private readonly ServiceProduct _serviceProduct;
+        private readonly IRequestClient<ProcessProduct> _requestClient;
 
-        public BasketService(IDistributedCache cache, IHttpClientFactory httpClientFactory, ISendEndpointProvider sendEndpointProvider)
+        public BasketService(IDistributedCache cache, IRequestClient<ProcessProduct> requestClient)
         {
             _cache = cache;
-            _httpClientFactory = httpClientFactory;
-            _serviceProduct = new ServiceProduct(sendEndpointProvider);
+            _requestClient = requestClient;
         }
 
         public async Task<BasketViewModel> Get(Guid userId)
@@ -32,17 +29,17 @@ namespace KartowkaMarkowkaHub.Basket.Services
             if (savedProduct is null)
                 return new BasketViewModel();
 
-            using var client = _httpClientFactory.CreateClient();
-            var result = await client.GetFromJsonAsync<IEnumerable<ProductViewModel>>("https://localhost:8088/api/Product", new JsonSerializerOptions(JsonSerializerDefaults.Web));
-            var product = result?.FirstOrDefault(x => savedProduct.ProductIdList.Contains(x.Id));
-            if (product is null)
+            Guid productId = savedProduct.ProductIdList.FirstOrDefault();
+
+            var productData = await _requestClient.GetResponse<GetProductDto>(new ProcessProduct { ProductId = productId });
+            if (productData is null)
                 return new BasketViewModel();
-            return new BasketViewModel { Id = Guid.NewGuid(), ProductId = product.Id, ProductName = product.Name };
+
+            return new BasketViewModel { Id = Guid.NewGuid(), ProductId = productId, ProductName = productData.Message.Name };
         }
 
         public async Task Create(Guid productId, Guid userId)
         {
-            await _serviceProduct.ProcessProduct(productId);
             string? basketText = await _cache.GetStringAsync(userId.ToString()) ?? "";
             BasketDto? savedProduct = null;
 

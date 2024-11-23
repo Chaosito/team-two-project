@@ -21,9 +21,10 @@ namespace KartowkaMarkowkaHub.Basket.Controllers
         /// <param name="userId"></param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            return Ok(_basketService.Get(_userId));
+            var result = await _basketService.Get(_userId);
+            return Ok(result);
         }
 
         /// <summary>
