@@ -4,6 +4,6 @@
     {
         public Guid UserId { get; set; }    
 
-        public IEnumerable<Guid> ProductIdList { get; set; } = [];
+        public IList<Guid> ProductIdList { get; set; } = [];
     }
 }

@@ -1,4 +1,4 @@
-﻿using KartowkaMarkowkaHub.Services.Products;
+﻿using KartowkaMarkowkaHub.Basket.ViewModels;
 using KartowkaMarkowkaHub.Services.rabbitmq;
 using MassTransit;
 using Microsoft.Extensions.Caching.Distributed;
@@ -9,9 +9,9 @@ namespace KartowkaMarkowkaHub.Basket.Services
     public class BasketService : IBasketService
     {
         private readonly IDistributedCache _cache;
-        private readonly IRequestClient<ProcessProduct> _requestClient;
+        private readonly IRequestClient<ProductsRequest> _requestClient;
 
-        public BasketService(IDistributedCache cache, IRequestClient<ProcessProduct> requestClient)
+        public BasketService(IDistributedCache cache, IRequestClient<ProductsRequest> requestClient)
         {
             _cache = cache;
             _requestClient = requestClient;
@@ -29,13 +29,20 @@ namespace KartowkaMarkowkaHub.Basket.Services
             if (savedProduct is null)
                 return new BasketViewModel();
 
-            Guid productId = savedProduct.ProductIdList.FirstOrDefault();
-
-            var productData = await _requestClient.GetResponse<GetProductDto>(new ProcessProduct { ProductId = productId });
-            if (productData is null)
+            ProductsRequest processProduct = new ProductsRequest { ProductIdList = savedProduct.ProductIdList };
+            var response = await _requestClient.GetResponse<ProductsResponse>(processProduct);
+            if (response is null)
                 return new BasketViewModel();
 
-            return new BasketViewModel { Id = Guid.NewGuid(), ProductId = productId, ProductName = productData.Message.Name };
+            var products = response.Message.Products
+                .Select(p => new ProductViewModel
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price
+                });
+
+            return new BasketViewModel { Products = products };
         }
 
         public async Task Create(Guid productId, Guid userId)
@@ -60,7 +67,7 @@ namespace KartowkaMarkowkaHub.Basket.Services
                 {
                     if (!savedProduct.ProductIdList.Contains(productId))
                     {
-                        savedProduct.ProductIdList.ToList().Add(productId);
+                        savedProduct.ProductIdList.Add(productId);
                         basketText = JsonSerializer.Serialize(savedProduct);
                     }
                 }

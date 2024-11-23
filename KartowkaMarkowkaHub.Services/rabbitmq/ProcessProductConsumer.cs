@@ -4,7 +4,7 @@ using MassTransit;
 
 namespace KartowkaMarkowkaHub.Services.rabbitmq
 {
-    public class ProcessProductConsumer: IConsumer<ProcessProduct>
+    public class ProcessProductConsumer: IConsumer<ProductsRequest>
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -13,19 +13,21 @@ namespace KartowkaMarkowkaHub.Services.rabbitmq
             _unitOfWork = unitOfWork;
         }
 
-        public async Task Consume(ConsumeContext<ProcessProduct> context)
+        public async Task Consume(ConsumeContext<ProductsRequest> context)
         {
-            Guid id = context.Message.ProductId;
-            var product = _unitOfWork.ProductRepository.Get(p => p.Id == id).FirstOrDefault();
-            if (product != null)
+            var listId = context.Message.ProductIdList;
+            var products = _unitOfWork.ProductRepository.Get(p => listId.Contains(p.Id));
+            if (products != null && products.Count() > 0)
             {
-                var productDto = new GetProductDto
+                var productsDto = products.Select(p => new GetProductDto
                 {
-                    Id = product.Id,
-                    Name = product.Name,
-                    Price = product.Price
-                };
-                await context.RespondAsync(productDto);
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price
+                });
+
+                var response = new ProductsResponse { Products = productsDto };
+                await context.RespondAsync(response);
             }
         }
     }
