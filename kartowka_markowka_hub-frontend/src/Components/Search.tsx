@@ -1,11 +1,15 @@
 import './../Styles/Search.css';
+import { TextField, Button } from '@mui/material';
 
 
 function Serarch() {
     return <div className='search'>
-        <input/>
-        <button>Найти</button>
-        <span>Усть-Каменогорск</span>
+        <div className='search__input-cover'>
+            <TextField className='search__input' variant='outlined'/>
+            <Button variant='contained' size='large'>Найти</Button>
+        </div>       
+        
+        <span className='search__city'>Усть-Каменогорск</span>
     </div>
 }
 
