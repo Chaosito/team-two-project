@@ -1,17 +1,11 @@
 @import url(./../colors.css);
 
 .categories {
-    padding-top: 40px;
+    width: 90vw;
+    height: 35vh;
+    background-color: var(--grin-color-background);
+    border-radius: 10px;
     display: flex;
-    justify-content: center;
-
-    .categories__box {
-        width: 90vw;
-        height: 35vh;
-        background-color: var(--grin-color-background);
-        border-radius: 10px;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-    }
+    justify-content: space-around;
+    align-items: center;
 }

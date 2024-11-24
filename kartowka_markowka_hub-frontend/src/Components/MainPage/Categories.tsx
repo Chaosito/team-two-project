@@ -8,12 +8,10 @@ import honey from './../../Images/honey.jpg';
 function Categories() 
 {
     return <div className="categories">
-        <div className="categories__box">
-            <CategoryCard buttonText="Овощи" imageUrl={vegetables} />
-            <CategoryCard buttonText="Фрукты" imageUrl={apples}/>
-            <CategoryCard buttonText="Молочка" imageUrl={milk}/>
-            <CategoryCard buttonText="Мёд" imageUrl={honey}/>
-        </div>
+        <CategoryCard buttonText="Овощи" imageUrl={vegetables} />
+        <CategoryCard buttonText="Фрукты" imageUrl={apples}/>
+        <CategoryCard buttonText="Молочка" imageUrl={milk}/>
+        <CategoryCard buttonText="Мёд" imageUrl={honey}/>
     </div>
 }
 
