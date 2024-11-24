@@ -21,6 +21,10 @@
         a {
             text-decoration: none;
         }
+
+        a:visited {
+            color: black;
+        }
     }
 
     .footer__info {
