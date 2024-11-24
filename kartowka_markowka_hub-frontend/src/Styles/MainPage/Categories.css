@@ -10,10 +10,8 @@
         height: 35vh;
         background-color: var(--grin-color-background);
         border-radius: 10px;
-        padding-left: 20px;
-        padding-right: 20px;
         display: flex;
-        flex-direction: column;
-        justify-content: center;
+        justify-content: space-around;
+        align-items: center;
     }
 }

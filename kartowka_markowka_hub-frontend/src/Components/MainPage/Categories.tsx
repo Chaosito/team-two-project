@@ -5,7 +5,10 @@ function Categories()
 {
     return <div className="categories">
         <div className="categories__box">
-            <CategoryCard/>
+            <CategoryCard buttonText="Овощи"/>
+            <CategoryCard buttonText="Фрукты"/>
+            <CategoryCard buttonText="Молочка"/>
+            <CategoryCard buttonText="Мёд"/>
         </div>
     </div>
 }
