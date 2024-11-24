@@ -1,0 +1,31 @@
+.footer {
+    --gray-color: #F8F8F8;
+
+    height: 58px;
+    background-color: var(--gray-color);
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    border-top: 1px solid gray;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    .footer__ref {
+        width: 35%;
+        display: flex;
+        justify-content: space-around;
+
+        a {
+            text-decoration: none;
+        }
+    }
+
+    .footer__info {
+        width: 15%;
+        display: flex;
+        flex-direction: column;
+    }
+}
