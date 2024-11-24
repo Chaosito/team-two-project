@@ -2,7 +2,7 @@
 
 .nav-box {
     color: var(--grin-color);
-    font-size: 24px;
+    font-size: 20px;
     display: flex;
     flex-direction: row;
     align-items: center;

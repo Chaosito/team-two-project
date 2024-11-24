@@ -6,7 +6,7 @@ function Serarch() {
     return <div className='search'>
         <div className='search__input-cover'>
             <TextField className='search__input' variant='outlined'/>
-            <Button variant='contained' size='large'>Найти</Button>
+            <Button variant='contained'>Найти</Button>
         </div>       
         
         <span className='search__city'>Усть-Каменогорск</span>

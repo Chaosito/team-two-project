@@ -2,7 +2,7 @@
 
 .menu {
     background-color: var(--gray-color);
-    height: 100px;
+    height: 80px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -10,8 +10,7 @@
     .menu__box-name {
         background-color: white;
         width: 500px;
-        height: 100px;
-        font-size: 32px;
+        font-size: 24px;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -24,7 +23,7 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-around;
-        font-size: 24px;
+        font-size: 20px;
         width: 280px;       
     }
 }
