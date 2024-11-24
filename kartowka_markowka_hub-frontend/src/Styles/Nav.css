@@ -1,6 +1,6 @@
-.nav-box {
-    --grin-color: #529E63;
+@import url(./colors.css);
 
+.nav-box {
     color: var(--grin-color);
     font-size: 24px;
     display: flex;

@@ -1,7 +1,6 @@
-.search {
-    --grin-color-background: #BBDDC2;
-    --grin-color: #529E63;
+@import url(./colors.css);
 
+.search {
     height: 80px;
     background-color: var(--grin-color-background);
     display: flex;

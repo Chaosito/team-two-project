@@ -1,7 +1,6 @@
-.menu {
-    --gray-color: #F8F8F8;
-    --grin-color: #529E63;
+@import url(./colors.css);
 
+.menu {
     background-color: var(--gray-color);
     height: 100px;
     display: flex;

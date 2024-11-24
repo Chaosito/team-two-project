@@ -1,6 +1,6 @@
-.footer {
-    --gray-color: #F8F8F8;
+@import url(./colors.css);
 
+.footer {
     height: 58px;
     background-color: var(--gray-color);
     position: absolute;
