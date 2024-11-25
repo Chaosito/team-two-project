@@ -1,19 +1,46 @@
 import './../Styles/ProductCard.css';
-import { Button } from '@mui/material';
+import { Card, CardMedia, CardActions, Button, CardContent, Typography } from '@mui/material';
 import LocalGroceryStoreOutlinedIcon from '@mui/icons-material/LocalGroceryStoreOutlined';
 
 interface PropsProductCard {
-    imageUrl: string; 
+    productName?: string;
+    imageUrl?: string;
     width?: number;
     height?: number;
     buyHandler?(): any;
     basketHandler?(): any;
 }
 
-const ProductCard = ({imageUrl = '', width = 270, height = 150, buyHandler, basketHandler}: PropsProductCard) => {
-    return <div className="product-card" style={{backgroundImage: `url(${imageUrl})`, backgroundSize: 'cover', width:`${width}px`, height:`${height}px`}}>
-        <Button className='product-card__button product-card__button--buy' onClick={buyHandler} variant='contained' >Купить</Button>
-        <Button className='product-card__button product-card__button--basket' onClick={basketHandler} variant='contained'>{<LocalGroceryStoreOutlinedIcon/>}</Button>        
+const ProductCard = ({ productName = '', imageUrl = '', width = 270, height = 150, buyHandler, basketHandler }: PropsProductCard) => {
+    return <div className="product-card">
+        <Card sx={{ maxWidth: 300 }}>
+            <CardMedia
+                sx={{ width: { width }, height: { height } }}
+                image={imageUrl}
+                title={productName}
+            />
+            <CardContent>
+                <Typography variant='h5' >
+                    {productName}
+                </Typography>
+            </CardContent>
+            <CardActions>
+                <Button 
+                    size='small' 
+                    variant='contained' 
+                    onClick={buyHandler} 
+                    className='product-card__button product-card__button--buy'
+                >Купить
+                </Button>
+                <Button
+                    size='small'
+                    variant='contained'
+                    onClick={basketHandler}
+                    className='product-card__button'
+                >{<LocalGroceryStoreOutlinedIcon />}
+                </Button>
+            </CardActions>
+        </Card>
     </div>
 }
 
