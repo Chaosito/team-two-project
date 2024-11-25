@@ -4,7 +4,7 @@
     height: 58px;
     background-color: var(--gray-color);
     bottom: 0;
-    border-top: 1px solid gray;
+    border-top: 1px solid silver;
     display: flex;
     flex-direction: row;
     align-items: center;

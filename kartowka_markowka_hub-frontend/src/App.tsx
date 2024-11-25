@@ -9,8 +9,10 @@ import MainPage from './Components/MainPage/MainPage';
 function App() {
   return (
     <div className='app'>
+      <div>
       <Menu/>
       <Serarch/>
+      </div>
       <MainPage/>
       <Footer/>
     </div>
