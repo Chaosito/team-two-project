@@ -1,4 +1,4 @@
-import './../Styles/Login.css';
+import './../../Styles/AuthPage/Login.css';
 import { TextField, Button } from '@mui/material';
 
 function Login() {
