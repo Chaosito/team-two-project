@@ -1,0 +1,6 @@
+@KartowkaMarkowkaHub.Basket_HostAddress = http://localhost:5125
+
+GET {{KartowkaMarkowkaHub.Basket_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

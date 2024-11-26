@@ -32,7 +32,15 @@ services:
     ports:
      - 6379:6379
      - 8001:8001 
-
+    
+  rabbitmq:
+    image: "rabbitmq:4.0.2-management-alpine"
+    container_name: "rabbitmq"
+    restart: always
+    ports: 
+      - 5672:5672
+      - 15672:15672
+      
   #adminer:
   #  image: adminer:4.8.1
   #  container_name: adminer
