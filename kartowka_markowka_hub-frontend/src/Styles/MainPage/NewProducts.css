@@ -1,0 +1,17 @@
+@import url(./../colors.css);
+
+.new-products__title {
+    text-align: center;
+    color: var(--grin-color);
+}
+
+.new-products__box {
+    width: 90vw;
+    height: 250px;
+    background-color: var(--gray-color);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border: 1px solid silver;
+}

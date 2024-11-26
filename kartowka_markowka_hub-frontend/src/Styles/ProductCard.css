@@ -1,0 +1,12 @@
+@import url(./colors.css);
+
+.product-card {
+    .product-card__button {
+        background-color: var(--grin-color-background);
+        color: var(--grin-color);
+    }
+    
+    .product-card__button--buy {
+        width: 60%;
+    }
+}

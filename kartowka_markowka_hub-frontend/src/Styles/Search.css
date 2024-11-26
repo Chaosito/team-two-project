@@ -1,0 +1,28 @@
+@import url(./colors.css);
+
+.search {
+    height: 80px;
+    background-color: var(--grin-color-background);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+
+    .search__input-cover {
+        width: 70%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+
+        .search__input {
+            background-color: white;
+            width: 90%;
+        }       
+    }
+
+    .search__city {
+        color: white;
+        font-size: 18px;    
+    }  
+}

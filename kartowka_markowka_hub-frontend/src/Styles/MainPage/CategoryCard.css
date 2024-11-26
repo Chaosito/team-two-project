@@ -1,0 +1,15 @@
+@import url(./../colors.css);
+
+.category-card {
+    width: 18vw;
+    height: 30vh;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+
+    .category-card__button {
+        color: var(--grin-color);
+        background-color: white;
+    }
+}

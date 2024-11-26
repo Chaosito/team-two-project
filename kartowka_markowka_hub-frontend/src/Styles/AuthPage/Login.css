@@ -1,0 +1,31 @@
+@import url(./../colors.css);
+
+.login {
+    height: 75vh;  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+
+    .login__box {
+        width: 30vw;
+        height: 30vh;
+        padding-top: 25px;
+        background-color: var(--grin-color-background);
+        border-radius: 10px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+
+        .login__field {
+            background-color: white;
+            width: 80%;
+        }
+
+        .login__button {
+            width: 80%;
+        }
+    } 
+}
