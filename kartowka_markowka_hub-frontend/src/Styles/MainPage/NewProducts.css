@@ -7,7 +7,7 @@
 
 .new-products__box {
     width: 90vw;
-    height: 20vh;
+    height: 250px;
     background-color: var(--gray-color);
     border-radius: 10px;
     display: flex;
