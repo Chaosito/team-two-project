@@ -9,20 +9,23 @@ import ProductsPage from './Components/ProductsPage/ProductsPage';
 import { BrowserRouter, Routes, Route } from 'react-router';
 
 function App() {  
+
+  let [userName, setUserName] = React.useState('');
+
   return (
     <div className='app'>
-      <div>
-        <Menu/>
-        <Serarch/>
-      </div>
       <BrowserRouter>
+      <div>
+        <Menu setUserName={setUserName} userName={userName}/>
+        <Serarch/>
+      </div>      
         <Routes>
           <Route path='/' element={<MainPage/>} />
-          <Route path='/login' element={<Login/>} />
+          <Route path='/login' element={<Login setUserName={setUserName} userName={userName}/>} />
           <Route path='/products' element={<ProductsPage/>} />
         </Routes>
-      </BrowserRouter>      
       <Footer/>
+      </BrowserRouter>  
     </div>
   );
 }
