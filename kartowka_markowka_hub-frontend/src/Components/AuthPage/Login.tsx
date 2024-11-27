@@ -34,6 +34,7 @@ function Login({ setUserName, userName = '' } : PropsLogin) {
             .then(response => response.json())
             .then(data => {
                 localStorage.setItem("myAccessToken", data.accessToken);
+                localStorage.setItem("userLogin", data.login);
                 setUserName(data.login);
                 navigate('/');
                 console.log(data);

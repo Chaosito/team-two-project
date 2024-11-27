@@ -9,8 +9,8 @@ import ProductsPage from './Components/ProductsPage/ProductsPage';
 import { BrowserRouter, Routes, Route } from 'react-router';
 
 function App() {  
-
-  let [userName, setUserName] = React.useState('');
+  const savedUserLogin = localStorage.getItem("userLogin") ?? '';
+  let [userName, setUserName] = React.useState(savedUserLogin);
 
   return (
     <div className='app'>

@@ -13,6 +13,7 @@ function Menu({ setUserName, userName = '' } : PropsMenu) {
     function logOut() {
         setUserName('');
         localStorage.removeItem("myAccessToken");
+        localStorage.removeItem("userLogin");
     }
 
     return <div className='menu'>
@@ -31,7 +32,7 @@ function Menu({ setUserName, userName = '' } : PropsMenu) {
                 ) 
                 : (
                     <>
-                        <span>userName</span>
+                        <span>{ userName }</span>
                         <span onClick={ logOut }>Выйти</span>
                     </>                   
                 )                 
