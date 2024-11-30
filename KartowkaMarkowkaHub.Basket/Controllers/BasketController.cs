@@ -1,4 +1,5 @@
 ﻿using KartowkaMarkowkaHub.Basket.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KartowkaMarkowkaHub.Basket.Controllers
@@ -20,6 +21,7 @@ namespace KartowkaMarkowkaHub.Basket.Controllers
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
+        [Authorize]
         [HttpGet("{userId:guid}")]
         public async Task<IActionResult> Get(Guid userId)
         {
