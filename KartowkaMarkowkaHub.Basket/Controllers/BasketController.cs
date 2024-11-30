@@ -1,6 +1,7 @@
 ﻿using KartowkaMarkowkaHub.Basket.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace KartowkaMarkowkaHub.Basket.Controllers
 {
@@ -22,9 +23,11 @@ namespace KartowkaMarkowkaHub.Basket.Controllers
         /// <param name="userId"></param>
         /// <returns></returns>
         [Authorize]
-        [HttpGet("{userId:guid}")]
-        public async Task<IActionResult> Get(Guid userId)
-        {
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {            
+            string userIdText = User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
+            Guid userId = Guid.Parse(userIdText);
             var result = await _basketService.Get(userId);
             return Ok(result);
         }
