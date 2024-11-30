@@ -1,3 +1,6 @@
+using KartowkaMarkowkaHub.Services.rabbitmq;
+using MassTransit;
+
 namespace KartowkaMarkowkaHub.Web
 {
     public class Program
@@ -5,6 +8,24 @@ namespace KartowkaMarkowkaHub.Web
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            var rabbitmqOptions = builder.Configuration.GetSection("RabbitMq");
+            builder.Services.AddMassTransit(x =>
+            {
+                x.AddConsumer<ProcessProductConsumer>();
+                x.UsingRabbitMq((context, config) =>
+                {
+                    config.Host(rabbitmqOptions["Host"], h =>
+                    {
+                        h.Username(rabbitmqOptions["Username"] ?? "");
+                        h.Password(rabbitmqOptions["Password"] ?? "");
+                    });
+                    config.ReceiveEndpoint("product-queue", e =>
+                    {
+                        e.ConfigureConsumer<ProcessProductConsumer>(context);
+                    });
+                });
+            });
 
             var startup = new Startup(builder.Configuration);
 
