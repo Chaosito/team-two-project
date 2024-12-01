@@ -8,7 +8,7 @@ function Nav() {
         <div className='nav-box__item' onClick={ () => navigate('/products') }>
             <span>Продукция</span>
         </div>
-        <div className='nav-box__item'>
+        <div className='nav-box__item' onClick={ () => navigate('/basket') }>
             <span>Корзина</span>
         </div>
         <div className='nav-box__item'>

@@ -6,6 +6,7 @@ import Footer from './Components/Footer';
 import Login from './Components/AuthPage/Login';
 import MainPage from './Components/MainPage/MainPage';
 import ProductsPage from './Components/ProductsPage/ProductsPage';
+import BasketPage from './Components/BasketPage/BasketPage';
 import { BrowserRouter, Routes, Route } from 'react-router';
 
 function App() {  
@@ -23,6 +24,7 @@ function App() {
           <Route path='/' element={<MainPage/>} />
           <Route path='/login' element={<Login setUserName={setUserName} userName={userName}/>} />
           <Route path='/products' element={<ProductsPage/>} />
+          <Route path='/basket' element={<BasketPage/>} />          
         </Routes>
       <Footer/>
       </BrowserRouter>  
