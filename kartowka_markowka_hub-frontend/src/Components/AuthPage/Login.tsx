@@ -14,6 +14,7 @@ interface PropsLogin {
 }
 
 function Login({ setUserName, userName = '' } : PropsLogin) {
+    const baseUrl = process.env.REACT_APP_BASE_URL;
     const [name, setName] = useState('Wower');
     const [password, setPassword] = useState('123123');
     const navigate = useNavigate();
@@ -24,7 +25,7 @@ function Login({ setUserName, userName = '' } : PropsLogin) {
             password: password
         }
      
-        fetch('https://localhost:7035/api/Account/Login', {
+        fetch(baseUrl + '/api/Account/Login', {
             method: 'POST',
             body: JSON.stringify(requestData),
             headers: {

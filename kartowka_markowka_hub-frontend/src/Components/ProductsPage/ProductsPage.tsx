@@ -11,12 +11,13 @@ interface Product {
 }
 
 function ProductsPage() {
+    const baseUrl = process.env.REACT_APP_BASE_URL;
     const savedToken = localStorage.getItem("myAccessToken") ?? '';
     let [products, setProducts] = useState<Product[]>([]);
 
     useEffect(() => {
         if(savedToken !== '') {
-            fetch('https://localhost:7035/api/Product', {
+            fetch(baseUrl + '/api/Product', {
                 method: 'GET',
                 headers: {
                     "Authorization": "Bearer " + savedToken
