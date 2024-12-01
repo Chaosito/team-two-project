@@ -17,8 +17,8 @@ function Menu({ setUserName, userName = '' } : PropsMenu) {
     }
 
     return <div className='menu'>
-        <div className='menu__box-name'>
-            <span onClick={ () => navigate('/') }><b>KartowkaMarkawkaHub</b></span>
+        <div className='menu__box-name' onClick={ () => navigate('/') }>
+            <span><b>KartowkaMarkawkaHub</b></span>
         </div>
         <Nav/>
         <div className='menu__box-login'>            

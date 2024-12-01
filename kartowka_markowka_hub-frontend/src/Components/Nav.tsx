@@ -5,9 +5,15 @@ function Nav() {
     const navigate = useNavigate();
 
     return <div className="nav-box">
-        <span onClick={ () => navigate('/products') }>Продукция</span>
-        <span>Корзина</span>
-        <span>Мои заказы</span>
+        <div className='nav-box__item' onClick={ () => navigate('/products') }>
+            <span>Продукция</span>
+        </div>
+        <div className='nav-box__item'>
+            <span>Корзина</span>
+        </div>
+        <div className='nav-box__item'>
+            <span>Мои заказы</span>
+        </div>       
     </div>
 }
 
