@@ -15,7 +15,6 @@ namespace KartowkaMarkowkaHab.Gateway
             var app = builder.Build();
 
             app.UseOcelot().Wait();
-            //app.MapGet("/", () => "Hello World!");
 
             app.Run();
         }
