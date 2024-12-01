@@ -1,0 +1,19 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/Product",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 8088
+        }
+      ],
+      "UpstreamPathTemplate": "/api/product",
+      "UpstreamHttpMethod": ["GET", "POST", "PUT"]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:7166"
+  }
+}

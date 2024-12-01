@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KartowkaMarkowkaHub.Test", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KartowkaMarkowkaHub.Basket", "KartowkaMarkowkaHub.Basket\KartowkaMarkowkaHub.Basket.csproj", "{EA00705B-13D6-45B8-B6D4-9ABEDEDB8556}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KartowkaMarkowkaHab.Gateway", "KartowkaMarkowkaHab.Gateway\KartowkaMarkowkaHab.Gateway.csproj", "{2894DD3B-96E6-476A-BFCA-0DD2CB675F8D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{EA00705B-13D6-45B8-B6D4-9ABEDEDB8556}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA00705B-13D6-45B8-B6D4-9ABEDEDB8556}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA00705B-13D6-45B8-B6D4-9ABEDEDB8556}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2894DD3B-96E6-476A-BFCA-0DD2CB675F8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2894DD3B-96E6-476A-BFCA-0DD2CB675F8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2894DD3B-96E6-476A-BFCA-0DD2CB675F8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2894DD3B-96E6-476A-BFCA-0DD2CB675F8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
