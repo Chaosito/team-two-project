@@ -40,6 +40,18 @@ services:
     ports: 
       - 5672:5672
       - 15672:15672
+
+  basket:
+    image: basket
+    container_name: basket
+    build:
+      context: .
+      dockerfile: KartowkaMarkowkaHub.Basket/Dockerfile
+    ports:
+      - 8090:8080
+      - 8091:8081
+    depends_on:
+      - rabbitmq
       
   #adminer:
   #  image: adminer:4.8.1
