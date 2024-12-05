@@ -1,0 +1,7 @@
+.basket-page {
+    height: 100vh;
+
+    .basket-page__box-card {
+        padding-left: 10vw;    
+    }  
+}
