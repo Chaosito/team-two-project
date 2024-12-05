@@ -66,18 +66,18 @@ services:
   mongodb:
     image: mongo:5.0
     container_name: graylog-mongodb
-    networks:
-      - graylog-network
+    volumes:
+      - mongo_data:/data/db
     restart: unless-stopped
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.17.13
     container_name: graylog-elasticsearch
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
     environment:
       - discovery.type=single-node
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    networks:
-      - graylog-network
     ulimits:
       memlock:
         soft: -1
@@ -85,23 +85,26 @@ services:
     mem_limit: 1g
     restart: unless-stopped
 
-  graylog:
-    image: graylog/graylog:5.1
+  graylog: #логин-пароль admin admin123
+    image: graylog/graylog:6.1
     container_name: graylog
+    volumes:
+      - graylog_data:/var/lib/graylog
     environment:
-      - GRAYLOG_PASSWORD_SECRET=admin
-      - GRAYLOG_ROOT_PASSWORD_SHA2=8C6976E5B5410415BDE908BD4DEE15DF #admin
+      - GRAYLOG_PASSWORD_SECRET=SuperSecureRandomKey123
+      - GRAYLOG_ROOT_PASSWORD_SHA2=240BE518FABD2724DDB6F04EEB1DA5967448D7E831C08C8FA822809F74C720A9
       - GRAYLOG_HTTP_EXTERNAL_URI=http://localhost:9000/
+      - GRAYLOG_MONGODB_URI=mongodb://mongodb:27017/graylog
+      - GRAYLOG_ELASTICSEARCH_HOSTS=http://elasticsearch:9200
     depends_on:
       - mongodb
       - elasticsearch
     ports:
-      - "9000:9000"   # Graylog Web UI
-      - "12201:12201/udp" # GELF UDP Input
-    networks:
-      - graylog-network
+      - "9000:9000"        # Graylog Web UI
+      - "12201:12201/udp"  # GELF UDP Input
     restart: unless-stopped
 
-networks:
-  graylog-network:
-    driver: bridge
+volumes:
+  mongo_data:
+  es_data:
+  graylog_data:

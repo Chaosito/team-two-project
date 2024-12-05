@@ -16,6 +16,8 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using KartowkaMarkowkaHub.Application;
 using KartowkaMarkowkaHub.Services.Roles;
+using Serilog;
+using Serilog.Sinks.Graylog;
 
 namespace KartowkaMarkowkaHub.Web
 {
@@ -23,9 +25,12 @@ namespace KartowkaMarkowkaHub.Web
     {
         public IConfiguration Configuration { get; }
 
-        public Startup(IConfiguration configuration)
+        public ILoggingBuilder Logging { get; set; }
+
+        public Startup(IConfiguration configuration, ILoggingBuilder logging)
         {
             Configuration = configuration;
+            Logging = logging;
         }
 
         // Метод для добавления служб в контейнер DI (Default name)
@@ -55,6 +60,25 @@ namespace KartowkaMarkowkaHub.Web
         // Add services to the container.
         public void DependencyInjectionRegistration(IServiceCollection services)
         {
+            Log.Logger = new LoggerConfiguration()
+             .Enrich.FromLogContext() // Добавление информации о контексте
+             .WriteTo.Graylog(
+                 new GraylogSinkOptions
+                 {
+                     HostnameOrAddress = "localhost", // URL сервера Graylog
+                     Port = 12201,
+                     Facility = "kartowkamarkowka",
+                     TransportType = Serilog.Sinks.Graylog.Core.Transport.TransportType.Udp
+                 })
+             .CreateLogger();
+
+            services.AddLogging(loggingBuilder =>
+            {
+                loggingBuilder.ClearProviders();
+                loggingBuilder.AddSerilog();
+            });
+
+
             services.AddControllersWithViews();
 
             //https://github.com/FluentValidation/FluentValidation.AspNetCore
@@ -174,6 +198,8 @@ namespace KartowkaMarkowkaHub.Web
                 cacheOptions.Configuration = options.ConnectionStrings.RedisConnection;
                 cacheOptions.InstanceName = "kartowka-markowka-hub_";
             });
+
+
         }
         // Метод для настройки конвейера HTTP-запросов
         // Configure the HTTP request pipeline.
@@ -189,6 +215,7 @@ namespace KartowkaMarkowkaHub.Web
                 //dbContext.Database.Migrate();
             }
 
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -199,6 +226,7 @@ namespace KartowkaMarkowkaHub.Web
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -244,6 +272,7 @@ namespace KartowkaMarkowkaHub.Web
                 #endregion
             });
 
+            
             // Включаем middleware для генерации Swagger JSON и Swagger UI
             app.UseSwagger();
             app.UseSwaggerUI(c =>
