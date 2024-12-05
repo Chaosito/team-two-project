@@ -122,6 +122,7 @@ namespace KartowkaMarkowkaHub.Web
             services.AddScoped<ITokenService, TokenService>();         
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+            //Добавляет DI зависимости проекта Application
             services.AddApplication();
             services.AddServices();
 

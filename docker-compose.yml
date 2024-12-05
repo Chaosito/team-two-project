@@ -1,16 +1,14 @@
-version: '3.4'
-
 services:
-  kartowkamarkowkahub.web:
-    image: ${DOCKER_REGISTRY-}kartowkamarkowkahubweb
-    build:
-      context: .
-      dockerfile: KartowkaMarkowkaHub.Web/Dockerfile
-    ports:
-      - 8080:8080
-      - 8081:8081
-    depends_on:
-      - postgreSql
+  # kartowkamarkowkahub.web:
+  #   image: ${DOCKER_REGISTRY-}kartowkamarkowkahubweb
+  #   build:
+  #     context: .
+  #     dockerfile: KartowkaMarkowkaHub.Web/Dockerfile
+  #   ports:
+  #     - 8080:8080
+  #     - 8081:8081
+  #   depends_on:
+  #     - postgreSql
 
   postgreSql:
     image: postgres:16
@@ -63,3 +61,47 @@ services:
   #        "PGADMIN_DEFAULT_PASSWORD": pg-admin_1
   #    ports:
   #        - "8086:80"
+
+  #Graylog Stack
+  mongodb:
+    image: mongo:5.0
+    container_name: graylog-mongodb
+    networks:
+      - graylog-network
+    restart: unless-stopped
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.13
+    container_name: graylog-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    networks:
+      - graylog-network
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    mem_limit: 1g
+    restart: unless-stopped
+
+  graylog:
+    image: graylog/graylog:5.1
+    container_name: graylog
+    environment:
+      - GRAYLOG_PASSWORD_SECRET=admin
+      - GRAYLOG_ROOT_PASSWORD_SHA2=8C6976E5B5410415BDE908BD4DEE15DF #admin
+      - GRAYLOG_HTTP_EXTERNAL_URI=http://localhost:9000/
+    depends_on:
+      - mongodb
+      - elasticsearch
+    ports:
+      - "9000:9000"   # Graylog Web UI
+      - "12201:12201/udp" # GELF UDP Input
+    networks:
+      - graylog-network
+    restart: unless-stopped
+
+networks:
+  graylog-network:
+    driver: bridge
