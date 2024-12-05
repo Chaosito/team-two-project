@@ -1,0 +1,18 @@
+# Исключить папки
+node_modules
+build
+dist
+coverage
+
+# Игнорировать временные файлы и IDE-конфигурации
+*.log
+*.tmp
+.DS_Store
+.vscode
+.idea
+
+# Исключить файлы системы контроля версий
+.git
+.gitignore
+
+README.md

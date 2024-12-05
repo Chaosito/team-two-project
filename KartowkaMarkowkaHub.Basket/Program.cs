@@ -13,6 +13,21 @@ namespace KartowkaMarkowkaHub.Basket
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            string Origin = "MyAllowOrigin";
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: Origin,
+                    corsBuilder =>
+                    {
+                        corsBuilder
+                          //.WithOrigins(["http://localhost:3000"])
+                            .AllowAnyOrigin()                           
+                            .AllowAnyHeader();
+                    });
+            });
+
+
             const string KEY = "mysecretsdasdasdasdkeyasdasdasdasdasda";
 
             builder.Services.AddAuthentication(options =>
@@ -109,6 +124,8 @@ namespace KartowkaMarkowkaHub.Basket
             builder.Services.AddScoped<IBasketService, BasketService>();    
 
             var app = builder.Build();
+
+            app.UseCors(Origin);
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

@@ -62,7 +62,9 @@ namespace KartowkaMarkowkaHub.Web
                 options.AddPolicy(name: Origin,
                     corsBuilder =>
                     {
-                        corsBuilder.WithOrigins(["http://localhost:3000"])
+                        corsBuilder
+                           //.WithOrigins(["http://localhost:3000", "http://localhost:8092"])
+                            .AllowAnyOrigin()
                             .AllowAnyHeader();
                     });
             });
