@@ -1,10 +1,19 @@
 import './../Styles/Nav.css';
+import { useNavigate } from 'react-router';
 
 function Nav() {
+    const navigate = useNavigate();
+
     return <div className="nav-box">
-        <span>Продукция</span>
-        <span>Корзина</span>
-        <span>Мои заказы</span>
+        <div className='nav-box__item' onClick={ () => navigate('/products') }>
+            <span>Продукция</span>
+        </div>
+        <div className='nav-box__item' onClick={ () => navigate('/basket') }>
+            <span>Корзина</span>
+        </div>
+        <div className='nav-box__item'>
+            <span>Мои заказы</span>
+        </div>       
     </div>
 }
 

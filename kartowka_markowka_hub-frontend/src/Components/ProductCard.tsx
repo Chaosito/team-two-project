@@ -1,6 +1,7 @@
 import './../Styles/ProductCard.css';
 import { Card, CardMedia, CardActions, Button, CardContent, Typography } from '@mui/material';
 import LocalGroceryStoreOutlinedIcon from '@mui/icons-material/LocalGroceryStoreOutlined';
+import vegetables from './../Images/vegetables.jpg';
 
 interface PropsProductCard {
     productName?: string;
@@ -16,7 +17,7 @@ const ProductCard = ({ productName = '', imageUrl = '', width = 270, height = 15
         <Card sx={{ maxWidth: 300 }}>
             <CardMedia
                 sx={{ width: { width }, height: { height } }}
-                image={imageUrl}
+                image={vegetables}
                 title={productName}
             />
             <CardContent>

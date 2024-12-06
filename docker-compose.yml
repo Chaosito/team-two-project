@@ -1,14 +1,19 @@
 services:
-  # kartowkamarkowkahub.web:
-  #   image: ${DOCKER_REGISTRY-}kartowkamarkowkahubweb
-  #   build:
-  #     context: .
-  #     dockerfile: KartowkaMarkowkaHub.Web/Dockerfile
-  #   ports:
-  #     - 8080:8080
-  #     - 8081:8081
-  #   depends_on:
-  #     - postgreSql
+  webApp:
+    #image: ${DOCKER_REGISTRY-}kartowkamarkowkahubweb
+    image: kartowkamarkowkahubweb
+    container_name: webApp
+    build:
+      context: .
+      dockerfile: KartowkaMarkowkaHub.Web/Dockerfile
+    ports:
+      - 8080:8080
+      - 8081:8081
+    depends_on:
+      - postgreSql
+      - cacheRedis
+    networks:
+      - app-network
 
   postgreSql:
     image: postgres:16
@@ -22,6 +27,8 @@ services:
       POSTGRES_DB: HubDb
     ports:
      - 5432:5432
+    networks:
+     - app-network
 
   cacheRedis:
     image: redis:7.4.0-alpine
@@ -29,7 +36,9 @@ services:
     restart: always
     ports:
      - 6379:6379
-     - 8001:8001 
+     - 8001:8001
+    networks:
+     - app-network
     
   rabbitmq:
     image: "rabbitmq:4.0.2-management-alpine"
@@ -38,7 +47,36 @@ services:
     ports: 
       - 5672:5672
       - 15672:15672
-      
+    networks:
+      - app-network
+
+  basket:
+    image: basket
+    container_name: basket
+    build:
+      context: .
+      dockerfile: KartowkaMarkowkaHub.Basket/Dockerfile
+    ports:
+      - 8090:8080
+      - 8091:8081
+    depends_on:
+      - rabbitmq
+    networks:
+      - app-network
+    
+  reactApp:
+    image: kartowka-markowka-hub-frontend:latest
+    container_name: reactApp
+    build: 
+      context: .
+      dockerfile: kartowka_markowka_hub-frontend/Dockerfile
+    ports:
+      - 8092:80
+    env_file: 
+     - kartowka_markowka_hub-frontend/.env.production
+    networks:
+     - app-network
+
   #adminer:
   #  image: adminer:4.8.1
   #  container_name: adminer
@@ -108,3 +146,8 @@ volumes:
   mongo_data:
   es_data:
   graylog_data:
+  #        - "8086:80"
+
+networks:
+  app-network:
+    driver: bridge

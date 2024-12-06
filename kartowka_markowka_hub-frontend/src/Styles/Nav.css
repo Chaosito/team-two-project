@@ -8,4 +8,16 @@
     align-items: center;
     justify-content: space-around;
     width: 50%;
+
+    .nav-box__item {        
+        height: 100%;
+        display: flex;
+        align-items: center;
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    .nav-box__item:hover {
+        background-color: white;
+    }
 }

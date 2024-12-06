@@ -31,6 +31,8 @@ namespace KartowkaMarkowkaHub.Web
             Configuration = configuration;
         }
 
+        string Origin = "MyAllowOrigin";
+
         // Метод для добавления служб в контейнер DI (Default name)
         // Add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -57,6 +59,19 @@ namespace KartowkaMarkowkaHub.Web
         // Метод для добавления служб в контейнер DI
         // Add services to the container.
         public void DependencyInjectionRegistration(IServiceCollection services)
+        {          
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: Origin,
+                    corsBuilder =>
+                    {
+                        corsBuilder
+                           //.WithOrigins(["http://localhost:3000", "http://localhost:8092"])
+                            .AllowAnyOrigin()
+                            .AllowAnyHeader();
+                    });
+            });
+
         {
             #region Add Serialog + Graylog
             //Добавление логера напрямую
@@ -208,6 +223,7 @@ namespace KartowkaMarkowkaHub.Web
         // Configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
+            app.UseCors(Origin);
             using (var scope = serviceProvider.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetService<HubContext>();
