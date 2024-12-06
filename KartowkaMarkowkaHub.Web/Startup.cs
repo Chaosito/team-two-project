@@ -16,6 +16,9 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using KartowkaMarkowkaHub.Application;
 using KartowkaMarkowkaHub.Services.Roles;
+using Serilog;
+using Serilog.Sinks.Graylog;
+using System.Configuration;
 
 namespace KartowkaMarkowkaHub.Web
 {
@@ -68,6 +71,32 @@ namespace KartowkaMarkowkaHub.Web
                             .AllowAnyHeader();
                     });
             });
+        
+            #region Add Serialog + Graylog
+            //Добавление логера напрямую
+            //Log.Logger = new LoggerConfiguration()
+            // .Enrich.FromLogContext()
+            // .WriteTo.Graylog(
+            //     new GraylogSinkOptions
+            //     {
+            //         HostnameOrAddress = "localhost",
+            //         Port = 12201,
+            //         Facility = "kartowkamarkowka",
+            //         TransportType = Serilog.Sinks.Graylog.Core.Transport.TransportType.Udp
+            //     })
+            // .CreateLogger();
+
+            Log.Logger = new LoggerConfiguration()
+            .ReadFrom.Configuration(Configuration) // Подключение конфигурации из appsettings.json
+            .CreateLogger();
+
+            services.AddLogging(loggingBuilder =>
+            {
+                loggingBuilder.ClearProviders();
+                loggingBuilder.AddSerilog();
+            });
+
+            #endregion
 
             services.AddControllersWithViews();
 
@@ -136,6 +165,7 @@ namespace KartowkaMarkowkaHub.Web
             services.AddScoped<ITokenService, TokenService>();         
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+            //Добавляет DI зависимости проекта Application
             services.AddApplication();
             services.AddServices();
 
@@ -188,6 +218,7 @@ namespace KartowkaMarkowkaHub.Web
                 cacheOptions.InstanceName = "kartowka-markowka-hub_";
             });
         }
+
         // Метод для настройки конвейера HTTP-запросов
         // Configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)

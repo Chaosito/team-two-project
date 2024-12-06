@@ -1,5 +1,3 @@
-version: '3.4'
-
 services:
   webApp:
     #image: ${DOCKER_REGISTRY-}kartowkamarkowkahubweb
@@ -70,8 +68,8 @@ services:
     image: kartowka-markowka-hub-frontend:latest
     container_name: reactApp
     build: 
-      context: .
-      dockerfile: kartowka_markowka_hub-frontend/Dockerfile
+      context: ./kartowka_markowka_hub-frontend
+      dockerfile: Dockerfile
     ports:
       - 8092:80
     env_file: 
@@ -101,6 +99,59 @@ services:
   #        "PGADMIN_DEFAULT_PASSWORD": pg-admin_1
   #    ports:
   #        - "8086:80"
+
+  #Graylog Stack
+  mongodb:
+    image: mongo:5.0
+    container_name: graylog-mongodb
+    volumes:
+      - mongo_data:/data/db
+    restart: unless-stopped
+    networks:
+     - app-network
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.13
+    container_name: graylog-elasticsearch
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    mem_limit: 1g
+    restart: unless-stopped
+    networks:
+     - app-network
+
+  graylog: #логин-пароль admin admin123
+    image: graylog/graylog:6.1
+    container_name: graylog
+    volumes:
+      - graylog_data:/var/lib/graylog
+    environment:
+      - GRAYLOG_PASSWORD_SECRET=SuperSecureRandomKey123
+      - GRAYLOG_ROOT_PASSWORD_SHA2=240BE518FABD2724DDB6F04EEB1DA5967448D7E831C08C8FA822809F74C720A9
+      - GRAYLOG_HTTP_EXTERNAL_URI=http://localhost:9000/
+      - GRAYLOG_MONGODB_URI=mongodb://mongodb:27017/graylog
+      - GRAYLOG_ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    depends_on:
+      - mongodb
+      - elasticsearch
+    ports:
+      - "9000:9000"        # Graylog Web UI
+      - "12201:12201/udp"  # GELF UDP Input
+    restart: unless-stopped
+    networks:
+     - app-network
+
+volumes:
+  mongo_data:
+  es_data:
+  graylog_data:
 
 networks:
   app-network:
