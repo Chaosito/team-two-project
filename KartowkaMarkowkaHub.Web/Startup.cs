@@ -59,12 +59,13 @@ namespace KartowkaMarkowkaHub.Web
         public void DependencyInjectionRegistration(IServiceCollection services)
         {
             #region Add Serialog + Graylog
+            //Добавление логера напрямую
             //Log.Logger = new LoggerConfiguration()
-            // .Enrich.FromLogContext() // Добавление информации о контексте
+            // .Enrich.FromLogContext()
             // .WriteTo.Graylog(
             //     new GraylogSinkOptions
             //     {
-            //         HostnameOrAddress = "localhost", // URL сервера Graylog
+            //         HostnameOrAddress = "localhost",
             //         Port = 12201,
             //         Facility = "kartowkamarkowka",
             //         TransportType = Serilog.Sinks.Graylog.Core.Transport.TransportType.Udp
