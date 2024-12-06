@@ -68,8 +68,8 @@ services:
     image: kartowka-markowka-hub-frontend:latest
     container_name: reactApp
     build: 
-      context: .
-      dockerfile: kartowka_markowka_hub-frontend/Dockerfile
+      context: ./kartowka_markowka_hub-frontend
+      dockerfile: Dockerfile
     ports:
       - 8092:80
     env_file: 

@@ -71,8 +71,7 @@ namespace KartowkaMarkowkaHub.Web
                             .AllowAnyHeader();
                     });
             });
-
-        {
+        
             #region Add Serialog + Graylog
             //Добавление логера напрямую
             //Log.Logger = new LoggerConfiguration()
@@ -219,6 +218,7 @@ namespace KartowkaMarkowkaHub.Web
                 cacheOptions.InstanceName = "kartowka-markowka-hub_";
             });
         }
+
         // Метод для настройки конвейера HTTP-запросов
         // Configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
