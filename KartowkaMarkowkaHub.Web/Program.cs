@@ -39,7 +39,7 @@ namespace KartowkaMarkowkaHub.Web
             var app = builder.Build();
 
             startup.Configure(app, app.Environment, app.Services);
-            
+
             #region Первичный вариант без Startup
             //if (!app.Environment.IsDevelopment())
             //{
@@ -59,7 +59,6 @@ namespace KartowkaMarkowkaHub.Web
             //    name: "default",
             //    pattern: "{controller=Home}/{action=Index}/{id?}");
             #endregion
-
 
             app.Run();
             Log.Information("Приложение запущено и готово отправлять логи в Graylog2222!");
