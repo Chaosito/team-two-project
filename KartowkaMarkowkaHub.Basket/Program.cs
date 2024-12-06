@@ -39,7 +39,7 @@ namespace KartowkaMarkowkaHub.Basket
             });
 
             builder.Services.AddHttpClient();
-            builder.Services.AddScoped<IBasketService, BasketService>();    
+            builder.Services.AddScoped<IBasketService, BasketService>();
 
             var app = builder.Build();
 

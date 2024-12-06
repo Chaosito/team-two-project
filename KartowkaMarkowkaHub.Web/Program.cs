@@ -1,5 +1,7 @@
 using KartowkaMarkowkaHub.Services.rabbitmq;
 using MassTransit;
+using Serilog;
+using Serilog.Sinks.Graylog;
 
 namespace KartowkaMarkowkaHub.Web
 {
@@ -31,13 +33,13 @@ namespace KartowkaMarkowkaHub.Web
 
             // Add services to the container.
             //builder.Services.AddControllersWithViews();
-            startup.DependencyInjectionRegistration(builder.Services); 
+            startup.DependencyInjectionRegistration(builder.Services);
             //startup.ConfigureServices(builder.Services);
 
             var app = builder.Build();
 
             startup.Configure(app, app.Environment, app.Services);
-
+            
             #region Первичный вариант без Startup
             //if (!app.Environment.IsDevelopment())
             //{
@@ -58,7 +60,9 @@ namespace KartowkaMarkowkaHub.Web
             //    pattern: "{controller=Home}/{action=Index}/{id?}");
             #endregion
 
+
             app.Run();
+            Log.Information("Приложение запущено и готово отправлять логи в Graylog2222!");
         }
     }
 }

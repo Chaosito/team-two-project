@@ -16,6 +16,9 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using KartowkaMarkowkaHub.Application;
 using KartowkaMarkowkaHub.Services.Roles;
+using Serilog;
+using Serilog.Sinks.Graylog;
+using System.Configuration;
 
 namespace KartowkaMarkowkaHub.Web
 {
@@ -55,6 +58,31 @@ namespace KartowkaMarkowkaHub.Web
         // Add services to the container.
         public void DependencyInjectionRegistration(IServiceCollection services)
         {
+            #region Add Serialog + Graylog
+            //Log.Logger = new LoggerConfiguration()
+            // .Enrich.FromLogContext() // Добавление информации о контексте
+            // .WriteTo.Graylog(
+            //     new GraylogSinkOptions
+            //     {
+            //         HostnameOrAddress = "localhost", // URL сервера Graylog
+            //         Port = 12201,
+            //         Facility = "kartowkamarkowka",
+            //         TransportType = Serilog.Sinks.Graylog.Core.Transport.TransportType.Udp
+            //     })
+            // .CreateLogger();
+
+            Log.Logger = new LoggerConfiguration()
+            .ReadFrom.Configuration(Configuration) // Подключение конфигурации из appsettings.json
+            .CreateLogger();
+
+            services.AddLogging(loggingBuilder =>
+            {
+                loggingBuilder.ClearProviders();
+                loggingBuilder.AddSerilog();
+            });
+
+            #endregion
+
             services.AddControllersWithViews();
 
             //https://github.com/FluentValidation/FluentValidation.AspNetCore
