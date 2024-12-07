@@ -4,15 +4,16 @@ import LocalGroceryStoreOutlinedIcon from '@mui/icons-material/LocalGroceryStore
 import vegetables from './../Images/vegetables.jpg';
 
 interface PropsProductCard {
+    productId?: string;
     productName?: string;
     imageUrl?: string;
     width?: number;
     height?: number;
-    buyHandler?(): any;
+    buyHandler?: (id:string)=>void;
     basketHandler?(): any;
 }
 
-const ProductCard = ({ productName = '', imageUrl = '', width = 270, height = 150, buyHandler, basketHandler }: PropsProductCard) => {
+const ProductCard = ({ productId = '', productName = '', imageUrl = '', width = 270, height = 150, buyHandler = ()=>{}, basketHandler }: PropsProductCard) => {
     return <div className="product-card">
         <Card sx={{ maxWidth: 300 }}>
             <CardMedia
@@ -29,7 +30,7 @@ const ProductCard = ({ productName = '', imageUrl = '', width = 270, height = 15
                 <Button 
                     size='small' 
                     variant='contained' 
-                    onClick={buyHandler} 
+                    onClick={ () => buyHandler(productId) } 
                     className='product-card__button product-card__button--buy'
                 >Купить
                 </Button>

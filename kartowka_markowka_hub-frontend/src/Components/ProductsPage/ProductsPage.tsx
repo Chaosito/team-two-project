@@ -3,24 +3,29 @@ import './../../Styles/ProductsPage/ProductsPage.css';
 import ProductCard from './../ProductCard';
 import { Grid2, Button } from '@mui/material';
 import { useNavigate } from 'react-router';
+import { type AppDispatch, productSlice } from '../../Redux/Store';
+import { useDispatch } from 'react-redux';
 
 interface Product {
-    id: number;
+    id: string;
     name: string;
     price: number;
     image: string;
 }
-
-
 
 function ProductsPage() {
     const baseUrl = process.env.REACT_APP_BASE_URL;
     const savedToken = localStorage.getItem("myAccessToken") ?? '';
     let [products, setProducts] = useState<Product[]>([]);
     let navigate = useNavigate();
+    const dispatchProducts = useDispatch<AppDispatch>();
+    const { add, clear } = productSlice.actions;
 
-    function buyProductHandler() {
-        navigate('/order-add')
+    function buyProductHandler(productId: string) {
+        console.log('id: ' + productId);
+        dispatchProducts(clear());
+        dispatchProducts(add(productId));
+        navigate('/order-add');
     }
 
     useEffect(() => {
@@ -50,7 +55,7 @@ function ProductsPage() {
                 {
                     products.map((p) => (
                         <Grid2 key={p.id}>
-                            <ProductCard productName={p.name + ' ' + p.price} imageUrl={''} buyHandler={buyProductHandler} />
+                            <ProductCard productId={p.id} productName={p.name + ' ' + p.price} imageUrl={''} buyHandler={buyProductHandler} />
                         </Grid2>
                     ))
                 }
