@@ -9,7 +9,9 @@ function OrderAddPage() {
     console.log(products);
 
     return <div className="order-add-page">  
-        <p>{ products[0] }</p>
+        <p>{ products[0]?.id }</p>
+        <p>{ products[0]?.name }</p>
+        <p>{ products[0]?.price }</p>
     </div>
 }
 

@@ -1,19 +1,20 @@
 import './../Styles/ProductCard.css';
+import { Product } from '../Redux/Store';
 import { Card, CardMedia, CardActions, Button, CardContent, Typography } from '@mui/material';
 import LocalGroceryStoreOutlinedIcon from '@mui/icons-material/LocalGroceryStoreOutlined';
 import vegetables from './../Images/vegetables.jpg';
 
 interface PropsProductCard {
-    productId?: string;
+    product: Product;
     productName?: string;
     imageUrl?: string;
     width?: number;
     height?: number;
-    buyHandler?: (id:string)=>void;
+    buyHandler?: (product:Product)=>void;
     basketHandler?(): any;
 }
 
-const ProductCard = ({ productId = '', productName = '', imageUrl = '', width = 270, height = 150, buyHandler = ()=>{}, basketHandler }: PropsProductCard) => {
+const ProductCard = ({ product, productName = '', imageUrl = '', width = 270, height = 150, buyHandler = ()=>{}, basketHandler }: PropsProductCard) => {
     return <div className="product-card">
         <Card sx={{ maxWidth: 300 }}>
             <CardMedia
@@ -30,7 +31,7 @@ const ProductCard = ({ productId = '', productName = '', imageUrl = '', width = 
                 <Button 
                     size='small' 
                     variant='contained' 
-                    onClick={ () => buyHandler(productId) } 
+                    onClick={ () => buyHandler(product) } 
                     className='product-card__button product-card__button--buy'
                 >Купить
                 </Button>

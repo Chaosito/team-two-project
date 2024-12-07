@@ -1,9 +1,14 @@
 
 import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+interface Product {
+    id: string;
+    name: string;
+    price: number;
+}
 
 type ProductsState = {
-    products: string[]
+    products: Product[]
 }
 
 const initialStateProducts: ProductsState = {
@@ -14,7 +19,7 @@ const productSlice = createSlice({
     name: 'productSlice',
     initialState: initialStateProducts,
     reducers: {
-        add: (state, action: PayloadAction<string>) => {
+        add: (state, action: PayloadAction<Product>) => {
             state.products.push(action.payload); 
             return state;
         },
@@ -33,4 +38,4 @@ const Store = configureStore({
 
 type AppDispatch = typeof Store.dispatch;
 
-export { Store, type AppDispatch, productSlice }
+export { Store, type AppDispatch, productSlice, type Product }

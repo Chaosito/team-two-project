@@ -3,10 +3,10 @@ import './../../Styles/ProductsPage/ProductsPage.css';
 import ProductCard from './../ProductCard';
 import { Grid2, Button } from '@mui/material';
 import { useNavigate } from 'react-router';
-import { type AppDispatch, productSlice } from '../../Redux/Store';
+import { type AppDispatch, productSlice, type Product } from '../../Redux/Store';
 import { useDispatch } from 'react-redux';
 
-interface Product {
+interface ProductCard {
     id: string;
     name: string;
     price: number;
@@ -16,15 +16,14 @@ interface Product {
 function ProductsPage() {
     const baseUrl = process.env.REACT_APP_BASE_URL;
     const savedToken = localStorage.getItem("myAccessToken") ?? '';
-    let [products, setProducts] = useState<Product[]>([]);
+    let [products, setProducts] = useState<ProductCard[]>([]);
     let navigate = useNavigate();
     const dispatchProducts = useDispatch<AppDispatch>();
     const { add, clear } = productSlice.actions;
 
-    function buyProductHandler(productId: string) {
-        console.log('id: ' + productId);
+    function buyProductHandler(product: Product) {
         dispatchProducts(clear());
-        dispatchProducts(add(productId));
+        dispatchProducts(add(product));
         navigate('/order-add');
     }
 
@@ -55,7 +54,7 @@ function ProductsPage() {
                 {
                     products.map((p) => (
                         <Grid2 key={p.id}>
-                            <ProductCard productId={p.id} productName={p.name + ' ' + p.price} imageUrl={''} buyHandler={buyProductHandler} />
+                            <ProductCard product={p} productName={p.name + ' ' + p.price} imageUrl={''} buyHandler={buyProductHandler} />
                         </Grid2>
                     ))
                 }
