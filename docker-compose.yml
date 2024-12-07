@@ -99,6 +99,8 @@ services:
           "PGADMIN_DEFAULT_PASSWORD": pg-admin_1
       ports:
           - "8086:80"
+      networks:
+        - app-network
 
   #Graylog Stack
   mongodb:
