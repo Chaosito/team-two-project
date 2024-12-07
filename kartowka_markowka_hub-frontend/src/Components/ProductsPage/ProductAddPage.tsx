@@ -18,7 +18,6 @@ function ProductAddPage() {
         const baseUrl = process.env.REACT_APP_BASE_URL;
         const savedToken = localStorage.getItem("myAccessToken") ?? '';
 
-
         const product: ProductAdd = {
             Name: productName,
             Price: productPrice
@@ -34,7 +33,6 @@ function ProductAddPage() {
         })
         .then(response => navigate('/products'))
         .catch((error) => console.error(error));
-
     }
 
     return <div className="product-add-page">
@@ -42,8 +40,7 @@ function ProductAddPage() {
             <TextField variant='outlined' label='название' onChange={(e) => setProductName(e.target.value)} />
             <TextField variant='outlined' label='цена' type='number' onChange={(e) => setProductPrice(Number(e.target.value))} />
             <Button variant="outlined" onClick={saveProductHandler}>Сохранить</Button>
-        </div>
-        
+        </div>        
     </div>
 }
 

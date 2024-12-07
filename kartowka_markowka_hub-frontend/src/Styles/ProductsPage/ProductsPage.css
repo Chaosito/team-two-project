@@ -1,6 +1,7 @@
 .products-page {
     .products-page__buttons {
-        padding-left: 25px;    
+        padding-top: 25px;
+        padding-left: 50px;    
     }
 
     .products-page__grid {
