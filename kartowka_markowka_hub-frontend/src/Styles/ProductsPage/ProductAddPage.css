@@ -1,0 +1,17 @@
+.product-add-page {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .product-add-page__box {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 300px;
+        height: 200px;
+        border: 1px solid silver;
+        border-radius: 10px;
+        padding: 25px;
+    }
+}

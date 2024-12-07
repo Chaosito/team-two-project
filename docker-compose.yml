@@ -90,15 +90,15 @@ services:
   #  depends_on:
   #   - postgreSql
 
-  #pgadmin: 
-  #    image: dpage/pgadmin4:8
-  #    container_name: pgadmin4
-  #    restart: always
-  #    environment:
-  #        "PGADMIN_DEFAULT_EMAIL": test@gmail.com
-  #        "PGADMIN_DEFAULT_PASSWORD": pg-admin_1
-  #    ports:
-  #        - "8086:80"
+  pgadmin: 
+      image: dpage/pgadmin4:8
+      container_name: pgadmin4
+      restart: always
+      environment:
+          "PGADMIN_DEFAULT_EMAIL": test@gmail.com
+          "PGADMIN_DEFAULT_PASSWORD": pg-admin_1
+      ports:
+          - "8086:80"
 
   #Graylog Stack
   mongodb:

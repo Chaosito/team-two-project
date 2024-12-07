@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import './../../Styles/ProductsPage/ProductsPage.css';
 import ProductCard from './../ProductCard';
-import { Grid2 } from '@mui/material';
+import { Grid2, Button } from '@mui/material';
+import { useNavigate } from 'react-router';
 
 interface Product {
     id: number;
@@ -14,6 +15,7 @@ function ProductsPage() {
     const baseUrl = process.env.REACT_APP_BASE_URL;
     const savedToken = localStorage.getItem("myAccessToken") ?? '';
     let [products, setProducts] = useState<Product[]>([]);
+    let navigate = useNavigate();
 
     useEffect(() => {
         if(savedToken !== '') {
@@ -33,15 +35,21 @@ function ProductsPage() {
     }, [savedToken]); 
 
     return <div className='products-page'>
-        <Grid2 container spacing={5} alignItems='center' justifyContent='center'>
-            {
-                products.map((p) => (
-                    <Grid2 key={p.id}>
-                        <ProductCard productName={p.name + ' ' + p.price} imageUrl={''} />
-                    </Grid2>
-                ))
-            }
-        </Grid2>     
+        <div className='products-page__buttons'>
+            <Button variant='outlined' onClick={() => navigate('/product-add')}>добавить</Button>
+        </div>
+        
+        <div className='products-page__grid'>
+            <Grid2 container spacing={5} alignItems='center' justifyContent='center'>
+                {
+                    products.map((p) => (
+                        <Grid2 key={p.id}>
+                            <ProductCard productName={p.name + ' ' + p.price} imageUrl={''} />
+                        </Grid2>
+                    ))
+                }
+            </Grid2>  
+        </div>           
     </div>
 }
 
