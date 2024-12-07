@@ -6,17 +6,14 @@ import { useNavigate } from 'react-router';
 import { type AppDispatch, productSlice, type Product } from '../../Redux/Store';
 import { useDispatch } from 'react-redux';
 
-interface ProductCard {
-    id: string;
-    name: string;
-    price: number;
+interface ProductData extends Product {
     image: string;
 }
 
 function ProductsPage() {
     const baseUrl = process.env.REACT_APP_BASE_URL;
     const savedToken = localStorage.getItem("myAccessToken") ?? '';
-    let [products, setProducts] = useState<ProductCard[]>([]);
+    let [products, setProducts] = useState<ProductData[]>([]);
     let navigate = useNavigate();
     const dispatchProducts = useDispatch<AppDispatch>();
     const { add, clear } = productSlice.actions;
@@ -42,7 +39,7 @@ function ProductsPage() {
             })
             .catch((error) => console.error(error));
         }
-    }, [savedToken]); 
+    }, [savedToken, baseUrl]); 
 
     return <div className='products-page'>
         <div className='products-page__buttons'>
