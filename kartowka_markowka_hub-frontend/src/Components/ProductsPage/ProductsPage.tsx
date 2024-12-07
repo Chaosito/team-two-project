@@ -11,11 +11,17 @@ interface Product {
     image: string;
 }
 
+
+
 function ProductsPage() {
     const baseUrl = process.env.REACT_APP_BASE_URL;
     const savedToken = localStorage.getItem("myAccessToken") ?? '';
     let [products, setProducts] = useState<Product[]>([]);
     let navigate = useNavigate();
+
+    function buyProductHandler() {
+        navigate('/order-add')
+    }
 
     useEffect(() => {
         if(savedToken !== '') {
@@ -44,7 +50,7 @@ function ProductsPage() {
                 {
                     products.map((p) => (
                         <Grid2 key={p.id}>
-                            <ProductCard productName={p.name + ' ' + p.price} imageUrl={''} />
+                            <ProductCard productName={p.name + ' ' + p.price} imageUrl={''} buyHandler={buyProductHandler} />
                         </Grid2>
                     ))
                 }
