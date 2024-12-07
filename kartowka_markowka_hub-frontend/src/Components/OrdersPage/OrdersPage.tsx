@@ -54,6 +54,7 @@ function OrdersPage() {
                     <TableRow
                         key={order.id}
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        hover
                     >
                         <TableCell component="th" scope="row">
                             {order.number}
