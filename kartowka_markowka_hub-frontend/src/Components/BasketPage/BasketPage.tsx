@@ -49,6 +49,25 @@ function BasketPage() {
         navigate('/order-add');
     }
 
+    function removeProductInBasketHandler() {
+        Promise.all(
+            checkedProducts.map(product => {
+                return fetch(basketUrl + '/api/Basket', {
+                    method: 'DELETE',
+                    headers: {
+                        "Authorization": "Bearer " + savedToken,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ ProductId: product.id })             
+                })
+                .catch((error) => console.error(error));
+            })                
+        ).then(response => {
+            let notRemovedProducts = products.filter(p => checkedProducts.find(c => c.id == p.id) === undefined);
+            setProducts(notRemovedProducts);
+        });
+    }
+
     return <div className='basket-page'>
         <div className='basket-page__box-card'>
             <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>            
@@ -69,11 +88,12 @@ function BasketPage() {
                     </ListItem>
                 ))
             }
-            </List>            
-        </div> 
-        <div className='basket-page__buttons'>
-            <Button variant='contained' onClick={openOrderHandler}>Заказать</Button>
-        </div>      
+            </List>     
+            <div className='basket-page__buttons'>
+                <Button variant='contained' onClick={openOrderHandler}>Заказать</Button>
+                <Button variant='contained' color="error" onClick={removeProductInBasketHandler}>Удалить</Button>
+            </div>         
+        </div>       
     </div>
 }
 

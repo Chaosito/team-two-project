@@ -13,8 +13,6 @@ interface PropsProductCard {
     buyHandler?: (product:Product)=>void;
 }
 
-
-
 const ProductCard = ({ product, productName = '', imageUrl = '', width = 270, height = 150, buyHandler = ()=>{} }: PropsProductCard) => {
     const basketUrl = process.env.REACT_APP_BASKET_URL;
     const savedToken = localStorage.getItem("myAccessToken") ?? '';
