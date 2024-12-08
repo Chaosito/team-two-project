@@ -11,7 +11,7 @@ function Nav() {
         <div className='nav-box__item' onClick={ () => navigate('/basket') }>
             <span>Корзина</span>
         </div>
-        <div className='nav-box__item'>
+        <div className='nav-box__item' onClick={ () => navigate('/orders') }>
             <span>Мои заказы</span>
         </div>       
     </div>

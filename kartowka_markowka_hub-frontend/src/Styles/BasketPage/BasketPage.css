@@ -1,7 +1,21 @@
 .basket-page {
     height: 100vh;
+    padding-left: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     .basket-page__box-card {
-        padding-left: 10vw;    
-    }  
+        border: 1px solid silver;
+        border-radius: 10px;
+        padding: 25px;
+
+        .basket-page__buttons {
+            padding-top: 15px;
+            width: 250px;
+            display: flex;
+            justify-content: space-between;
+        }
+    }
 }

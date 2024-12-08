@@ -5,12 +5,12 @@ using System.Security.Claims;
 
 namespace KartowkaMarkowkaHub.Basket.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BasketController : ControllerBase
     {
         private readonly IBasketService _basketService;
-        //private readonly Guid _userId = Guid.Parse("6ebc929b-3785-49d9-9d46-b3b9f70b0bb5");
 
         public BasketController(IBasketService basketService)
         {
@@ -22,7 +22,7 @@ namespace KartowkaMarkowkaHub.Basket.Controllers
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        [Authorize]
+     
         [HttpGet]
         public async Task<IActionResult> Get()
         {            
@@ -38,9 +38,15 @@ namespace KartowkaMarkowkaHub.Basket.Controllers
         /// <param name="productId">id продукта</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Post(Guid userId, Guid productId)
+        public async Task<IActionResult> Post([FromBody] BasketRequest basketRequest)
         {
-            await _basketService.Create(productId, userId);
+            string userIdText = User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
+
+            if (userIdText == string.Empty)
+                return BadRequest();
+
+            Guid userId = Guid.Parse(userIdText);
+            await _basketService.Create(basketRequest.ProductId, userId);
             return Created();
         }
 
@@ -50,9 +56,15 @@ namespace KartowkaMarkowkaHub.Basket.Controllers
         /// <param name="productId">id продукта</param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IActionResult> Delete(Guid userId, Guid productId)
+        public async Task<IActionResult> Delete([FromBody] BasketRequest basketRequest)
         {
-            await _basketService.Remove(productId, userId);
+            string userIdText = User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
+
+            if (userIdText == string.Empty)
+                return BadRequest();
+
+            Guid userId = Guid.Parse(userIdText);
+            await _basketService.Remove(basketRequest.ProductId, userId);
             return Ok();
         }
     }

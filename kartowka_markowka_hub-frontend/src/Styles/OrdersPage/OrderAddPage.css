@@ -1,0 +1,20 @@
+.order-add-page {
+    height: 100%;
+    padding-top: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    
+    .order-add-page__table {
+        width: 50vw;    
+        border: 1px solid silver;
+    }
+
+    .order-add-page__buttons {
+        display: flex;
+        justify-content: end;
+        padding-top: 10px;
+        width: 50vw;
+    }
+}

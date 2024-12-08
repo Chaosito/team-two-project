@@ -1,4 +1,11 @@
 .products-page {
-    padding-top: 25px;
-    padding-bottom: 25px;
+    .products-page__buttons {
+        padding-top: 25px;
+        padding-left: 50px;    
+    }
+
+    .products-page__grid {
+        padding-top: 25px;
+        padding-bottom: 25px;
+    }
 }

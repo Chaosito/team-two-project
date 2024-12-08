@@ -38,7 +38,6 @@ function Login({ setUserName, userName = '' } : PropsLogin) {
                 localStorage.setItem("userLogin", data.login);
                 setUserName(data.login);
                 navigate('/');
-                console.log(data);
             })
             .catch((error) => console.error(error));
     }

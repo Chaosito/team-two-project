@@ -21,9 +21,10 @@ namespace KartowkaMarkowkaHub.Basket
                     corsBuilder =>
                     {
                         corsBuilder
-                          //.WithOrigins(["http://localhost:3000"])
-                            .AllowAnyOrigin()                           
-                            .AllowAnyHeader();
+                          .WithOrigins(["http://localhost:3000", "http://localhost:80"])
+                            //.AllowAnyOrigin()                           
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
                     });
             });
 

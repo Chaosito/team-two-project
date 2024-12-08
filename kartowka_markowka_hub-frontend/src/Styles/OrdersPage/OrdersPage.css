@@ -1,0 +1,12 @@
+.orders-page {
+    height: 100%;
+    padding-top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .orders-page__table {
+        border: 1px solid silver;
+        width: 90vw;
+    }
+}
