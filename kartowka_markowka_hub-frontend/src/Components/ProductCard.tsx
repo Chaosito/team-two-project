@@ -11,10 +11,28 @@ interface PropsProductCard {
     width?: number;
     height?: number;
     buyHandler?: (product:Product)=>void;
-    basketHandler?(): any;
 }
 
-const ProductCard = ({ product, productName = '', imageUrl = '', width = 270, height = 150, buyHandler = ()=>{}, basketHandler }: PropsProductCard) => {
+
+
+const ProductCard = ({ product, productName = '', imageUrl = '', width = 270, height = 150, buyHandler = ()=>{} }: PropsProductCard) => {
+    const basketUrl = process.env.REACT_APP_BASKET_URL;
+    const savedToken = localStorage.getItem("myAccessToken") ?? '';
+
+    function basketHandler() {
+        if(savedToken !== '') {
+            fetch(basketUrl + '/api/Basket', {
+                method: 'POST',
+                headers: {
+                    "Authorization": "Bearer " + savedToken,
+                     "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ ProductId: product.id })             
+            })
+            .catch((error) => console.error(error));
+        }
+    }
+    
     return <div className="product-card">
         <Card sx={{ maxWidth: 300 }}>
             <CardMedia

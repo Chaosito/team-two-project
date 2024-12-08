@@ -38,7 +38,7 @@ namespace KartowkaMarkowkaHub.Basket.Controllers
         /// <param name="productId">id продукта</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Post(Guid productId)
+        public async Task<IActionResult> Post([FromBody] BasketRequest basketRequest)
         {
             string userIdText = User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
 
@@ -46,7 +46,7 @@ namespace KartowkaMarkowkaHub.Basket.Controllers
                 return BadRequest();
 
             Guid userId = Guid.Parse(userIdText);
-            await _basketService.Create(productId, userId);
+            await _basketService.Create(basketRequest.ProductId, userId);
             return Created();
         }
 
@@ -56,7 +56,7 @@ namespace KartowkaMarkowkaHub.Basket.Controllers
         /// <param name="productId">id продукта</param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IActionResult> Delete(Guid productId)
+        public async Task<IActionResult> Delete([FromBody] BasketRequest basketRequest)
         {
             string userIdText = User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
 
@@ -64,7 +64,7 @@ namespace KartowkaMarkowkaHub.Basket.Controllers
                 return BadRequest();
 
             Guid userId = Guid.Parse(userIdText);
-            await _basketService.Remove(productId, userId);
+            await _basketService.Remove(basketRequest.ProductId, userId);
             return Ok();
         }
     }
