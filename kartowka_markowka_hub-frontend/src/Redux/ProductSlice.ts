@@ -6,11 +6,13 @@ interface ProductData extends Product {
 }
 
 type ProductsState = {
-    products: ProductData[]
+    products: ProductData[];
+    filter: string;
 }
 
 const initialStateProducts: ProductsState = {
-    products: []
+    products: [],
+    filter: '',
 }
 
 const productsSlice = createSlice({
@@ -23,6 +25,10 @@ const productsSlice = createSlice({
         },
         set: (state, action: PayloadAction<ProductData[]>) => {
             state.products = action.payload;
+            return state;
+        },
+        setFilter: (state, action: PayloadAction<string>) => {
+            state.filter = action.payload;
             return state;
         },
     }

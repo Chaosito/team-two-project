@@ -15,8 +15,11 @@ function ProductsPage() {
     const dispatch = useDispatch<AppDispatch>();
     const { set } = productsSlice.actions;
     type RootState = ReturnType<typeof Store.getState>;
-    const products = useSelector((state: RootState) => state.products.products);
-    
+    const selector = (state: RootState) => {
+        const { products, filter } = state.products;
+        return products.filter(p => p.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase()));
+    }
+    const products = useSelector(selector);
     
     function loadProducts() {
         if(savedToken !== '' && products.length === 0) {
