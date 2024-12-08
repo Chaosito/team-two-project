@@ -1,31 +1,32 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import './../../Styles/ProductsPage/ProductsPage.css';
 import ProductCard from './../ProductCard';
 import { Grid2, Button } from '@mui/material';
 import { useNavigate } from 'react-router';
-import { type AppDispatch, productSlice, type Product } from '../../Redux/Store';
-import { useDispatch } from 'react-redux';
-
-interface ProductData extends Product {
-    image: string;
-}
+import { type AppDispatch} from '../../Redux/Store';
+import { productForOrderSlice, type Product } from '../../Redux/ProductForOrderSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { productsSlice } from '../../Redux/ProductSlice';
+import { Store } from '../../Redux/Store';
 
 function ProductsPage() {
     const baseUrl = process.env.REACT_APP_BASE_URL;
     const savedToken = localStorage.getItem("myAccessToken") ?? '';
-    let [products, setProducts] = useState<ProductData[]>([]);
-    let navigate = useNavigate();
-    const dispatchProducts = useDispatch<AppDispatch>();
-    const { add, clear } = productSlice.actions;
-
+    const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
+    const { add, clear } = productForOrderSlice.actions;
+    const { set } = productsSlice.actions;
+    type RootState = ReturnType<typeof Store.getState>;
+    const products = useSelector((state: RootState) => state.products.products);
+    
     function buyProductHandler(product: Product) {
-        dispatchProducts(clear());
-        dispatchProducts(add(product));
+        dispatch(clear());
+        dispatch(add(product));
         navigate('/order-add');
     }
-
-    useEffect(() => {
-        if(savedToken !== '') {
+    
+    function loadProducts() {
+        if(savedToken !== '' && products.length === 0) {
             fetch(baseUrl + '/api/Product', {
                 method: 'GET',
                 headers: {
@@ -34,10 +35,14 @@ function ProductsPage() {
             })
             .then(response => response.json())
             .then(data => {
-                setProducts(data.products);
+                dispatch(set(data.products));
             })
             .catch((error) => console.error(error));
         }
+    }
+
+    useEffect(() => {
+        loadProducts();
     }, [savedToken, baseUrl]); 
 
     return <div className='products-page'>

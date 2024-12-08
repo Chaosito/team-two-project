@@ -1,5 +1,5 @@
 import './../Styles/ProductCard.css';
-import { Product } from '../Redux/Store';
+import { type Product } from '../Redux/ProductForOrderSlice';
 import { Card, CardMedia, CardActions, Button, CardContent, Typography } from '@mui/material';
 import LocalGroceryStoreOutlinedIcon from '@mui/icons-material/LocalGroceryStoreOutlined';
 import vegetables from './../Images/vegetables.jpg';
@@ -39,7 +39,7 @@ const ProductCard = ({ product, productName = '', imageUrl = '', width = 270, he
                 title={productName}
             />
             <CardContent>
-                <Typography variant='h5' >
+                <Typography variant='h6' >
                     {productName}
                 </Typography>
             </CardContent>

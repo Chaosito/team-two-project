@@ -6,7 +6,7 @@ import { TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper
 
 function OrderAddPage() {
     type RootState = ReturnType<typeof Store.getState>;
-    const products = useSelector((state: RootState) => state.products.products);
+    const products = useSelector((state: RootState) => state.productForOrder.products);
     const baseUrl = process.env.REACT_APP_BASE_URL;
     const savedToken = localStorage.getItem("myAccessToken") ?? '';
     const navigate = useNavigate();
