@@ -1,11 +1,38 @@
 import { Store } from "../../Redux/Store";
 import { useSelector } from 'react-redux';
 import './../../Styles/OrdersPage/OrderAddPage.css';
+import { useNavigate } from 'react-router';
 import { TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper, Button } from '@mui/material';
 
 function OrderAddPage() {
     type RootState = ReturnType<typeof Store.getState>;
     const products = useSelector((state: RootState) => state.products.products);
+    const baseUrl = process.env.REACT_APP_BASE_URL;
+    const savedToken = localStorage.getItem("myAccessToken") ?? '';
+    const navigate = useNavigate();
+
+    function orderAddHandler() {
+        if(products.length === 0)
+            return;
+
+        const order = {
+            Number: Math.round(Math.random() * (1000 - 1) + 1),
+            ProductId: products[0].id
+        }
+
+        if(savedToken !== '') {
+            fetch(baseUrl + '/api/Order', {
+                method: 'POST',
+                headers: {
+                    "Authorization": "Bearer " + savedToken,
+                    "Content-Type": "application/json"
+                },    
+                body: JSON.stringify(order)          
+            })
+            .then(response => navigate('/orders'))
+            .catch((error) => console.error(error));
+        } 
+    }
 
     return <div className="order-add-page">  
         <div className="order-add-page__table">
@@ -38,7 +65,7 @@ function OrderAddPage() {
         </div>
         
         <div className="order-add-page__buttons">
-            <Button variant="contained">Заказать</Button>
+            <Button variant="contained" onClick={orderAddHandler}>Заказать</Button>
         </div>
         
     </div>

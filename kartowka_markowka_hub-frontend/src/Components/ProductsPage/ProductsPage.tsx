@@ -34,7 +34,6 @@ function ProductsPage() {
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data.products);
                 setProducts(data.products);
             })
             .catch((error) => console.error(error));

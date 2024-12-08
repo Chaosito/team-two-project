@@ -30,7 +30,6 @@ function OrdersPage() {
             })
             .then(response => response.json())
             .then(data => {
-                console.log(data.orders);
                 setOrders(data.orders);
             })
             .catch((error) => console.error(error));
