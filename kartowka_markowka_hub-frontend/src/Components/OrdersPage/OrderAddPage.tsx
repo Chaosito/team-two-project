@@ -15,22 +15,25 @@ function OrderAddPage() {
         if(products.length === 0)
             return;
 
-        const order = {
-            Number: Math.round(Math.random() * (1000 - 1) + 1),
-            ProductId: products[0].id
-        }
+        if(savedToken !== '') {         
+            Promise.all(
+                products.map(product => {
+                    const order = {
+                        Number: Math.round(Math.random() * (1000 - 1) + 1),
+                        ProductId: product.id
+                    }
 
-        if(savedToken !== '') {
-            fetch(baseUrl + '/api/Order', {
-                method: 'POST',
-                headers: {
-                    "Authorization": "Bearer " + savedToken,
-                    "Content-Type": "application/json"
-                },    
-                body: JSON.stringify(order)          
-            })
-            .then(response => navigate('/orders'))
-            .catch((error) => console.error(error));
+                    return fetch(baseUrl + '/api/Order', {
+                        method: 'POST',
+                        headers: {
+                            "Authorization": "Bearer " + savedToken,
+                            "Content-Type": "application/json"
+                        },    
+                        body: JSON.stringify(order)          
+                    })
+                    .catch((error) => console.error(error));
+                })                
+            ).then(response => navigate('/orders'));
         } 
     }
 

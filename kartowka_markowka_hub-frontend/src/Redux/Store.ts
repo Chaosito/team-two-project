@@ -27,6 +27,10 @@ const productSlice = createSlice({
             state.products = []; 
             return state;
         },
+        set: (state, action: PayloadAction<Product[]>) => {
+            state.products = action.payload;
+            return state;
+        },
     }
 })
 

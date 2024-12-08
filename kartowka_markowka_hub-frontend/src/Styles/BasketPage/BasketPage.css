@@ -4,4 +4,9 @@
     .basket-page__box-card {
         padding-left: 10vw;    
     }  
+
+    .basket-page__buttons {
+        padding-left: 12vw;
+        padding-top: 15px;
+    }
 }
