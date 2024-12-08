@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import './../../Styles/OrdersPage/OrdersPage.css';
 import { TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper } from '@mui/material';
 
 interface ProductDto {
@@ -38,36 +39,38 @@ function OrdersPage() {
 
 
     return <div className="orders-page">
-    <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-            <TableRow>
-                <TableCell>№ заказа</TableCell>
-                <TableCell align="right">Продукт</TableCell>
-                <TableCell align="right">Цена</TableCell>
-                <TableCell align="right">Статус заказа</TableCell>
-            </TableRow>
-            </TableHead>
-            <TableBody>
-            {
-                orders.map((order) => (
-                    <TableRow
-                        key={order.id}
-                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                        hover
-                    >
-                        <TableCell component="th" scope="row">
-                            {order.number}
-                        </TableCell>
-                        <TableCell align="right">{order.product.name}</TableCell>
-                        <TableCell align="right">{order.product.price}</TableCell>
-                        <TableCell align="right">{order.orderStatusName}</TableCell>
+        <div className='orders-page__table'>
+            <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <TableHead>
+                    <TableRow>
+                        <TableCell>№ заказа</TableCell>
+                        <TableCell align="right">Продукт</TableCell>
+                        <TableCell align="right">Цена</TableCell>
+                        <TableCell align="right">Статус заказа</TableCell>
                     </TableRow>
-                ))
-            }
-            </TableBody>
-        </Table>
-        </TableContainer>
+                    </TableHead>
+                    <TableBody>
+                    {
+                        orders.map((order) => (
+                            <TableRow
+                                key={order.id}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                hover
+                            >
+                                <TableCell component="th" scope="row">
+                                    {order.number}
+                                </TableCell>
+                                <TableCell align="right">{order.product.name}</TableCell>
+                                <TableCell align="right">{order.product.price}</TableCell>
+                                <TableCell align="right">{order.orderStatusName}</TableCell>
+                            </TableRow>
+                        ))
+                    }
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </div>
     </div>
 }
 
