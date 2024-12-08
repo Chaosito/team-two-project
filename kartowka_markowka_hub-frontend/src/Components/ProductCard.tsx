@@ -1,8 +1,12 @@
 import './../Styles/ProductCard.css';
-import { Product } from '../Redux/Store';
+import { productForOrderSlice, type Product } from '../Redux/ProductForOrderSlice';
 import { Card, CardMedia, CardActions, Button, CardContent, Typography } from '@mui/material';
 import LocalGroceryStoreOutlinedIcon from '@mui/icons-material/LocalGroceryStoreOutlined';
 import vegetables from './../Images/vegetables.jpg';
+import { useNavigate } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { type AppDispatch } from '../Redux/Store';
+
 
 interface PropsProductCard {
     product: Product;
@@ -10,12 +14,14 @@ interface PropsProductCard {
     imageUrl?: string;
     width?: number;
     height?: number;
-    buyHandler?: (product:Product)=>void;
 }
 
-const ProductCard = ({ product, productName = '', imageUrl = '', width = 270, height = 150, buyHandler = ()=>{} }: PropsProductCard) => {
+const ProductCard = ({ product, productName = '', imageUrl = '', width = 270, height = 150 }: PropsProductCard) => {
     const basketUrl = process.env.REACT_APP_BASKET_URL;
     const savedToken = localStorage.getItem("myAccessToken") ?? '';
+    const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
+    const { add, clear } = productForOrderSlice.actions;
 
     function basketHandler() {
         if(savedToken !== '') {
@@ -30,6 +36,12 @@ const ProductCard = ({ product, productName = '', imageUrl = '', width = 270, he
             .catch((error) => console.error(error));
         }
     }
+
+    function buyHandler(product: Product) {
+        dispatch(clear());
+        dispatch(add(product));
+        navigate('/order-add');
+    }
     
     return <div className="product-card">
         <Card sx={{ maxWidth: 300 }}>
@@ -39,7 +51,7 @@ const ProductCard = ({ product, productName = '', imageUrl = '', width = 270, he
                 title={productName}
             />
             <CardContent>
-                <Typography variant='h5' >
+                <Typography variant='h6' >
                     {productName}
                 </Typography>
             </CardContent>

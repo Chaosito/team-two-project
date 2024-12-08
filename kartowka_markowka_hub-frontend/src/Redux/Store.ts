@@ -1,45 +1,14 @@
-
-import { configureStore, createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-interface Product {
-    id: string;
-    name: string;
-    price: number;
-}
-
-type ProductsState = {
-    products: Product[]
-}
-
-const initialStateProducts: ProductsState = {
-    products: []
-}
-
-const productSlice = createSlice({
-    name: 'productSlice',
-    initialState: initialStateProducts,
-    reducers: {
-        add: (state, action: PayloadAction<Product>) => {
-            state.products.push(action.payload); 
-            return state;
-        },
-        clear: (state) => {
-            state.products = []; 
-            return state;
-        },
-        set: (state, action: PayloadAction<Product[]>) => {
-            state.products = action.payload;
-            return state;
-        },
-    }
-})
+import { configureStore } from '@reduxjs/toolkit';
+import { productForOrderSlice } from './ProductForOrderSlice';
+import { productsSlice } from './ProductSlice';
 
 const Store = configureStore({
     reducer: {
-        products: productSlice.reducer
+        productForOrder: productForOrderSlice.reducer,
+        products: productsSlice.reducer
     }
 });
 
 type AppDispatch = typeof Store.dispatch;
 
-export { Store, type AppDispatch, productSlice, type Product }
+export { Store, type AppDispatch }

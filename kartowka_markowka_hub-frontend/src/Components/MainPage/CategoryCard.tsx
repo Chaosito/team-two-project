@@ -1,4 +1,5 @@
 import './../../Styles/MainPage/CategoryCard.css';
+import { useNavigate } from 'react-router';
 import { Button } from '@mui/material';
 
 interface PropsCategoryCard {
@@ -7,8 +8,10 @@ interface PropsCategoryCard {
 }
 
 function CategoryCard({buttonText, imageUrl}: PropsCategoryCard) {
+    const navigate = useNavigate();
+
     return <div className='category-card' style={{backgroundImage: `url(${imageUrl})`, backgroundSize: 'cover'}}>
-        <Button className='category-card__button' variant='contained'>{buttonText}</Button>
+        <Button className='category-card__button' variant='contained' onClick={() => navigate('/products')}>{buttonText}</Button>
     </div>
 }
 

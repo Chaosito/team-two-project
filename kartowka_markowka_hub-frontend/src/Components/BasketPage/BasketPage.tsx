@@ -1,7 +1,8 @@
 import React from 'react';
 import './../../Styles/BasketPage/BasketPage.css';
 import { useNavigate } from 'react-router';
-import { type AppDispatch, productSlice, type Product } from '../../Redux/Store';
+import { type AppDispatch } from '../../Redux/Store';
+import { productForOrderSlice, type Product  } from '../../Redux/ProductForOrderSlice';
 import { useDispatch } from 'react-redux';
 import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Checkbox, Button } from '@mui/material';
 
@@ -10,7 +11,7 @@ function BasketPage() {
     const savedToken = localStorage.getItem("myAccessToken") ?? '';
     const navigate = useNavigate();
     const dispatchProducts = useDispatch<AppDispatch>();
-    const { set, clear } = productSlice.actions;
+    const { set, clear } = productForOrderSlice.actions;
     let [products, setProducts] = React.useState<Product[]>([]);
     let [checkedProducts, setCheckedProducts] = React.useState<Product[]>([]);
 
@@ -63,7 +64,7 @@ function BasketPage() {
                 .catch((error) => console.error(error));
             })                
         ).then(response => {
-            let notRemovedProducts = products.filter(p => checkedProducts.find(c => c.id == p.id) === undefined);
+            let notRemovedProducts = products.filter(p => checkedProducts.find(c => c.id === p.id) === undefined);
             setProducts(notRemovedProducts);
         });
     }

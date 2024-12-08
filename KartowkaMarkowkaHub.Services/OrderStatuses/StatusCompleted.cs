@@ -12,7 +12,7 @@ namespace KartowkaMarkowkaHub.Services.OrderStatuses
 
         public StatusType NextStatus(IOrderStatusService orderStatusService)
         {
-            throw new NotImplementedException();
+            return orderStatusService.Status.StatusType;
         }
     }
 }

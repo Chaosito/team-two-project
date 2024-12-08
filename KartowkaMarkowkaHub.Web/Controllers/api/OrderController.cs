@@ -113,12 +113,12 @@ namespace KartowkaMarkowkaHub.Web.Controllers.api
         /// <summary>
         /// Переключить статус заказа
         /// </summary>
-        /// <param name="orderId"></param>
+        /// <param name="orderStatusRequest">id заказа</param>
         /// <returns></returns>
         [HttpPut, Route("UpdateStatus")]
-        public async Task<IActionResult> UpdateStatus([FromBody] Guid orderId, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateStatus([FromBody] OrderStatusRequest orderStatusRequest, CancellationToken cancellationToken)
         {
-            bool result = await _mediator.Send(new UpdateOrderStatusCommand { OrderId = orderId }, cancellationToken);
+            bool result = await _mediator.Send(new UpdateOrderStatusCommand { OrderId = orderStatusRequest.OrderId }, cancellationToken);
 
             return Ok(result);
         }

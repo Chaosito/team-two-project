@@ -19,6 +19,7 @@ function OrdersPage() {
     const baseUrl = process.env.REACT_APP_BASE_URL;
     const savedToken = localStorage.getItem("myAccessToken") ?? '';
     let [orders, setOrders] = useState<Order[]>([]);
+    let [triggerRead, settriggerRead] = useState(false);
 
     useEffect(() => {
         if(savedToken !== '') {
@@ -34,8 +35,21 @@ function OrdersPage() {
             })
             .catch((error) => console.error(error));
         }
-    }, [savedToken, baseUrl]); 
+    }, [triggerRead, savedToken, baseUrl]); 
 
+
+    function updateStatuHandler(orderId: string) {
+        fetch(baseUrl + '/api/Order/UpdateStatus', {
+            method: 'PUT',
+            headers: {
+                "Authorization": "Bearer " + savedToken,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({'orderId': orderId})        
+        })
+        .then(response => settriggerRead(true))
+        .catch((error) => console.error(error));
+    }
 
     return <div className="orders-page">
         <div className='orders-page__table'>
@@ -62,7 +76,7 @@ function OrdersPage() {
                                 </TableCell>
                                 <TableCell align="right">{order.product.name}</TableCell>
                                 <TableCell align="right">{order.product.price}</TableCell>
-                                <TableCell align="right">{order.orderStatusName}</TableCell>
+                                <TableCell align="right" onClick={() => updateStatuHandler(order.id)}>{order.orderStatusName}</TableCell>
                             </TableRow>
                         ))
                     }
