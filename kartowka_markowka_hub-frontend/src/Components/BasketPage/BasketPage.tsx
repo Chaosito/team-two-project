@@ -63,7 +63,7 @@ function BasketPage() {
                 .catch((error) => console.error(error));
             })                
         ).then(response => {
-            let notRemovedProducts = products.filter(p => checkedProducts.find(c => c.id == p.id) === undefined);
+            let notRemovedProducts = products.filter(p => checkedProducts.find(c => c.id === p.id) === undefined);
             setProducts(notRemovedProducts);
         });
     }
