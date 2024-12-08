@@ -4,7 +4,6 @@ import ProductCard from './../ProductCard';
 import { Grid2, Button } from '@mui/material';
 import { useNavigate } from 'react-router';
 import { type AppDispatch} from '../../Redux/Store';
-import { productForOrderSlice, type Product } from '../../Redux/ProductForOrderSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { productsSlice } from '../../Redux/ProductSlice';
 import { Store } from '../../Redux/Store';
@@ -14,16 +13,10 @@ function ProductsPage() {
     const savedToken = localStorage.getItem("myAccessToken") ?? '';
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
-    const { add, clear } = productForOrderSlice.actions;
     const { set } = productsSlice.actions;
     type RootState = ReturnType<typeof Store.getState>;
     const products = useSelector((state: RootState) => state.products.products);
     
-    function buyProductHandler(product: Product) {
-        dispatch(clear());
-        dispatch(add(product));
-        navigate('/order-add');
-    }
     
     function loadProducts() {
         if(savedToken !== '' && products.length === 0) {
@@ -55,7 +48,7 @@ function ProductsPage() {
                 {
                     products.map((p) => (
                         <Grid2 key={p.id}>
-                            <ProductCard product={p} productName={p.name + ' ' + p.price} imageUrl={''} buyHandler={buyProductHandler} />
+                            <ProductCard product={p} productName={p.name + ' ' + p.price} imageUrl={''} />
                         </Grid2>
                     ))
                 }
