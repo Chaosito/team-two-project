@@ -26,7 +26,6 @@ function Menu({ setUserName, userName = '' } : PropsMenu) {
                 userName.trim() === '' 
                 ? (
                     <>
-                        <span onClick={ () => navigate('/') } >Регистрация</span>
                         <span onClick={ () => navigate('/login') } >Войти</span>
                     </>                    
                 ) 
