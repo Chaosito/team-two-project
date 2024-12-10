@@ -31,10 +31,11 @@ namespace KartowkaMarkowkaHub.Data
             context.Database.EnsureDeleted();
             if(DbConfiguration.CurrentDbType == DbType.SqlLite) DeleteSqlLiteFiles();
 
-            if (context.Database.EnsureCreated())
-            {
-                context.Database.Migrate();
-            }
+            context.Database.Migrate();
+            //if (context.Database.EnsureCreated())
+            //{
+            //    //context.Database.Migrate();
+            //}
         }
 
         private static void DeleteSqlLiteFiles()

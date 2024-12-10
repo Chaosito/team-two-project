@@ -1,3 +1,5 @@
+using Autofac.Extensions.DependencyInjection;
+using Autofac;
 using KartowkaMarkowkaHub.Basket.Services;
 using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -122,7 +124,11 @@ namespace KartowkaMarkowkaHub.Basket
             });
 
             builder.Services.AddHttpClient();
-            builder.Services.AddScoped<IBasketService, BasketService>();
+            builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
+            .ConfigureContainer<ContainerBuilder>((context, container) =>
+            {
+                container.RegisterType<BasketService>().As<IBasketService>().InstancePerLifetimeScope();
+            });
 
             var app = builder.Build();
 
@@ -138,7 +144,7 @@ namespace KartowkaMarkowkaHub.Basket
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
-            app.UseAuthorization();    
+            app.UseAuthorization();
 
             app.MapControllers();
 
