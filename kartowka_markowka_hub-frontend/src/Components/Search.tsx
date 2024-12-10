@@ -23,8 +23,6 @@ function Serarch() {
             <TextField className='search__input' variant='outlined' onChange={t => setproductName(t.target.value)}/>
             <Button variant='contained' onClick={searchHandler}>Найти</Button>
         </div>       
-        
-        <span className='search__city'>Усть-Каменогорск</span>
     </div>
 }
 

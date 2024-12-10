@@ -8,7 +8,6 @@
     justify-content: space-around;
     align-items: center;
 
-
     .search__input-cover {
         width: 70%;
         display: flex;
@@ -20,9 +19,4 @@
             width: 90%;
         }       
     }
-
-    .search__city {
-        color: white;
-        font-size: 18px;    
-    }  
 }

@@ -2,9 +2,6 @@ import { useState } from 'react';
 import './../../Styles/AuthPage/Login.css';
 import { TextField, Button } from '@mui/material';
 import { useNavigate } from 'react-router';
-import { useDispatch } from 'react-redux';
-import { productsSlice } from '../../Redux/ProductSlice';
-import { type AppDispatch} from '../../Redux/Store';
 
 interface LoginData {
     login: string;
@@ -18,30 +15,9 @@ interface PropsLogin {
 
 function Login({ setUserName, userName = '' } : PropsLogin) {
     const baseUrl = process.env.REACT_APP_BASE_URL;
-    const [name, setName] = useState('Wower');
-    const [password, setPassword] = useState('123123');
+    const [name, setName] = useState('');
+    const [password, setPassword] = useState('');
     const navigate = useNavigate();
-    const dispatch = useDispatch<AppDispatch>();
-    const { set } = productsSlice.actions;
-
-    function loadProducts() {
-        const baseUrl = process.env.REACT_APP_BASE_URL;
-        const savedToken = localStorage.getItem("myAccessToken") ?? '';
-    
-        if(savedToken !== '') {
-            fetch(baseUrl + '/api/Product', {
-                method: 'GET',
-                headers: {
-                    "Authorization": "Bearer " + savedToken
-                },        
-            })
-            .then(response => response.json())
-            .then(data => {
-                dispatch(set(data.products));
-            })
-            .catch((error) => console.error(error));
-        }
-    }
 
     function sendLoginRequest() {
         let requestData: LoginData = {
@@ -62,7 +38,6 @@ function Login({ setUserName, userName = '' } : PropsLogin) {
                 localStorage.setItem("userLogin", data.login);
                 setUserName(data.login);
                 navigate('/');
-                loadProducts();
             })
             .catch((error) => console.error(error));
     }
