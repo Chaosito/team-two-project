@@ -5,7 +5,7 @@ on:
     branches: 
       - main
 jobs:
-  build:
+  buildWithTest:
     runs-on: ubuntu-latest
     steps:
       - name: pull repository
