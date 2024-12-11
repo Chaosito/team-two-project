@@ -19,5 +19,5 @@ jobs:
       - name: build
         run: dotnet build './KartowkaMarkowkaHub.Web/KartowkaMarkowkaHub.Web.csproj'
       - name: test
-        run: dotnet test --no-build
+        run: dotnet test './KartowkaMarkowkaHub.Test/KartowkaMarkowkaHub.Test.csproj'
       - run: echo "🐱‍👤This job's status is ${{ job.status }}."  
