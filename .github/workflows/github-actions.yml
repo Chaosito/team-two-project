@@ -18,4 +18,6 @@ jobs:
         run: dotnet restore './KartowkaMarkowkaHub.Web/KartowkaMarkowkaHub.Web.csproj'
       - name: build
         run: dotnet build './KartowkaMarkowkaHub.Web/KartowkaMarkowkaHub.Web.csproj'
+      - name: test
+        run: dotnet test'./KartowkaMarkowkaHub.Web/KartowkaMarkowkaHub.Test.csproj'
       - run: echo "🐱‍👤This job's status is ${{ job.status }}."  
