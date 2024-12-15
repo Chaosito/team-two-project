@@ -5,7 +5,7 @@ on:
     branches: 
       - main
 jobs:
-  build:
+  buildWithTest:
     runs-on: ubuntu-latest
     steps:
       - name: pull repository
@@ -14,10 +14,19 @@ jobs:
         uses: actions/setup-dotnet@v4
         with: 
           dotnet-version: '8.0'
+          
+      - name: cache nuget
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+            
       - name: restore
         run: dotnet restore './KartowkaMarkowkaHub.Web/KartowkaMarkowkaHub.Web.csproj'
       - name: build
         run: dotnet build './KartowkaMarkowkaHub.Web/KartowkaMarkowkaHub.Web.csproj'
       - name: test
-        run: dotnet test --no-build
-      - run: echo "🐱‍👤This job's status is ${{ job.status }}."  
+        run: dotnet test './KartowkaMarkowkaHub.Test/KartowkaMarkowkaHub.Test.csproj'
+      - run: echo "🐱‍👤This job's status is ${{ job.status }}."
