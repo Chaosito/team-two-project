@@ -16,6 +16,7 @@ namespace KartowkaMarkowkaHub.Basket
             var builder = WebApplication.CreateBuilder(args);
 
             string Origin = "MyAllowOrigin";
+            string corsAllowedOrigins = builder.Configuration["CORS_ALLOWED_ORIGINS"] ?? string.Empty;
 
             builder.Services.AddCors(options =>
             {
@@ -23,8 +24,7 @@ namespace KartowkaMarkowkaHub.Basket
                     corsBuilder =>
                     {
                         corsBuilder
-                          .WithOrigins(["http://localhost:3000", "http://localhost:80"])
-                            //.AllowAnyOrigin()                           
+                            .WithOrigins(corsAllowedOrigins)                      
                             .AllowAnyHeader()
                             .AllowAnyMethod();
                     });

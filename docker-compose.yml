@@ -1,6 +1,5 @@
 services:
   webApp:
-    #image: ${DOCKER_REGISTRY-}kartowkamarkowkahubweb
     image: kartowkamarkowkahubweb
     container_name: webApp
     build:
@@ -9,6 +8,8 @@ services:
     ports:
       - 8080:8080
       - 8081:8081
+    environment:
+      - CORS_ALLOWED_ORIGINS=http://localhost:8092 
     depends_on:
       - postgreSql
       - cacheRedis
@@ -59,13 +60,15 @@ services:
     ports:
       - 8090:8080
       - 8091:8081
+    environment:
+      - CORS_ALLOWED_ORIGINS=http://localhost:8092
     depends_on:
       - rabbitmq
     networks:
       - app-network
     
   reactApp:
-    image: kartowka-markowka-hub-frontend:latest
+    image: frontend
     container_name: reactApp
     build: 
       context: ./kartowka_markowka_hub-frontend

@@ -59,15 +59,15 @@ namespace KartowkaMarkowkaHub.Web
         // Метод для добавления служб в контейнер DI
         // Add services to the container.
         public void DependencyInjectionRegistration(IServiceCollection services)
-        {          
+        {
+            string corsAllowedOrigins = Configuration["CORS_ALLOWED_ORIGINS"] ?? string.Empty;
             services.AddCors(options =>
             {
                 options.AddPolicy(name: Origin,
                     corsBuilder =>
                     {
                         corsBuilder
-                            .WithOrigins(["http://localhost:3000", "http://localhost:80"])
-                            //.AllowAnyOrigin()
+                            .WithOrigins(corsAllowedOrigins)
                             .AllowAnyHeader()
                             .AllowAnyMethod();
                     });
